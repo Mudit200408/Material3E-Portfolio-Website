@@ -1,0 +1,21 @@
+﻿# Flutter
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+
+# IDEs
+.idea/
+.vscode/
+android/.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+*.env
+*.env.*
