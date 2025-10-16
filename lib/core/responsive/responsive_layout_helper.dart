@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+
+class ResponsiveLayoutHelper {
+  // Breakpoint helpers
+  static bool isMobile(BuildContext context) =>
+      ResponsiveBreakpoints.of(context).isMobile;
+
+  static bool isTablet(BuildContext context) =>
+      ResponsiveBreakpoints.of(context).isTablet;
+
+  static bool isDesktop(BuildContext context) =>
+      ResponsiveBreakpoints.of(context).isDesktop;
+
+  // Get adaptive padding
+  static EdgeInsets getHorizontalPadding(BuildContext context) {
+    if (isMobile(context)) {
+      return const EdgeInsets.symmetric(horizontal: 16);
+    } else if (isTablet(context)) {
+      return const EdgeInsets.symmetric(horizontal: 32);
+    } else {
+      return const EdgeInsets.symmetric(horizontal: 48);
+    }
+  }
+
+  // Get max content width
+  static double getMaxContentWidth(BuildContext context) {
+    if (isMobile(context)) {
+      return double.infinity;
+    } else if (isTablet(context)) {
+      return 800;
+    } else {
+      return 1200;
+    }
+  }
+
+  // Get responsive axis for Wrap/Flex
+  static Axis getFlexDirection(BuildContext context) {
+    return isMobile(context) ? Axis.vertical : Axis.horizontal;
+  }
+
+  // Get number of columns for grid
+  static int getGridCrossAxisCount(
+    BuildContext context, {
+    int mobile = 1,
+    int tablet = 2,
+    int desktop = 3,
+  }) {
+    if (isMobile(context)) return mobile;
+    if (isTablet(context)) return tablet;
+    return desktop;
+  }
+
+  // Responsive value selector
+  static T responsiveValue<T>(
+    BuildContext context, {
+    required T mobile,
+    T? tablet,
+    required T desktop,
+  }) {
+    if (isMobile(context)) return mobile;
+    if (isTablet(context)) return tablet ?? mobile;
+    return desktop;
+  }
+}
