@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Spacer(flex: 2),
+        const Spacer(flex: 1),
         _buildTab('Home', context, isSelected: true),
         _buildTab('Projects', context),
         _buildTab('Services', context),
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
             });
           },
         ),
-        const Spacer(flex: 2),
+        const Spacer(flex: 1),
       ],
     );
   }

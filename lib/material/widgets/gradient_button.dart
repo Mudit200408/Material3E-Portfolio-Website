@@ -55,6 +55,7 @@ class _GradientButtonState extends State<GradientButton> {
         child: TextButton(
           onPressed: widget.onPressed,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 widget.buttonName,

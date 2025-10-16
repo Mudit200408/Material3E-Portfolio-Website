@@ -59,26 +59,26 @@ class _SegmentButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeOutCubic,
-      decoration: BoxDecoration(
-        color: isSelected ? selectedColor : Colors.transparent,
-        borderRadius: BorderRadius.circular(100),
-      ),
-      padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveSpacing.wSmall,
-        vertical: ResponsiveSpacing.hSmall,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(100),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(100),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOutCubic,
+        decoration: BoxDecoration(
+          color: isSelected ? selectedColor : Colors.transparent,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveSpacing.wXSmall,
+          vertical: ResponsiveSpacing.hSmall,
+        ),
         child: Text(
           label,
-          style: theme.textTheme.bodyMedium?.copyWith(
+          style: theme.textTheme.bodySmall?.copyWith(
             color: isSelected
                 ? theme.colorScheme.onPrimary
-                : theme.colorScheme.onSurface.withOpacity(0.7),
+                : theme.colorScheme.onSurface.withValues(alpha: 0.7),
             fontWeight: FontWeight.w500,
           ),
         ),

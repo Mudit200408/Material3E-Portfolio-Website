@@ -41,6 +41,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
             ),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 widget.buttonName,
