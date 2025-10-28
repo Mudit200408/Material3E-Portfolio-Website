@@ -7,13 +7,19 @@ class AnimatedShapeContainer extends StatefulWidget {
   final Color? color;
   final double width;
   final double height;
+  final Gradient? gradient;
+  final BorderSide border;
+  final List<BoxShadow>? boxShadow;
 
   const AnimatedShapeContainer({
     super.key,
     this.child,
     this.color,
+    this.gradient,
     required this.width,
     required this.height,
+    this.border = BorderSide.none,
+    this.boxShadow,
   });
 
   @override
@@ -31,9 +37,10 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
     Shapes.square,
     Shapes.c7_sided_cookie,
     Shapes.pill,
-    Shapes.very_sunny,
+    Shapes.circle,
     Shapes.c9_sided_cookie,
     Shapes.slanted,
+    Shapes.arrow,
   ];
 
   void _onTap() {
@@ -66,9 +73,11 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
       shape,
       key: ValueKey(_currentShapeIndex),
       color: widget.color,
-      clipBehavior: Clip.antiAlias,
       width: widget.width,
       height: widget.height,
+      gradient: widget.gradient,
+      border: widget.border,
+      boxShadow: widget.boxShadow,
       child: widget.child ?? const SizedBox.shrink(),
     );
   }
@@ -82,13 +91,13 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
       child: GestureDetector(
         onTap: _onTap,
         child: SingleMotionBuilder(
-          motion: CupertinoMotion.bouncy(extraBounce: 0.1),
+          motion: CupertinoMotion.bouncy(extraBounce: 0.05),
           value: _scale,
           builder: (context, scale, child) {
             return Transform.scale(
               scale: scale,
               child: SingleMotionBuilder(
-                motion: CupertinoMotion.bouncy(extraBounce: 0.35),
+                motion: CupertinoMotion.bouncy(extraBounce: 0.25),
                 value: _bounceScale,
                 builder: (context, bounceScale, child) {
                   return Transform.scale(

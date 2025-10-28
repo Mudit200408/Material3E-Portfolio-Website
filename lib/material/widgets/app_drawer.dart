@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_web/app.dart';
+import 'package:portfolio_web/material/models/nav_section_enums.dart';
 import 'package:portfolio_web/material/widgets/style_toggle.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 
 class AppDrawer extends StatelessWidget {
-  final Function(String)? onNavigate;
-
-  const AppDrawer({super.key, this.onNavigate});
+  final Function(NavSection)? onNavigate;
+  final NavSection currentSection;
+  const AppDrawer({super.key, this.onNavigate, required this.currentSection});
 
   @override
   Widget build(BuildContext context) {
@@ -49,37 +50,50 @@ class AppDrawer extends StatelessWidget {
               context,
               icon: Icons.home_outlined,
               title: 'Home',
-              isSelected: true,
+              isSelected: currentSection == NavSection.home,
               onTap: () {
                 Navigator.pop(context);
-                onNavigate?.call('Home');
-              },
-            ),
-            _buildDrawerItem(
-              context,
-              icon: Icons.work_outline,
-              title: 'Projects',
-              onTap: () {
-                Navigator.pop(context);
-                onNavigate?.call('Projects');
-              },
-            ),
-            _buildDrawerItem(
-              context,
-              icon: Icons.design_services_outlined,
-              title: 'Services',
-              onTap: () {
-                Navigator.pop(context);
-                onNavigate?.call('Services');
+                onNavigate?.call(NavSection.home);
               },
             ),
             _buildDrawerItem(
               context,
               icon: Icons.person_outline,
               title: 'About',
+              isSelected: currentSection == NavSection.about,
               onTap: () {
                 Navigator.pop(context);
-                onNavigate?.call('About');
+                onNavigate?.call(NavSection.about);
+              },
+            ),
+            _buildDrawerItem(
+              context,
+              icon: Icons.work_outline,
+              title: 'Projects',
+              isSelected: currentSection == NavSection.projects,
+              onTap: () {
+                Navigator.pop(context);
+                onNavigate?.call(NavSection.projects);
+              },
+            ),
+            _buildDrawerItem(
+              context,
+              icon: Icons.insights_outlined,
+              title: 'Experience',
+              isSelected: currentSection == NavSection.experience,
+              onTap: () {
+                Navigator.pop(context);
+                onNavigate?.call(NavSection.experience);
+              },
+            ),
+            _buildDrawerItem(
+              context,
+              icon: Icons.person_outline,
+              title: 'Contact Me',
+              isSelected: currentSection == NavSection.contact,
+              onTap: () {
+                Navigator.pop(context);
+                onNavigate?.call(NavSection.contact);
               },
             ),
             const Spacer(),

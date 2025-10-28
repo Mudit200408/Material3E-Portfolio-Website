@@ -10,18 +10,19 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv: ^6.0.0
-  flutter_m3shapes: ^1.0.0+2
   flutter_svg: ^2.2.1
   material_shapes: ^0.0.2
   motor: ^1.0.1
   responsive_framework: ^1.5.1
   responsive_scaler: ^0.1.0
   supabase_flutter: ^2.10.3
+  flutter_m3shapes:
+    path: "../flutter_m3shapes/"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true

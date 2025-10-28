@@ -11,13 +11,13 @@ class SkillsChip extends StatelessWidget {
     final theme = Theme.of(context);
     return Chip(
       backgroundColor: theme.colorScheme.surfaceContainerLow,
-      side: BorderSide(color: theme.colorScheme.primary, width: 0.2),
+      side: BorderSide(color: theme.colorScheme.primary, width: 0.8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       label: Text(
         skill.skillName,
         style: theme.textTheme.labelMedium?.copyWith(
-          color: theme.colorScheme.onSurfaceVariant,
-          fontWeight: FontWeight.w500,
+          color: theme.colorScheme.primary,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

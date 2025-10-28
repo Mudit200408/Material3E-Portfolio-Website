@@ -25,35 +25,36 @@ class _GradientButtonState extends State<GradientButton> {
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(
-          horizontal: 24.scale(),
-          vertical: 18.scale(),
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(120),
-          boxShadow: [
-            BoxShadow(
-              color: _isHovered
-                  ? theme.colorScheme.primary.withValues(alpha: 0.6)
-                  : Colors.transparent,
-              blurRadius: _isHovered ? 4 : 0,
-              spreadRadius: _isHovered ? 2 : 0,
-              offset: const Offset(0, 4),
-            ),
-          ],
-          gradient: LinearGradient(
-            colors: [
-              theme.colorScheme.primary,
-              theme.colorScheme.primary.withValues(alpha: 0.4),
-            ],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(120),
+        onTap: widget.onPressed,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: EdgeInsets.symmetric(
+            horizontal: 24.scale(),
+            vertical: 18.scale(),
           ),
-        ),
-        child: TextButton(
-          onPressed: widget.onPressed,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(120),
+            boxShadow: [
+              BoxShadow(
+                color: _isHovered
+                    ? theme.colorScheme.primary.withValues(alpha: 0.6)
+                    : Colors.transparent,
+                blurRadius: _isHovered ? 4 : 0,
+                spreadRadius: _isHovered ? 2 : 0,
+                offset: const Offset(0, 4),
+              ),
+            ],
+            gradient: LinearGradient(
+              colors: [
+                theme.colorScheme.primary,
+                theme.colorScheme.primary.withValues(alpha: 0.4),
+              ],
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+            ),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

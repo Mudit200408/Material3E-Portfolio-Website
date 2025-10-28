@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_web/app.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
+import 'package:portfolio_web/material/models/nav_section_enums.dart';
+import 'package:portfolio_web/material/pages/about_page.dart';
+import 'package:portfolio_web/material/pages/contact_page.dart';
+import 'package:portfolio_web/material/pages/experience_page.dart';
+import 'package:portfolio_web/material/pages/project_page.dart';
 import 'package:portfolio_web/material/widgets/animated_shape_container.dart';
 import 'package:portfolio_web/material/widgets/app_drawer.dart';
 import 'package:portfolio_web/material/widgets/gradient_button.dart';
@@ -19,6 +24,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  NavSection _currentSection = NavSection.home;
+  bool _isProgrammaticScroll = false;
+  final _scrollController = ScrollController();
+
+  // Global keys for different sections
+  final Map<NavSection, GlobalKey> _sectionKeys = {
+    NavSection.home: GlobalKey(),
+    NavSection.about: GlobalKey(),
+    NavSection.projects: GlobalKey(),
+    NavSection.experience: GlobalKey(),
+    NavSection.contact: GlobalKey(),
+  };
+
   static const List<FontVariation> introFontNormal = [
     FontVariation('wght', 280),
     FontVariation('GRAD', 18),
@@ -56,6 +74,85 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadSkills();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    // ADD THIS
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isProgrammaticScroll) return;
+    const appBarHeight = kToolbarHeight + 20;
+    NavSection activeSection = _currentSection; // Start with the current one
+
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+
+    if (currentScroll >= maxScroll - 1.0) {
+      activeSection = NavSection.values.last; // Force select the last section
+    } else {
+      // Iterate through our keys in REVERSE order
+      for (final section in NavSection.values.reversed) {
+        final key = _sectionKeys[section];
+        final context = key?.currentContext;
+
+        if (context != null) {
+          final box = context.findRenderObject() as RenderBox;
+          final position = box.localToGlobal(Offset.zero).dy;
+
+          if (position <= appBarHeight) {
+            activeSection = section;
+            break; // Found it
+          }
+        }
+      }
+    }
+
+    // Only call setState if the section has actually changed
+    if (_currentSection != activeSection) {
+      setState(() {
+        _currentSection = activeSection;
+      });
+    }
+  }
+
+  Future<void> _scrollToSection(NavSection section) async {
+    // 1. Update state immediately on click
+    setState(() {
+      _currentSection = section;
+    });
+
+    // 2. Find the key from the map
+    final key = _sectionKeys[section];
+    final context = key?.currentContext;
+
+    if (context != null) {
+      _isProgrammaticScroll = true;
+
+      await Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOutCubic,
+      );
+
+      _isProgrammaticScroll = false;
+    }
+  }
+
+  bool _onUserScroll(UserScrollNotification notification) {
+    // If the user starts scrolling, we know it's no longer a programmatic scroll.
+    if (_isProgrammaticScroll) {
+      setState(() {
+        _isProgrammaticScroll = false;
+      });
+    }
+    // Return false to allow the notification to continue bubbling
+    return false;
   }
 
   @override
@@ -64,20 +161,63 @@ class _HomePageState extends State<HomePage> {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
 
     return Scaffold(
-      drawer: isMobile ? const AppDrawer() : null,
-      body: CustomScrollView(
-        slivers: [
-          _buildAppBar(context, theme, isMobile),
-          SliverToBoxAdapter(
-            child: ResponsiveLayoutHelper.responsiveValue(
-              context,
-              mobile: _buildMobileLayout(context, theme),
-              desktop: _buildDesktopLayout(context, theme),
-            ),
-          ),
-        ],
+      drawer: isMobile
+          ? AppDrawer(
+              currentSection: _currentSection, // 1. Pass the current state
+              onNavigate: _scrollToSection, // 2. Pass the scroll function
+            )
+          : null,
+      body: NotificationListener<UserScrollNotification>(
+        onNotification: _onUserScroll,
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            _buildAppBar(context, theme, isMobile),
+            ..._buildPageSections(context, theme, isMobile),
+          ],
+        ),
       ),
     );
+  }
+
+  List<Widget> _buildPageSections(
+    BuildContext context,
+    ThemeData theme,
+    bool isMobile,
+  ) {
+    // This is your OLD layout, now just for the "Home" section
+    final homeSection = Container(
+      key: _sectionKeys[NavSection.home],
+      child: isMobile
+          ? _buildMobileHomeContent(context, theme)
+          : _buildDesktopHomeContent(context, theme),
+    );
+
+    final aboutSection = AboutPage(key: _sectionKeys[NavSection.about]);
+
+    // 2. CREATE STUBS FOR YOUR OTHER SECTIONS
+    //    You will need to build these out
+    final projectsSection = ProjectPage(key: _sectionKeys[NavSection.projects]);
+
+    final experienceSection = ExperiencePage(
+      key: _sectionKeys[NavSection.experience],
+    );
+
+    final contactSection = ContactPage(key: _sectionKeys[NavSection.contact]);
+
+    // 3. Put all sections in a list
+    final sections = [
+      homeSection,
+      aboutSection,
+      projectsSection,
+      experienceSection,
+      contactSection,
+    ];
+
+    // 4. Convert each section widget into a Sliver and return the list
+    return sections
+        .map((section) => SliverToBoxAdapter(child: section))
+        .toList();
   }
 
   Widget _buildAppBar(BuildContext context, ThemeData theme, bool isMobile) {
@@ -113,10 +253,37 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Spacer(flex: 1),
-        _buildTab('Home', context, isSelected: true),
-        _buildTab('Projects', context),
-        _buildTab('Services', context),
-        _buildTab('About', context),
+        _buildTab(
+          'Home',
+          context,
+          onPressed: () => _scrollToSection(NavSection.home),
+          isSelected: _currentSection == NavSection.home,
+        ),
+        _buildTab(
+          'About',
+          context,
+          onPressed: () => _scrollToSection(NavSection.about),
+          isSelected: _currentSection == NavSection.about,
+        ),
+        _buildTab(
+          'Projects',
+          context,
+          onPressed: () => _scrollToSection(NavSection.projects),
+          isSelected: _currentSection == NavSection.projects,
+        ),
+        _buildTab(
+          'Experience',
+          context,
+          onPressed: () => _scrollToSection(NavSection.experience),
+          isSelected: _currentSection == NavSection.experience,
+        ),
+        _buildTab(
+          'Contact Me',
+          context,
+          onPressed: () => _scrollToSection(NavSection.contact),
+          isSelected: _currentSection == NavSection.contact,
+        ),
+
         const Spacer(),
         StyleToggle(
           currentStyle: App.controller.appStyle,
@@ -131,7 +298,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMobileLayout(BuildContext context, ThemeData theme) {
+  Widget _buildMobileHomeContent(BuildContext context, ThemeData theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -157,7 +324,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildDesktopLayout(BuildContext context, ThemeData theme) {
+  Widget _buildDesktopHomeContent(BuildContext context, ThemeData theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -430,13 +597,14 @@ class _HomePageState extends State<HomePage> {
   Widget _buildTab(
     String text,
     BuildContext context, {
+    required VoidCallback onPressed,
     bool isSelected = false,
   }) {
     final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.only(left: 6.scale()),
       child: TextButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: TextButton.styleFrom(
           backgroundColor: isSelected
               ? theme.colorScheme.primary
