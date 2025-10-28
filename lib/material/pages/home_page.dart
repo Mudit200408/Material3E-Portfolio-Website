@@ -87,7 +87,9 @@ class _HomePageState extends State<HomePage> {
 
   void _onScroll() {
     if (_isProgrammaticScroll) return;
-    const appBarHeight = kToolbarHeight + 20;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final triggerLine = screenHeight / 3;
+
     NavSection activeSection = _currentSection; // Start with the current one
 
     final maxScroll = _scrollController.position.maxScrollExtent;
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
           final box = context.findRenderObject() as RenderBox;
           final position = box.localToGlobal(Offset.zero).dy;
 
-          if (position <= appBarHeight) {
+          if (position <= triggerLine) {
             activeSection = section;
             break; // Found it
           }
