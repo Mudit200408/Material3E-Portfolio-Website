@@ -1,21 +1,479 @@
 // lib/material/pages/about_section.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
+import 'package:portfolio_web/material/widgets/style_toggle.dart';
+import 'package:responsive_scaler/responsive_scaler.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
 
   @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+  int selectedTab = 0; // 0 for About Me, 1 for Education
+  bool _isQuoteHovered = false;
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    // Just return the content. NO SCROLLVIEWS HERE.
+    final isMobile = ResponsiveLayoutHelper.isMobile(context);
     return Container(
-      // The height is just for the placeholder,
-      // your content will define its own height.
-      height: 600, 
-      color: theme.colorScheme.surfaceVariant,
+      padding: EdgeInsets.symmetric(
+        vertical: isMobile ? 60.scale() : 100.scale(),
+      ),
       child: Center(
-        child: Text('About Section', style: theme.textTheme.headlineLarge),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: ResponsiveLayoutHelper.getMaxContentWidth(context),
+          ),
+          child: Padding(
+            padding: ResponsiveLayoutHelper.getHorizontalPadding(context),
+            child: isMobile
+                ? _buildMobileLayout(context, theme)
+                : _buildDesktopLayout(context, theme),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMobileLayout(BuildContext context, ThemeData theme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(height: ResponsiveSpacing.hMedium),
+        _buildQuoteCard(context, theme),
+        SizedBox(height: ResponsiveSpacing.hMedium),
+        _buildInfoCard(context, theme),
+        SizedBox(height: ResponsiveSpacing.hLarge),
+      ],
+    );
+  }
+
+  Widget _buildDesktopLayout(BuildContext context, ThemeData theme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _buildQuoteCard(context, theme),
+        SizedBox(width: ResponsiveSpacing.wXSmall),
+        Expanded(child: _buildInfoCard(context, theme)),
+      ],
+    );
+  }
+
+  Widget _buildInfoCard(BuildContext context, ThemeData theme) {
+    final isMobile = ResponsiveLayoutHelper.isMobile(context);
+
+    return Container(
+      padding: EdgeInsets.all(isMobile ? 16.scale() : 24.scale()),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(32.scale()),
+        color: theme.colorScheme.primaryFixed.withValues(alpha: 0.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSegmentedButtons(context, theme, isMobile),
+          SizedBox(height: 24.scale()),
+          SizedBox(
+            //height: isMobile ? null : 350.scale(),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: selectedTab == 0
+                  ? _buildAboutMeContent(context, theme)
+                  : _buildEducationContent(context, theme),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuoteCard(BuildContext context, ThemeData theme) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        // vertical: 12.scale(),
+        horizontal: 8.scale(),
+      ),
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isQuoteHovered = true),
+        onExit: (_) => setState(() => _isQuoteHovered = false),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          padding: EdgeInsets.all(24.scale()),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: _isQuoteHovered
+                  ? [theme.colorScheme.primary, theme.colorScheme.secondary]
+                  : [theme.colorScheme.surface, theme.colorScheme.surface],
+            ),
+            borderRadius: BorderRadius.circular(20.scale()),
+            boxShadow: [
+              if (_isQuoteHovered)
+                BoxShadow(
+                  color: theme.colorScheme.primary.withAlpha(80),
+                  blurRadius: 18,
+                  offset: const Offset(0, 6),
+                ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "“Clean code always looks like\nit was written by someone who cares.”",
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: _isQuoteHovered
+                      ? theme.colorScheme.onPrimary
+                      : theme.colorScheme.onSurface,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 12.scale()),
+              Text(
+                "- Robert C. Martin",
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: _isQuoteHovered
+                      ? theme.colorScheme.onPrimary.withValues(alpha: 0.8)
+                      : theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSegmentedButtons(
+    BuildContext context,
+    ThemeData theme,
+    bool isMobile,
+  ) {
+    const List<FontVariation> segmentedButtonFont = [
+      FontVariation('slnt', -8),
+      FontVariation('wght', 824),
+      FontVariation('wdth', 78),
+      FontVariation('GRAD', 15),
+      FontVariation('XOPQ', 124),
+      FontVariation('XTRA', 500),
+      FontVariation('YOPQ', 100),
+      FontVariation('YTLC', 750),
+      FontVariation('YTAS', 535),
+      FontVariation('opsz', 40),
+    ];
+
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.inversePrimary,
+        borderRadius: BorderRadius.circular(120),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: SegmentButton(
+              width: double.infinity,
+              height: isMobile ? 50.scale() : 60.scale(),
+              isSelected: selectedTab == 0,
+              selectedColor: theme.colorScheme.primary,
+              onTap: () => setState(() => selectedTab = 0),
+              child: Center(
+                child: Text(
+                  "About Me",
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontSize: isMobile ? 16.scale() : null,
+                    color: selectedTab == 0
+                        ? theme.colorScheme.onPrimary
+                        : theme.colorScheme.primary.withValues(alpha: 0.8),
+                    fontVariations: segmentedButtonFont,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: SegmentButton(
+              width: double.infinity,
+              height: isMobile ? 50.scale() : 60.scale(),
+              isSelected: selectedTab == 1,
+              selectedColor: theme.colorScheme.primary,
+              onTap: () => setState(() => selectedTab = 1),
+              child: Center(
+                child: Text(
+                  "Education",
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontSize: isMobile ? 16.scale() : null,
+                    color: selectedTab == 1
+                        ? theme.colorScheme.onPrimary
+                        : theme.colorScheme.primary.withValues(alpha: 0.8),
+                    fontVariations: segmentedButtonFont,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAboutMeContent(BuildContext context, ThemeData theme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Hello! I'm Mudit, and I'm genuinely excited to be building in the world of mobile development. I'm a passionate Flutter developer who loves transforming design concepts into smooth, functional apps. I'm focused on mastering best practices like Clean Architecture, SOLID principles, and BLoC state management, because I believe a great app starts with a great foundation!",
+          style: theme.textTheme.bodyLarge?.copyWith(
+            height: 1.6,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
+        SizedBox(height: 16.scale()),
+        Text(
+          "I'm constantly learning and developing my skills, and I've already had amazing experiences integrating advanced features using Firebase services and even Gemini AI. From sketching out intuitive user interfaces in Figma to debugging complex integrations, I approach every project as an opportunity to grow.",
+          style: theme.textTheme.bodyLarge?.copyWith(
+            height: 1.6,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
+        SizedBox(height: 16.scale()),
+        Text(
+          "I'm on a journey to create innovative and efficient applications, and I can't wait to see what challenge comes next!",
+          style: theme.textTheme.bodyLarge?.copyWith(
+            height: 1.6,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEducationContent(BuildContext context, ThemeData theme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // College Item
+        _buildEducationItem(
+          context,
+          theme,
+          assetString: 'assets/icons/graduate.svg',
+          institution: 'Atharva College of Engineering',
+          degree: 'BE - Computer Engineering',
+          years: '2023-2026',
+        ),
+        SizedBox(height: 16.scale()),
+        // Diploma Item
+        _buildEducationItem(
+          context,
+          theme,
+          assetString: 'assets/icons/diploma.svg',
+          institution: 'Thakur Polytechnic',
+          degree: 'Diploma - Information Technology',
+          years: '2020-2023',
+        ),
+        SizedBox(height: 16.scale()),
+        // School Item
+        _buildEducationItem(
+          context,
+          theme,
+          assetString: 'assets/icons/school.svg',
+          institution: 'Don Bosco High School',
+          degree: 'Xth SSC Board Exams',
+          years: '2019-2020',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEducationItem(
+    BuildContext context,
+    ThemeData theme, {
+    required String assetString,
+    required String institution,
+    required String degree,
+    required String years,
+  }) {
+    final isMobile = ResponsiveLayoutHelper.isMobile(context);
+
+    return Container(
+      padding: EdgeInsets.all(isMobile ? 12.scale() : 16.scale()),
+      child: isMobile
+          ? _buildMobileEducationItem(
+              context,
+              theme,
+              assetString,
+              institution,
+              degree,
+              years,
+            )
+          : _buildDesktopEducationItem(
+              context,
+              theme,
+              assetString,
+              institution,
+              degree,
+              years,
+            ),
+    );
+  }
+
+  Widget _buildMobileEducationItem(
+    BuildContext context,
+    ThemeData theme,
+    String assetString,
+    String institution,
+    String degree,
+    String years,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(4.scale()),
+              width: 50.scale(),
+              height: 50.scale(),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.scale()),
+                color: theme.colorScheme.primary.withAlpha(50),
+              ),
+              child: SvgPicture.asset(
+                assetString,
+                colorFilter: ColorFilter.mode(
+                  theme.colorScheme.primary,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+            SizedBox(width: 12.scale()),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    institution,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  SizedBox(height: 4.scale()),
+                  Text(
+                    degree,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurface.withAlpha(200),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 8.scale()),
+        Text(
+          years,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.primary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDesktopEducationItem(
+    BuildContext context,
+    ThemeData theme,
+    String assetString,
+    String institution,
+    String degree,
+    String years,
+  ) {
+    const List<FontVariation> collegeNameFont = [
+      FontVariation('slnt', 0),
+      FontVariation('wdth', 124),
+      FontVariation('wght', 640),
+      FontVariation('GRAD', -57),
+      FontVariation('XOPQ', 50),
+      FontVariation('XTRA', 470),
+      FontVariation('YOPQ', 79),
+      FontVariation('YTAS', 750),
+      FontVariation('YTLC', 515),
+      FontVariation('opsz', 139),
+    ];
+    const List<FontVariation> branchNameFont = [
+      FontVariation('slnt', -5),
+      FontVariation('wdth', 30),
+      FontVariation('wght', 180),
+      FontVariation('GRAD', -80),
+      FontVariation('XOPQ', 135),
+      FontVariation('XTRA', 500),
+      FontVariation('YOPQ', 100),
+      FontVariation('YTAS', 730),
+      FontVariation('YTLC', 480),
+      FontVariation('opsz', 23),
+    ];
+    const List<FontVariation> dateFont = [
+      FontVariation('slnt', -2),
+      FontVariation('wdth', 55),
+      FontVariation('wght', 680),
+      FontVariation('opsz', 23),
+    ];
+    return SizedBox(
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(4.scale()),
+            width: 60.scale(),
+            height: 60.scale(),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.scale()),
+              color: theme.colorScheme.primary.withAlpha(50),
+            ),
+            child: SvgPicture.asset(
+              assetString,
+              colorFilter: ColorFilter.mode(
+                theme.colorScheme.primary,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
+          SizedBox(width: 16.scale()),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  institution,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: theme.colorScheme.onSurface,
+                    fontVariations: collegeNameFont,
+                  ),
+                ),
+                SizedBox(height: 4.scale()),
+                Text(
+                  degree,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontVariations: branchNameFont,
+                    color: theme.colorScheme.onSurface.withAlpha(200),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            years,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontVariations: dateFont,
+              color: theme.colorScheme.primary,
+            ),
+          ),
+        ],
       ),
     );
   }

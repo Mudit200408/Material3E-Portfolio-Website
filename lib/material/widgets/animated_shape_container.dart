@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_m3shapes/flutter_m3shapes.dart';
 import 'package:motor/motor.dart';
@@ -118,7 +119,15 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
                           ),
                         );
                       },
-                      child: _buildShapeContainer(),
+                      child: AvatarGlow(
+                        startDelay: const Duration(milliseconds: 300),
+                        glowCount: 3,
+                        glowRadiusFactor: 0.25,
+                        glowColor: widget.color ?? Colors.blue,
+                        glowShape: BoxShape.circle,
+                        curve: Curves.fastEaseInToSlowEaseOut,
+                        child: _buildShapeContainer(),
+                      ),
                     ),
                   );
                 },

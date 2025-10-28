@@ -18,6 +18,7 @@ dependencies:
   supabase_flutter: ^2.10.3
   flutter_m3shapes:
     path: "../flutter_m3shapes/"
+  avatar_glow: ^3.0.1
 
 dev_dependencies:
   flutter_test:
