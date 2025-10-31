@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:responsive_scaler/responsive_scaler.dart';
 
 class ResponsiveLayoutHelper {
   // Breakpoint helpers
@@ -15,11 +16,11 @@ class ResponsiveLayoutHelper {
   // Get adaptive padding
   static EdgeInsets getHorizontalPadding(BuildContext context) {
     if (isMobile(context)) {
-      return const EdgeInsets.symmetric(horizontal: 16);
+      return EdgeInsets.symmetric(horizontal: 16.scale());
     } else if (isTablet(context)) {
-      return const EdgeInsets.symmetric(horizontal: 32);
+      return EdgeInsets.symmetric(horizontal: 32.scale());
     } else {
-      return const EdgeInsets.symmetric(horizontal: 48);
+      return EdgeInsets.symmetric(horizontal: 48.scale());
     }
   }
 
@@ -30,7 +31,7 @@ class ResponsiveLayoutHelper {
     } else if (isTablet(context)) {
       return 800;
     } else {
-      return 1200;
+      return 1200.scale();
     }
   }
 

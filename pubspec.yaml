@@ -19,6 +19,8 @@ dependencies:
   flutter_m3shapes:
     path: "../flutter_m3shapes/"
   avatar_glow: ^3.0.1
+  m3e_collection: ^0.3.5
+  flutter_custom_caraousel_v2: ^0.2.0
 
 dev_dependencies:
   flutter_test:

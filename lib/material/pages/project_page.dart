@@ -1,22 +1,315 @@
-// lib/material/pages/Project_section.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_caraousel_v2/flutter_custom_caraousel_v2.dart';
+import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
+import 'package:responsive_scaler/responsive_scaler.dart';
 
-class ProjectPage extends StatelessWidget {
+class ProjectPage extends StatefulWidget {
   const ProjectPage({super.key});
+
+  @override
+  State<ProjectPage> createState() => _ProjectPageState();
+}
+
+class _ProjectPageState extends State<ProjectPage> {
+  final CarouselControllerv2 _carouselController = CarouselControllerv2();
+  int _currentIndex = 0;
+
+  final List<Map<String, dynamic>> projects = [
+    {
+      'title': 'Responsive Scaler',
+      'tags': ['Flutter', 'Dart', 'Responsive Design', 'package'],
+      'description':
+          'Responsive Scaler takes the pain out of Flutter responsiveness.\n\n'
+          '✨ One utility. Zero MediaQuery boilerplate.\n\n'
+          'It automatically scales padding, fonts, icons, and widgets to keep your UI consistent across phones, tablets, and web — perfectly pixel-balanced.\n\n'
+          '🧩 Design once. Scale everywhere.',
+      'image': 'assets/images/responsive-scaler.jpeg',
+      'pubDev': 'https://pub.dev/packages/responsive_scaler',
+      'github': 'https://github.com/yourrepo/responsive_scaler',
+    },
+    {
+      'title': 'AI Note Sync',
+      'tags': ['Flutter', 'Supabase', 'Gemini API'],
+      'description':
+          'An intelligent note app that syncs across devices and lets you search handwriting with AI. Minimal, seamless, and fast.',
+      'image': 'assets/images/project1.png',
+      'pubDev': '',
+      'github': 'https://github.com/yourrepo/ai_note_sync',
+    },
+    {
+      'title': 'AI Note Sync',
+      'tags': ['Flutter', 'Supabase', 'Gemini API'],
+      'description':
+          'An intelligent note app that syncs across devices and lets you search handwriting with AI. Minimal, seamless, and fast.',
+      'image': 'assets/images/project2.png',
+      'pubDev': '',
+      'github': 'https://github.com/yourrepo/ai_note_sync',
+    },
+    {
+      'title': 'AI Note Sync',
+      'tags': ['Flutter', 'Supabase', 'Gemini API'],
+      'description':
+          'An intelligent note app that syncs across devices and lets you search handwriting with AI. Minimal, seamless, and fast.',
+      'image': 'assets/images/project3.png',
+      'pubDev': '',
+      'github': 'https://github.com/yourrepo/ai_note_sync',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    // Just return the content. NO SCROLLVIEWS HERE.
+    final project = projects[_currentIndex];
+    final isMobile = ResponsiveLayoutHelper.isMobile(context);
+    final isTablet = ResponsiveLayoutHelper.isTablet(context);
+    final isDesktop = ResponsiveLayoutHelper.isDesktop(context);
     return Container(
-      // The height is just for the placeholder,
-      // your content will define its own height.
-      height: 600, 
-      color: theme.colorScheme.surfaceVariant,
-      child: Center(
-        child: Text('Project Section', style: theme.textTheme.headlineLarge),
+      color: theme.colorScheme.surface,
+      margin: isMobile
+          ? EdgeInsets.all(21.scale())
+          : (isTablet
+                ? EdgeInsetsGeometry.all(21.scale())
+                : EdgeInsets.symmetric(
+                    horizontal: 100.scale(),
+                    vertical: 28.scale(),
+                  )),
+      child: ConstrainedBox(
+        constraints: isDesktop
+            ? BoxConstraints(maxWidth: 600.scale(), minHeight: 800.scale())
+            : BoxConstraints(),
+        child: Container(
+          padding: isMobile
+              ? EdgeInsets.zero
+              : EdgeInsets.symmetric(
+                  vertical: (isTablet ? 12.scale() : 40.scale()),
+                  horizontal: (isTablet ? 12.scale() : 80.scale()),
+                ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(52.scale()),
+            // color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+          ),
+          child: Column(
+            spacing: ResponsiveSpacing.hLarge,
+            children: [
+              // --- CAROUSEL SECTION ---
+              _buildCarouselWidget(isMobile, isTablet),
+
+              // --- INFO SECTION ---
+              IntrinsicHeight(
+                child: Flex(
+                  direction: isMobile ? Axis.vertical : Axis.horizontal,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  spacing: ResponsiveSpacing.hSmall,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: _buildInfoCard(theme, project, isMobile),
+                    ),
+                    Expanded(
+                      flex: isMobile ? 2 : (isTablet ? 3 : 6),
+                      child: _buildDescription(theme, project, isMobile),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  SizedBox _buildCarouselWidget(bool isMobile, bool isTablet) {
+    return SizedBox(
+      height: isMobile ? 280.scale() : (isTablet ? 350.scale() : 600.scale()),
+      // We add a NotificationListener to get the current index
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          // Check if the scroll is happening and the controller is ready
+          if (notification is ScrollUpdateNotification &&
+              _carouselController.hasClients) {
+            // Get the current item index from the controller
+            final int newIndex = _carouselController.currentItem ?? 0;
+
+            // If the index has changed, update the state
+            if (newIndex != _currentIndex && newIndex < projects.length) {
+              setState(() {
+                _currentIndex = newIndex;
+              });
+            }
+          }
+          return true; // Allow the notification to continue
+        },
+        child: CarouselViewV2.weighted(
+          // Pass the controller
+          controller: _carouselController,
+          flexWeights: isMobile ? const [1, 18, 1] : const [2, 8, 2],
+          elevation: 3,
+          isWeb: true,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 20),
+          consumeMaxWeight: true,
+          enableSplash: false,
+          itemSnapping: true,
+          shrinkExtent: 10.scale(),
+          padding: EdgeInsets.all(8.scale()),
+
+          children: List.generate(projects.length, (index) {
+            final imagePath = projects[index]['image'];
+            // The package wraps this in Material, so we
+            // just need the ClipRRect and Image.
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(24.scale()),
+              child: Image.asset(imagePath, fit: BoxFit.cover),
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(
+    ThemeData theme,
+    Map<String, dynamic> project,
+    bool isMobile,
+  ) {
+    return Container(
+      padding: EdgeInsets.all(24.scale()),
+      constraints: isMobile ? BoxConstraints(maxWidth: 150.scale()) : null,
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primaryFixedDim,
+        borderRadius: BorderRadius.circular(52.scale()),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Center(
+            child: Text(
+              project['title'],
+              style: theme.textTheme.displaySmall?.copyWith(
+                color: theme.colorScheme.onPrimaryContainer,
+                fontVariations: [
+                  const FontVariation('wght', 790),
+                  const FontVariation('wdth', 80),
+                  const FontVariation('slnt', -5),
+                  const FontVariation('opsz', 35),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: ResponsiveSpacing.hMedium),
+          Wrap(
+            spacing: 4.scale(),
+            runSpacing: 4.scale(),
+            children: (project['tags'] as List).map((tag) {
+              return Chip(
+                label: Text(tag),
+                shape: StadiumBorder(),
+                backgroundColor: theme.colorScheme.surface,
+              );
+            }).toList(),
+          ),
+          SizedBox(height: ResponsiveSpacing.hMedium),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+
+            children: [
+              if ((project['pubDev'] as String).isNotEmpty)
+                Expanded(
+                  child: _buildGithubButton(
+                    theme,
+                    label: 'Pub Dev',
+                    icon: Icons.public,
+                    url: project['pubDev'],
+                  ),
+                ),
+              SizedBox(width: ResponsiveSpacing.wXSmall),
+              if ((project['github'] as String).isNotEmpty)
+                Expanded(
+                  child: _buildGithubButton(
+                    theme,
+                    label: 'GitHub',
+                    icon: Icons.code,
+                    url: project['github'],
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDescription(
+    ThemeData theme,
+    Map<String, dynamic> project,
+    bool isMobile,
+  ) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 400),
+      transitionBuilder: (child, anim) =>
+          FadeTransition(opacity: anim, child: child),
+      child: Container(
+        key: ValueKey(project['title']),
+        width: double.infinity,
+        height: double.infinity,
+        padding: EdgeInsets.all(24.scale()),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.primaryFixedDim,
+          borderRadius: BorderRadius.circular(52.scale()),
+        ),
+        child: Text(
+          project['description'],
+          style: theme.textTheme.bodyLarge?.copyWith(
+            height: 1.5,
+            color: theme.colorScheme.onPrimaryContainer,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGithubButton(
+    ThemeData theme, {
+    required String label,
+    required IconData icon,
+    required String url,
+  }) {
+    return ElevatedButton.icon(
+      onPressed: () {
+        // Use url_launcher here
+      },
+      icon: Icon(icon, size: 18),
+      label: Text(label),
+
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(150.scale(), 75.scale()),
+        backgroundColor: theme.colorScheme.onPrimaryContainer,
+        foregroundColor: theme.colorScheme.onPrimary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21)),
+      ),
+    );
+  }
+}
+
+class SlowScrollPhysics extends ScrollPhysics {
+  final double dragMultiplier;
+  const SlowScrollPhysics({this.dragMultiplier = 0.3, super.parent});
+
+  @override
+  SlowScrollPhysics applyTo(ScrollPhysics? ancestor) {
+    return SlowScrollPhysics(
+      dragMultiplier: dragMultiplier,
+      parent: buildParent(ancestor),
+    );
+  }
+
+  @override
+  double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
+    // Reduce scroll sensitivity
+    return super.applyPhysicsToUserOffset(position, offset * dragMultiplier);
   }
 }

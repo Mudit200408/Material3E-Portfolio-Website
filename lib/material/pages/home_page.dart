@@ -317,7 +317,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: ResponsiveSpacing.hMedium),
               _buildSkillsSection(context, theme),
               SizedBox(height: ResponsiveSpacing.hMedium),
-              _buildActionButtons(context, isStacked: true),
+              _buildActionButtons(context, isMobile: true),
               SizedBox(height: ResponsiveSpacing.hLarge),
             ],
           ),
@@ -348,7 +348,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: ResponsiveSpacing.hMedium),
                   _buildSkillsSection(context, theme),
                   SizedBox(height: ResponsiveSpacing.hCustom(0.04)),
-                  _buildActionButtons(context, isStacked: false),
+                  _buildActionButtons(context, isMobile: false),
                   SizedBox(height: ResponsiveSpacing.hLarge),
                 ],
               ),
@@ -370,7 +370,7 @@ class _HomePageState extends State<HomePage> {
     return AnimatedShapeContainer(
       width: imageSize.scale(),
       height: imageSize.scale(),
-      color: theme.colorScheme.primaryContainer,
+      color: theme.colorScheme.primaryFixed,
       child: Image.asset(
         'assets/images/profile.png',
         width: imageSize.scale(),
@@ -573,24 +573,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildActionButtons(BuildContext context, {required bool isStacked}) {
-    if (isStacked) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          GradientButton(buttonName: 'Get in Touch', onPressed: () {}),
-          SizedBox(height: ResponsiveSpacing.hXSmall),
-          CustomOutlinedButton(buttonName: "Download Resume", onPressed: () {}),
-        ],
-      );
-    }
-
-    return Row(
+  Widget _buildActionButtons(BuildContext context, {required bool isMobile}) {
+    return Flex(
+      direction: isMobile ? Axis.vertical : Axis.horizontal,
+      spacing: ResponsiveSpacing.hSmall,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GradientButton(buttonName: 'Get in Touch', onPressed: () {}),
-        SizedBox(width: ResponsiveSpacing.wXSmall),
         CustomOutlinedButton(buttonName: "Download Resume", onPressed: () {}),
       ],
     );

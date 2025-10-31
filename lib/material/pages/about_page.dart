@@ -19,21 +19,17 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
+    final isTablet = ResponsiveLayoutHelper.isTablet(context);
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: isMobile ? 60.scale() : 100.scale(),
       ),
       child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: ResponsiveLayoutHelper.getMaxContentWidth(context),
-          ),
-          child: Padding(
-            padding: ResponsiveLayoutHelper.getHorizontalPadding(context),
-            child: isMobile
-                ? _buildMobileLayout(context, theme)
-                : _buildDesktopLayout(context, theme),
-          ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32.scale()),
+          child: isMobile
+              ? _buildMobileLayout(context, theme)
+              : _buildDesktopLayout(context, theme, isTablet),
         ),
       ),
     );
@@ -52,26 +48,29 @@ class _AboutPageState extends State<AboutPage> {
     );
   }
 
-  Widget _buildDesktopLayout(BuildContext context, ThemeData theme) {
+  Widget _buildDesktopLayout(
+    BuildContext context,
+    ThemeData theme,
+    bool isTablet,
+  ) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
+      spacing: ResponsiveSpacing.wLarge,
       children: [
-        _buildQuoteCard(context, theme),
-        SizedBox(width: ResponsiveSpacing.wXSmall),
-        Expanded(child: _buildInfoCard(context, theme)),
+        Flexible(flex: 2, child: _buildQuoteCard(context, theme)),
+        Flexible(flex: isTablet ? 3 : 2, child: _buildInfoCard(context, theme)),
       ],
     );
   }
 
   Widget _buildInfoCard(BuildContext context, ThemeData theme) {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
-
     return Container(
       padding: EdgeInsets.all(isMobile ? 16.scale() : 24.scale()),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(32.scale()),
-        color: theme.colorScheme.primaryFixed.withValues(alpha: 0.2),
+        color: theme.colorScheme.primaryFixed,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +170,7 @@ class _AboutPageState extends State<AboutPage> {
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.inversePrimary,
-        borderRadius: BorderRadius.circular(120),
+        borderRadius: BorderRadius.circular(999.scale()),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -181,7 +180,7 @@ class _AboutPageState extends State<AboutPage> {
               width: double.infinity,
               height: isMobile ? 50.scale() : 60.scale(),
               isSelected: selectedTab == 0,
-              selectedColor: theme.colorScheme.primary,
+              selectedColor: theme.colorScheme.onPrimaryContainer,
               onTap: () => setState(() => selectedTab = 0),
               child: Center(
                 child: Text(
@@ -190,7 +189,7 @@ class _AboutPageState extends State<AboutPage> {
                     fontSize: isMobile ? 16.scale() : null,
                     color: selectedTab == 0
                         ? theme.colorScheme.onPrimary
-                        : theme.colorScheme.primary.withValues(alpha: 0.8),
+                        : theme.colorScheme.onPrimaryContainer,
                     fontVariations: segmentedButtonFont,
                   ),
                 ),
@@ -202,7 +201,7 @@ class _AboutPageState extends State<AboutPage> {
               width: double.infinity,
               height: isMobile ? 50.scale() : 60.scale(),
               isSelected: selectedTab == 1,
-              selectedColor: theme.colorScheme.primary,
+              selectedColor: theme.colorScheme.onPrimaryContainer,
               onTap: () => setState(() => selectedTab = 1),
               child: Center(
                 child: Text(
@@ -211,7 +210,7 @@ class _AboutPageState extends State<AboutPage> {
                     fontSize: isMobile ? 16.scale() : null,
                     color: selectedTab == 1
                         ? theme.colorScheme.onPrimary
-                        : theme.colorScheme.primary.withValues(alpha: 0.8),
+                        : theme.colorScheme.onPrimaryContainer,
                     fontVariations: segmentedButtonFont,
                   ),
                 ),
@@ -331,6 +330,36 @@ class _AboutPageState extends State<AboutPage> {
     String degree,
     String years,
   ) {
+    const List<FontVariation> collegeNameFont = [
+      FontVariation('slnt', 0),
+      FontVariation('wdth', 124),
+      FontVariation('wght', 640),
+      FontVariation('GRAD', -57),
+      FontVariation('XOPQ', 50),
+      FontVariation('XTRA', 470),
+      FontVariation('YOPQ', 79),
+      FontVariation('YTAS', 750),
+      FontVariation('YTLC', 515),
+      FontVariation('opsz', 139),
+    ];
+    const List<FontVariation> branchNameFont = [
+      FontVariation('slnt', -5),
+      FontVariation('wdth', 30),
+      FontVariation('wght', 300),
+      FontVariation('GRAD', -80),
+      FontVariation('XOPQ', 135),
+      FontVariation('XTRA', 500),
+      FontVariation('YOPQ', 100),
+      FontVariation('YTAS', 730),
+      FontVariation('YTLC', 480),
+      FontVariation('opsz', 23),
+    ];
+    const List<FontVariation> dateFont = [
+      FontVariation('slnt', -2),
+      FontVariation('wdth', 55),
+      FontVariation('wght', 720),
+      FontVariation('opsz', 23),
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -342,12 +371,12 @@ class _AboutPageState extends State<AboutPage> {
               height: 50.scale(),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.scale()),
-                color: theme.colorScheme.primary.withAlpha(50),
+                color: theme.colorScheme.inversePrimary,
               ),
               child: SvgPicture.asset(
                 assetString,
                 colorFilter: ColorFilter.mode(
-                  theme.colorScheme.primary,
+                  theme.colorScheme.onPrimaryContainer,
                   BlendMode.srcIn,
                 ),
               ),
@@ -361,6 +390,7 @@ class _AboutPageState extends State<AboutPage> {
                     institution,
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: theme.colorScheme.onSurface,
+                      fontVariations: collegeNameFont,
                     ),
                   ),
                   SizedBox(height: 4.scale()),
@@ -368,19 +398,20 @@ class _AboutPageState extends State<AboutPage> {
                     degree,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurface.withAlpha(200),
+                      fontVariations: branchNameFont,
                     ),
                   ),
                 ],
               ),
             ),
+            Text(
+              years,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onPrimaryContainer,
+                fontVariations: dateFont,
+              ),
+            ),
           ],
-        ),
-        SizedBox(height: 8.scale()),
-        Text(
-          years,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.primary,
-          ),
         ),
       ],
     );
@@ -409,7 +440,7 @@ class _AboutPageState extends State<AboutPage> {
     const List<FontVariation> branchNameFont = [
       FontVariation('slnt', -5),
       FontVariation('wdth', 30),
-      FontVariation('wght', 180),
+      FontVariation('wght', 300),
       FontVariation('GRAD', -80),
       FontVariation('XOPQ', 135),
       FontVariation('XTRA', 500),
@@ -421,7 +452,7 @@ class _AboutPageState extends State<AboutPage> {
     const List<FontVariation> dateFont = [
       FontVariation('slnt', -2),
       FontVariation('wdth', 55),
-      FontVariation('wght', 680),
+      FontVariation('wght', 750),
       FontVariation('opsz', 23),
     ];
     return SizedBox(
@@ -433,12 +464,12 @@ class _AboutPageState extends State<AboutPage> {
             height: 60.scale(),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.scale()),
-              color: theme.colorScheme.primary.withAlpha(50),
+              color: theme.colorScheme.inversePrimary,
             ),
             child: SvgPicture.asset(
               assetString,
               colorFilter: ColorFilter.mode(
-                theme.colorScheme.primary,
+                theme.colorScheme.onPrimaryContainer,
                 BlendMode.srcIn,
               ),
             ),
@@ -470,7 +501,7 @@ class _AboutPageState extends State<AboutPage> {
             years,
             style: theme.textTheme.titleMedium?.copyWith(
               fontVariations: dateFont,
-              color: theme.colorScheme.primary,
+              color: theme.colorScheme.onPrimaryContainer,
             ),
           ),
         ],
