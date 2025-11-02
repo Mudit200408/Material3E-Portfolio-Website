@@ -48,8 +48,8 @@ class _GradientButtonState extends State<GradientButton> {
             ],
             gradient: LinearGradient(
               colors: [
-                theme.colorScheme.primary,
-                theme.colorScheme.primary.withValues(alpha: 0.4),
+                theme.colorScheme.onPrimaryContainer,
+                theme.colorScheme.onTertiaryContainer,
               ],
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
@@ -60,15 +60,15 @@ class _GradientButtonState extends State<GradientButton> {
             children: [
               Text(
                 widget.buttonName,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontVariations: [const FontVariation('wght', 530)],
+                  color: theme.colorScheme.surface,
                 ),
               ),
               SizedBox(width: 8.scale()),
               Icon(
                 Icons.arrow_forward_rounded,
-                color: Colors.white,
+                color: theme.colorScheme.surface,
                 size: 28.scale(),
               ),
             ],

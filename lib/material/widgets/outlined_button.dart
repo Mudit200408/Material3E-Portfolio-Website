@@ -31,34 +31,40 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
             horizontal: 24.scale(),
             vertical: 18.scale(),
           ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(120),
-            border: Border.all(
-              color: _isHovered
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.primaryFixedDim,
-              width: 1.5,
+          decoration: ShapeDecoration(
+            shape: StadiumBorder(
+              side: BorderSide(
+                color: _isHovered
+                    ? theme.colorScheme.onPrimaryContainer
+                    : theme.colorScheme.primary,
+                width: 1.5,
+              ),
             ),
           ),
+
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 widget.buttonName,
                 style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.primary,
+                  fontVariations: [const FontVariation('wght', 530)],
+                  color: _isHovered
+                      ? theme.colorScheme.onPrimaryContainer
+                      : theme.colorScheme.primary,
                 ),
               ),
               SizedBox(width: 8.scale()),
               SvgPicture.asset(
                 'assets/icons/document.svg',
                 colorFilter: ColorFilter.mode(
-                  theme.colorScheme.primary,
+                  _isHovered
+                      ? theme.colorScheme.onPrimaryContainer
+                      : theme.colorScheme.primary,
                   BlendMode.srcIn,
                 ),
-                width: 32.scale(),
-                height: 32.scale(),
+                width: 28.scale(),
+                height: 28.scale(),
               ),
             ],
           ),

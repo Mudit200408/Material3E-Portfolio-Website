@@ -168,9 +168,9 @@ class _AboutPageState extends State<AboutPage> {
     ];
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: theme.colorScheme.inversePrimary,
-        borderRadius: BorderRadius.circular(999.scale()),
+        shape: StadiumBorder(),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

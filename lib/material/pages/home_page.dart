@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:m3e_collection/m3e_collection.dart';
 import 'package:portfolio_web/app.dart';
+import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:portfolio_web/material/models/nav_section_enums.dart';
 import 'package:portfolio_web/material/pages/about_page.dart';
@@ -15,6 +18,7 @@ import 'package:portfolio_web/material/widgets/style_toggle.dart';
 import 'package:portfolio_web/models/skills_model.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   NavSection _currentSection = NavSection.home;
   bool _isProgrammaticScroll = false;
   final _scrollController = ScrollController();
-
+  final _fabController = FabMenuController();
   // Global keys for different sections
   final Map<NavSection, GlobalKey> _sectionKeys = {
     NavSection.home: GlobalKey(),
@@ -38,12 +42,12 @@ class _HomePageState extends State<HomePage> {
   };
 
   static const List<FontVariation> introFontNormal = [
-    FontVariation('wght', 280),
+    FontVariation('wght', 320),
     FontVariation('GRAD', 18),
   ];
 
   static const List<FontVariation> introFontEmphasized = [
-    FontVariation('wght', 700),
+    FontVariation('wght', 750),
     FontVariation('slnt', -5),
     FontVariation('wdth', 70),
     FontVariation('XOPQ', 125),
@@ -163,6 +167,65 @@ class _HomePageState extends State<HomePage> {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
 
     return Scaffold(
+      floatingActionButton: FabMenuM3E(
+        controller: _fabController,
+        overlayColor: Colors.transparent,
+        alignment: Alignment.bottomRight,
+        direction: FabMenuDirection.up,
+        primaryFab: FabM3E(
+          icon: SvgPicture.asset('assets/icons/social-media.svg'),
+          onPressed: _fabController.toggle,
+        ),
+
+        items: [
+          FabMenuItem(
+            icon: SvgPicture.asset(
+              'assets/icons/linkedin.svg',
+              height: 25.scale(),
+              width: 25.scale(),
+              colorFilter: ColorFilter.mode(
+                theme.colorScheme.onPrimaryFixed,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: Text(
+              'LinkedIn',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onPrimaryFixed,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            onPressed: () {
+              launchUrl(
+                Uri.parse(
+                  'https://www.linkedin.com/in/mudit-purohit-7759a823a/',
+                ),
+              );
+            },
+          ),
+          FabMenuItem(
+            icon: SvgPicture.asset(
+              'assets/icons/github.svg',
+              height: 25.scale(),
+              width: 25.scale(),
+              colorFilter: ColorFilter.mode(
+                theme.colorScheme.onPrimaryFixed,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: Text(
+              'Github',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onPrimaryFixed,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            onPressed: () {
+              launchUrl(Uri.parse('https://github.com/Mudit200408'));
+            },
+          ),
+        ],
+      ),
       drawer: isMobile
           ? AppDrawer(
               currentSection: _currentSection, // 1. Pass the current state
@@ -227,6 +290,7 @@ class _HomePageState extends State<HomePage> {
       pinned: true,
       floating: true,
       backgroundColor: theme.colorScheme.surface,
+      surfaceTintColor: theme.colorScheme.surface,
       elevation: 0,
       title: isMobile
           ? _buildMobileAppBar(context, theme)
@@ -255,35 +319,51 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Spacer(flex: 1),
-        _buildTab(
-          'Home',
-          context,
-          onPressed: () => _scrollToSection(NavSection.home),
-          isSelected: _currentSection == NavSection.home,
-        ),
-        _buildTab(
-          'About',
-          context,
-          onPressed: () => _scrollToSection(NavSection.about),
-          isSelected: _currentSection == NavSection.about,
-        ),
-        _buildTab(
-          'Projects',
-          context,
-          onPressed: () => _scrollToSection(NavSection.projects),
-          isSelected: _currentSection == NavSection.projects,
-        ),
-        _buildTab(
-          'Experience',
-          context,
-          onPressed: () => _scrollToSection(NavSection.experience),
-          isSelected: _currentSection == NavSection.experience,
-        ),
-        _buildTab(
-          'Contact Me',
-          context,
-          onPressed: () => _scrollToSection(NavSection.contact),
-          isSelected: _currentSection == NavSection.contact,
+        Container(
+          decoration: ShapeDecoration(
+            color: theme
+                .colorScheme
+                .primaryFixed, // Background color of the container
+            shape: StadiumBorder(),
+          ),
+          padding: EdgeInsets.symmetric(
+            vertical: 8.scale(),
+            horizontal: 8.scale(),
+          ),
+          child: Row(
+            children: [
+              _buildTab(
+                'Home',
+                context,
+                onPressed: () => _scrollToSection(NavSection.home),
+                isSelected: _currentSection == NavSection.home,
+              ),
+              _buildTab(
+                'About',
+                context,
+                onPressed: () => _scrollToSection(NavSection.about),
+                isSelected: _currentSection == NavSection.about,
+              ),
+              _buildTab(
+                'Projects',
+                context,
+                onPressed: () => _scrollToSection(NavSection.projects),
+                isSelected: _currentSection == NavSection.projects,
+              ),
+              _buildTab(
+                'Experience',
+                context,
+                onPressed: () => _scrollToSection(NavSection.experience),
+                isSelected: _currentSection == NavSection.experience,
+              ),
+              _buildTab(
+                'Contact Me',
+                context,
+                onPressed: () => _scrollToSection(NavSection.contact),
+                isSelected: _currentSection == NavSection.contact,
+              ),
+            ],
+          ),
         ),
 
         const Spacer(),
@@ -310,11 +390,11 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               _buildProfileSection(context, theme),
-              SizedBox(height: ResponsiveSpacing.hMedium),
+              SizedBox(height: ResponsiveSpacing.hXLarge),
               _buildIntroText(context, theme),
               SizedBox(height: ResponsiveSpacing.hMedium),
               _buildInfoBox(context, theme),
-              SizedBox(height: ResponsiveSpacing.hMedium),
+              SizedBox(height: ResponsiveSpacing.hSmall),
               _buildSkillsSection(context, theme),
               SizedBox(height: ResponsiveSpacing.hMedium),
               _buildActionButtons(context, isMobile: true),
@@ -341,11 +421,10 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   _buildProfileSection(context, theme),
-                  SizedBox(height: ResponsiveSpacing.hMedium),
+                  SizedBox(height: ResponsiveSpacing.hXLarge),
                   _buildIntroText(context, theme),
                   SizedBox(height: ResponsiveSpacing.hXSmall),
                   _buildInfoBox(context, theme),
-                  SizedBox(height: ResponsiveSpacing.hMedium),
                   _buildSkillsSection(context, theme),
                   SizedBox(height: ResponsiveSpacing.hCustom(0.04)),
                   _buildActionButtons(context, isMobile: false),
@@ -371,6 +450,7 @@ class _HomePageState extends State<HomePage> {
       width: imageSize.scale(),
       height: imageSize.scale(),
       color: theme.colorScheme.primaryFixed,
+      border: BorderSide(color: theme.colorScheme.onPrimaryContainer, width: 2),
       child: Image.asset(
         'assets/images/profile.png',
         width: imageSize.scale(),
@@ -403,9 +483,9 @@ class _HomePageState extends State<HomePage> {
               TextSpan(
                 text: 'Mudit Purohit',
                 style: theme.textTheme.headlineLarge?.copyWith(
-                  color: theme.colorScheme.primary.withAlpha(180),
+                  color: theme.colorScheme.onPrimaryContainer,
                   fontVariations: const [
-                    FontVariation('wght', 750),
+                    FontVariation('wght', 800),
                     FontVariation('slnt', -8),
                     FontVariation('GRAD', 80),
                     FontVariation('wdth', 20),
@@ -448,7 +528,7 @@ class _HomePageState extends State<HomePage> {
         vertical: ResponsiveSpacing.hMedium,
       ),
       decoration: BoxDecoration(
-        color: theme.colorScheme.primaryFixed.withValues(alpha: 0.2),
+        color: theme.colorScheme.primaryFixed.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(18),
       ),
       child: RichText(
@@ -561,7 +641,7 @@ class _HomePageState extends State<HomePage> {
         vertical: ResponsiveSpacing.hMedium,
       ),
       child: isLoading
-          ? const CircularProgressIndicator()
+          ? const Loader()
           : Wrap(
               spacing: ResponsiveSpacing.wXSmall,
               runSpacing: ResponsiveSpacing.hXSmall,
@@ -579,8 +659,8 @@ class _HomePageState extends State<HomePage> {
       spacing: ResponsiveSpacing.hSmall,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GradientButton(buttonName: 'Get in Touch', onPressed: () {}),
         CustomOutlinedButton(buttonName: "Download Resume", onPressed: () {}),
+        GradientButton(buttonName: 'Get in Touch', onPressed: () {}),
       ],
     );
   }
@@ -600,9 +680,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: isSelected
               ? theme.colorScheme.primary
               : Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+          shape: StadiumBorder(),
           padding: EdgeInsets.symmetric(
             horizontal: ResponsiveSpacing.wXSmall,
             vertical: ResponsiveSpacing.hXSmall,
@@ -610,7 +688,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Text(
           text,
-          style: TextStyle(
+          style: theme.textTheme.labelLarge?.copyWith(
             color: isSelected ? Colors.white : Colors.black,
             fontWeight: FontWeight.w500,
           ),

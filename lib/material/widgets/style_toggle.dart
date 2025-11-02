@@ -86,16 +86,17 @@ class SegmentButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashColor: selectedColor.withValues(alpha: 0.4),
       onTap: onTap,
-      borderRadius: BorderRadius.circular(100),
+      customBorder: StadiumBorder(),
       child: AnimatedContainer(
         width: width,
         height: height,
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOutCubic,
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
+          shape: StadiumBorder(),
           color: isSelected ? selectedColor : Colors.transparent,
-          borderRadius: BorderRadius.circular(100),
         ),
         padding: EdgeInsets.symmetric(
           horizontal: ResponsiveSpacing.wXSmall,
