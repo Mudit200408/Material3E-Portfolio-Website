@@ -12,8 +12,7 @@ class ContactPage extends StatelessWidget {
     return Container(
       // The height is just for the placeholder,
       // your content will define its own height.
-      height: 600, 
-      color: theme.colorScheme.surfaceVariant,
+      height: 600,
       child: Center(
         child: Text('Contact Section', style: theme.textTheme.headlineLarge),
       ),

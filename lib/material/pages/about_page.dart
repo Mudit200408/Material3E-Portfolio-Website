@@ -1,5 +1,7 @@
 // lib/material/pages/about_section.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:portfolio_web/material/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:portfolio_web/material/widgets/style_toggle.dart';
@@ -22,7 +24,7 @@ class _AboutPageState extends State<AboutPage> {
     final isTablet = ResponsiveLayoutHelper.isTablet(context);
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 60.scale() : 100.scale(),
+        vertical: isMobile ? 60.scale() : 210.scale(),
       ),
       child: Center(
         child: Padding(
@@ -66,83 +68,89 @@ class _AboutPageState extends State<AboutPage> {
 
   Widget _buildInfoCard(BuildContext context, ThemeData theme) {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
-    return Container(
-      padding: EdgeInsets.all(isMobile ? 16.scale() : 24.scale()),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32.scale()),
-        color: theme.colorScheme.primaryFixed,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSegmentedButtons(context, theme, isMobile),
-          SizedBox(height: 24.scale()),
-          SizedBox(
-            //height: isMobile ? null : 350.scale(),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              child: selectedTab == 0
-                  ? _buildAboutMeContent(context, theme)
-                  : _buildEducationContent(context, theme),
+    return ScrollAnimatedFadeIn(
+      slideOffset: 0.1,
+      child: Container(
+        padding: EdgeInsets.all(isMobile ? 16.scale() : 24.scale()),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32.scale()),
+          color: theme.colorScheme.primaryFixed,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSegmentedButtons(context, theme, isMobile),
+            SizedBox(height: 24.scale()),
+            SizedBox(
+              //height: isMobile ? null : 350.scale(),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: selectedTab == 0
+                    ? _buildAboutMeContent(context, theme)
+                    : _buildEducationContent(context, theme),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildQuoteCard(BuildContext context, ThemeData theme) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        // vertical: 12.scale(),
-        horizontal: 8.scale(),
-      ),
-      child: MouseRegion(
-        onEnter: (_) => setState(() => _isQuoteHovered = true),
-        onExit: (_) => setState(() => _isQuoteHovered = false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          padding: EdgeInsets.all(24.scale()),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: _isQuoteHovered
-                  ? [theme.colorScheme.primary, theme.colorScheme.secondary]
-                  : [theme.colorScheme.surface, theme.colorScheme.surface],
+    return ScrollAnimatedFadeIn(
+      slideOffset: -0.1,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          // vertical: 12.scale(),
+          horizontal: 8.scale(),
+        ),
+        child: MouseRegion(
+          onEnter: (_) => setState(() => _isQuoteHovered = true),
+          onExit: (_) => setState(() => _isQuoteHovered = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            padding: EdgeInsets.all(24.scale()),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: _isQuoteHovered
+                    ? [theme.colorScheme.primary, theme.colorScheme.secondary]
+                    : [theme.colorScheme.surface, theme.colorScheme.surface],
+              ),
+              borderRadius: BorderRadius.circular(20.scale()),
+              boxShadow: [
+                if (_isQuoteHovered)
+                  BoxShadow(
+                    color: theme.colorScheme.primary.withAlpha(80),
+                    blurRadius: 18,
+                    offset: const Offset(0, 6),
+                  ),
+              ],
             ),
-            borderRadius: BorderRadius.circular(20.scale()),
-            boxShadow: [
-              if (_isQuoteHovered)
-                BoxShadow(
-                  color: theme.colorScheme.primary.withAlpha(80),
-                  blurRadius: 18,
-                  offset: const Offset(0, 6),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "“Clean code always looks like\nit was written by someone who cares.”",
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: _isQuoteHovered
+                        ? theme.colorScheme.onPrimary
+                        : theme.colorScheme.onSurface,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "“Clean code always looks like\nit was written by someone who cares.”",
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: _isQuoteHovered
-                      ? theme.colorScheme.onPrimary
-                      : theme.colorScheme.onSurface,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w600,
+                SizedBox(height: 12.scale()),
+                Text(
+                  "- Robert C. Martin",
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: _isQuoteHovered
+                        ? theme.colorScheme.onPrimary.withValues(alpha: 0.8)
+                        : theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
                 ),
-              ),
-              SizedBox(height: 12.scale()),
-              Text(
-                "- Robert C. Martin",
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: _isQuoteHovered
-                      ? theme.colorScheme.onPrimary.withValues(alpha: 0.8)
-                      : theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -223,40 +231,44 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   Widget _buildAboutMeContent(BuildContext context, ThemeData theme) {
-    const List<FontVariation> _descriptionFont = [
+    const List<FontVariation> descriptionFont = [
       FontVariation('ROND', 80),
       FontVariation('wght', 600),
     ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Hello! I'm Mudit, and I'm genuinely excited to be building in the world of mobile development. I'm a passionate Flutter developer who loves transforming design concepts into smooth, functional apps. I'm focused on mastering best practices like Clean Architecture, SOLID principles, and BLoC state management, because I believe a great app starts with a great foundation!",
-          style: theme.textTheme.bodyLarge?.copyWith(
-            height: 1.6,
-            color: theme.colorScheme.onSurface,
-            fontVariations: _descriptionFont,
+    return ScrollAnimatedFadeIn(
+      delay: 200.ms,
+      slideOffset: 0.1,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Hello! I'm Mudit, and I'm genuinely excited to be building in the world of mobile development. I'm a passionate Flutter developer who loves transforming design concepts into smooth, functional apps. I'm focused on mastering best practices like Clean Architecture, SOLID principles, and BLoC state management, because I believe a great app starts with a great foundation!",
+            style: theme.textTheme.bodyLarge?.copyWith(
+              height: 1.6,
+              color: theme.colorScheme.onSurface,
+              fontVariations: descriptionFont,
+            ),
           ),
-        ),
-        SizedBox(height: 16.scale()),
-        Text(
-          "I'm constantly learning and developing my skills, and I've already had amazing experiences integrating advanced features using Firebase services and even Gemini AI. From sketching out intuitive user interfaces in Figma to debugging complex integrations, I approach every project as an opportunity to grow.",
-          style: theme.textTheme.bodyLarge?.copyWith(
-            height: 1.6,
-            color: theme.colorScheme.onSurface,
-            fontVariations: _descriptionFont,
+          SizedBox(height: 16.scale()),
+          Text(
+            "I'm constantly learning and developing my skills, and I've already had amazing experiences integrating advanced features using Firebase services and even Gemini AI. From sketching out intuitive user interfaces in Figma to debugging complex integrations, I approach every project as an opportunity to grow.",
+            style: theme.textTheme.bodyLarge?.copyWith(
+              height: 1.6,
+              color: theme.colorScheme.onSurface,
+              fontVariations: descriptionFont,
+            ),
           ),
-        ),
-        SizedBox(height: 16.scale()),
-        Text(
-          "I'm on a journey to create innovative and efficient applications, and I can't wait to see what challenge comes next!",
-          style: theme.textTheme.bodyLarge?.copyWith(
-            height: 1.6,
-            color: theme.colorScheme.onSurface,
-            fontVariations: _descriptionFont,
+          SizedBox(height: 16.scale()),
+          Text(
+            "I'm on a journey to create innovative and efficient applications, and I can't wait to see what challenge comes next!",
+            style: theme.textTheme.bodyLarge?.copyWith(
+              height: 1.6,
+              color: theme.colorScheme.onSurface,
+              fontVariations: descriptionFont,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -265,33 +277,42 @@ class _AboutPageState extends State<AboutPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // College Item
-        _buildEducationItem(
-          context,
-          theme,
-          assetString: 'assets/icons/graduate.svg',
-          institution: 'Atharva College of Engineering',
-          degree: 'BE - Computer Engineering',
-          years: '2023-2026',
+        ScrollAnimatedFadeIn(
+          delay: 100.ms,
+          child: _buildEducationItem(
+            context,
+            theme,
+            assetString: 'assets/icons/graduate.svg',
+            institution: 'Atharva College of Engineering',
+            degree: 'BE - Computer Engineering',
+            years: '2023-2026',
+          ),
         ),
         SizedBox(height: 16.scale()),
         // Diploma Item
-        _buildEducationItem(
-          context,
-          theme,
-          assetString: 'assets/icons/diploma.svg',
-          institution: 'Thakur Polytechnic',
-          degree: 'Diploma - Information Technology',
-          years: '2020-2023',
+        ScrollAnimatedFadeIn(
+          delay: 200.ms,
+          child: _buildEducationItem(
+            context,
+            theme,
+            assetString: 'assets/icons/diploma.svg',
+            institution: 'Thakur Polytechnic',
+            degree: 'Diploma - Information Technology',
+            years: '2020-2023',
+          ),
         ),
         SizedBox(height: 16.scale()),
         // School Item
-        _buildEducationItem(
-          context,
-          theme,
-          assetString: 'assets/icons/school.svg',
-          institution: 'Don Bosco High School',
-          degree: 'Xth SSC Board Exams',
-          years: '2019-2020',
+        ScrollAnimatedFadeIn(
+          delay: 300.ms,
+          child: _buildEducationItem(
+            context,
+            theme,
+            assetString: 'assets/icons/school.svg',
+            institution: 'Don Bosco High School',
+            degree: 'Xth SSC Board Exams',
+            years: '2019-2020',
+          ),
         ),
       ],
     );

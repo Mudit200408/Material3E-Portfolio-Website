@@ -92,7 +92,7 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
       child: GestureDetector(
         onTap: _onTap,
         child: SingleMotionBuilder(
-          motion: CupertinoMotion.bouncy(extraBounce: 0.05),
+          motion: CupertinoMotion.bouncy(extraBounce: 0.07),
           value: _scale,
           builder: (context, scale, child) {
             return Transform.scale(

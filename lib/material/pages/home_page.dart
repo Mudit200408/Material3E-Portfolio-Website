@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:portfolio_web/material/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:m3e_collection/m3e_collection.dart';
 import 'package:portfolio_web/app.dart';
@@ -9,6 +11,7 @@ import 'package:portfolio_web/material/pages/about_page.dart';
 import 'package:portfolio_web/material/pages/contact_page.dart';
 import 'package:portfolio_web/material/pages/experience_page.dart';
 import 'package:portfolio_web/material/pages/project_page.dart';
+import 'package:portfolio_web/material/widgets/animated_background_shapes.dart';
 import 'package:portfolio_web/material/widgets/animated_shape_container.dart';
 import 'package:portfolio_web/material/widgets/app_drawer.dart';
 import 'package:portfolio_web/material/widgets/gradient_button.dart';
@@ -235,11 +238,21 @@ class _HomePageState extends State<HomePage> {
           : null,
       body: NotificationListener<UserScrollNotification>(
         onNotification: _onUserScroll,
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            _buildAppBar(context, theme, isMobile),
-            ..._buildPageSections(context, theme, isMobile),
+        child: Stack(
+          children: [
+            // Background Shapes
+            AnimatedBackgroundShapes(
+              scrollController: _scrollController,
+              currentSection: _currentSection,
+            ),
+            // Main Content
+            CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                _buildAppBar(context, theme, isMobile),
+                ..._buildPageSections(context, theme, isMobile),
+              ],
+            ),
           ],
         ),
       ),
@@ -447,222 +460,244 @@ class _HomePageState extends State<HomePage> {
       desktop: 300.0,
     );
 
-    return AnimatedShapeContainer(
-      width: imageSize.scale(),
-      height: imageSize.scale(),
-      color: theme.colorScheme.primaryFixed,
-      border: BorderSide(color: theme.colorScheme.onPrimaryContainer, width: 2),
-      child: Image.asset(
-        'assets/images/profile.png',
+    return ScrollAnimatedFadeIn(
+      child: AnimatedShapeContainer(
         width: imageSize.scale(),
         height: imageSize.scale(),
+        color: theme.colorScheme.primaryFixed,
+        border: BorderSide(
+          color: theme.colorScheme.onPrimaryContainer,
+          width: 2,
+        ),
+        child: Image.asset(
+          'assets/images/profile.png',
+          width: imageSize.scale(),
+          height: imageSize.scale(),
+        ),
       ),
     );
   }
 
   Widget _buildIntroText(BuildContext context, ThemeData theme) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'Hello, I am ',
-                style: theme.textTheme.headlineLarge?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                  fontVariations: const [
-                    FontVariation('wght', 350),
-                    FontVariation('wdth', 50),
-                    FontVariation('opsz', 19),
-                    FontVariation('GRAD', 30),
-                  ],
-                  letterSpacing: 0.2.scale(),
+    return ScrollAnimatedFadeIn(
+      delay: 200.ms,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Hello, I am ',
+                  style: theme.textTheme.headlineLarge?.copyWith(
+                    color: theme.colorScheme.onSurface,
+                    fontVariations: const [
+                      FontVariation('wght', 350),
+                      FontVariation('wdth', 50),
+                      FontVariation('opsz', 19),
+                      FontVariation('GRAD', 30),
+                    ],
+                    letterSpacing: 0.2.scale(),
+                  ),
                 ),
-              ),
-              TextSpan(
-                text: 'Mudit Purohit',
-                style: theme.textTheme.headlineLarge?.copyWith(
-                  color: theme.colorScheme.onPrimaryContainer,
-                  fontVariations: const [
-                    FontVariation('wght', 800),
-                    FontVariation('slnt', -8),
-                    FontVariation('GRAD', 80),
-                    FontVariation('wdth', 20),
-                    FontVariation('opsz', 23),
-                  ],
+                TextSpan(
+                  text: 'Mudit Purohit',
+                  style: theme.textTheme.headlineLarge?.copyWith(
+                    color: theme.colorScheme.onPrimaryContainer,
+                    fontVariations: const [
+                      FontVariation('wght', 800),
+                      FontVariation('slnt', -8),
+                      FontVariation('GRAD', 80),
+                      FontVariation('wdth', 20),
+                      FontVariation('opsz', 23),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: ResponsiveSpacing.hSmall),
-        Text(
-          'Cross Platform App Developer',
-          textAlign: TextAlign.center,
-          style: theme.textTheme.displaySmall?.copyWith(
-            color: theme.colorScheme.primary,
-            fontVariations: const [
-              FontVariation('wght', 800),
-              FontVariation('GRAD', 50),
-              FontVariation('wdth', 20),
-            ],
+          SizedBox(height: ResponsiveSpacing.hSmall),
+          Text(
+            'Cross Platform App Developer',
+            textAlign: TextAlign.center,
+            style: theme.textTheme.displaySmall?.copyWith(
+              color: theme.colorScheme.primary,
+              fontVariations: const [
+                FontVariation('wght', 800),
+                FontVariation('GRAD', 50),
+                FontVariation('wdth', 20),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _buildInfoBox(BuildContext context, ThemeData theme) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveSpacing.wSmall,
-        vertical: ResponsiveSpacing.hSmall,
-      ),
-      margin: EdgeInsets.symmetric(
-        horizontal: ResponsiveLayoutHelper.responsiveValue(
-          context,
-          mobile: ResponsiveSpacing.wXSmall,
-          desktop: ResponsiveSpacing.wMedium,
+    return ScrollAnimatedFadeIn(
+      delay: 400.ms,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveSpacing.wSmall,
+          vertical: ResponsiveSpacing.hSmall,
         ),
-        vertical: ResponsiveSpacing.hMedium,
-      ),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.primaryFixed.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'I am a skilled ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurface,
-                fontVariations: introFontNormal,
+        margin: EdgeInsets.symmetric(
+          horizontal: ResponsiveLayoutHelper.responsiveValue(
+            context,
+            mobile: ResponsiveSpacing.wXSmall,
+            desktop: ResponsiveSpacing.wMedium,
+          ),
+          vertical: ResponsiveSpacing.hMedium,
+        ),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.primaryFixed.withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'I am a skilled ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontVariations: introFontNormal,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'Flutter Developer',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.primary,
-                fontVariations: introFontEmphasized,
+              TextSpan(
+                text: 'Flutter Developer',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontVariations: introFontEmphasized,
+                ),
               ),
-            ),
-            TextSpan(
-              text:
-                  ' with expertise in building robust and scalable mobile applications. My experience includes using ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurface,
-                fontVariations: introFontNormal,
+              TextSpan(
+                text:
+                    ' with expertise in building robust and scalable mobile applications. My experience includes using ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontVariations: introFontNormal,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'Clean Architecture ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.primary,
-                fontVariations: introFontEmphasized,
+              TextSpan(
+                text: 'Clean Architecture ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontVariations: introFontEmphasized,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'and ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurface,
-                fontVariations: introFontNormal,
+              TextSpan(
+                text: 'and ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontVariations: introFontNormal,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'SOLID principles ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.primary,
-                fontVariations: introFontEmphasized,
+              TextSpan(
+                text: 'SOLID principles ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontVariations: introFontEmphasized,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'for clean, maintainable code. I\'m proficient in ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurface,
-                fontVariations: introFontNormal,
+              TextSpan(
+                text: 'for clean, maintainable code. I\'m proficient in ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontVariations: introFontNormal,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'Dart',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.primary,
-                fontVariations: introFontEmphasized,
+              TextSpan(
+                text: 'Dart',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontVariations: introFontEmphasized,
+                ),
               ),
-            ),
-            TextSpan(
-              text: ', and have integrated ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurface,
-                fontVariations: introFontNormal,
+              TextSpan(
+                text: ', and have integrated ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontVariations: introFontNormal,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'Firebase services ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.primary,
-                fontVariations: introFontEmphasized,
+              TextSpan(
+                text: 'Firebase services ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontVariations: introFontEmphasized,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'and ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurface,
-                fontVariations: introFontNormal,
+              TextSpan(
+                text: 'and ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontVariations: introFontNormal,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'Gemini AI ',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.primary,
-                fontVariations: introFontEmphasized,
+              TextSpan(
+                text: 'Gemini AI ',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontVariations: introFontEmphasized,
+                ),
               ),
-            ),
-            TextSpan(
-              text:
-                  'to create dynamic and intelligent applications. I am passionate about creating innovative and efficient applications that provide a seamless user experience.',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurface,
-                fontVariations: introFontNormal,
+              TextSpan(
+                text:
+                    'to create dynamic and intelligent applications. I am passionate about creating innovative and efficient applications that provide a seamless user experience.',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontVariations: introFontNormal,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildSkillsSection(BuildContext context, ThemeData theme) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveSpacing.wMedium,
-        vertical: ResponsiveSpacing.hMedium,
+    return ScrollAnimatedFadeIn(
+      delay: 600.ms,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveSpacing.wMedium,
+          vertical: ResponsiveSpacing.hMedium,
+        ),
+        child: isLoading
+            ? const Loader()
+            : Wrap(
+                spacing: ResponsiveSpacing.wXSmall,
+                runSpacing: ResponsiveSpacing.hXSmall,
+                alignment: WrapAlignment.center,
+                children: skills.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final skill = entry.value;
+                  return SkillsChip(skill: skill)
+                      .animate()
+                      .fadeIn(delay: (100 * index).ms, duration: 400.ms)
+                      .scale(curve: Curves.easeOutBack);
+                }).toList(),
+              ),
       ),
-      child: isLoading
-          ? const Loader()
-          : Wrap(
-              spacing: ResponsiveSpacing.wXSmall,
-              runSpacing: ResponsiveSpacing.hXSmall,
-              alignment: WrapAlignment.center,
-              children: skills.map((skill) {
-                return SkillsChip(skill: skill);
-              }).toList(),
-            ),
     );
   }
 
   Widget _buildActionButtons(BuildContext context, {required bool isMobile}) {
-    return Flex(
-      direction: isMobile ? Axis.vertical : Axis.horizontal,
-      spacing: ResponsiveSpacing.hSmall,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomOutlinedButton(buttonName: "Download Resume", onPressed: () {}),
-        GradientButton(buttonName: 'Get in Touch', onPressed: () {}),
-      ],
+    return ScrollAnimatedFadeIn(
+      delay: 800.ms,
+      child: Flex(
+        direction: isMobile ? Axis.vertical : Axis.horizontal,
+        spacing: ResponsiveSpacing.hSmall,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CustomOutlinedButton(buttonName: "Download Resume", onPressed: () {}),
+          GradientButton(buttonName: 'Get in Touch', onPressed: () {}),
+        ],
+      ),
     );
   }
 
