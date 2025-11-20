@@ -69,5 +69,5 @@ const lightColorScheme = ColorScheme(
 final ThemeData appTheme = ThemeData(
   useMaterial3: true,
   colorScheme: lightColorScheme,
-  fontFamily: 'RobotoFlex',
+  fontFamily: 'GoogleSansFlex',
 );

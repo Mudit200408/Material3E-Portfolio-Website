@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv: ^6.0.0
-  flutter_svg: ^2.2.1
+  flutter_svg: ^2.2.2
   material_shapes: ^0.0.2
   motor: ^1.0.1
   responsive_framework: ^1.5.1
@@ -19,7 +19,7 @@ dependencies:
   flutter_m3shapes:
     path: "../flutter_m3shapes/"
   avatar_glow: ^3.0.1
-  m3e_collection: ^0.3.5
+  m3e_collection: ^0.3.7
   flutter_custom_caraousel_v2: ^0.2.0
   url_launcher: ^6.3.2
 
@@ -37,6 +37,6 @@ flutter:
     - .env
 
   fonts:
-    - family: RobotoFlex
+    - family: GoogleSansFlex
       fonts:
-        - asset: assets/fonts/RobotoFlex.ttf
+        - asset: assets/fonts/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf

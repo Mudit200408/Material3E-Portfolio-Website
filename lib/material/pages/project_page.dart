@@ -177,7 +177,7 @@ class _ProjectPageState extends State<ProjectPage> {
       padding: EdgeInsets.all(24.scale()),
       constraints: isMobile ? BoxConstraints(maxWidth: 150.scale()) : null,
       decoration: BoxDecoration(
-        color: theme.colorScheme.primaryFixedDim,
+        color: theme.colorScheme.primaryFixedDim.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(52.scale()),
       ),
       child: Column(
@@ -257,7 +257,7 @@ class _ProjectPageState extends State<ProjectPage> {
         height: double.infinity,
         padding: EdgeInsets.all(24.scale()),
         decoration: BoxDecoration(
-          color: theme.colorScheme.primaryFixedDim,
+          color: theme.colorScheme.primaryFixedDim.withValues(alpha: 0.4),
           borderRadius: BorderRadius.circular(52.scale()),
         ),
         child: Text(
@@ -265,7 +265,10 @@ class _ProjectPageState extends State<ProjectPage> {
           style: theme.textTheme.bodyLarge?.copyWith(
             height: 1.5,
             color: theme.colorScheme.onPrimaryContainer,
-            fontWeight: FontWeight.w500,
+            fontVariations: const [
+              FontVariation('wght', 620),
+              FontVariation('ROND', 80),
+            ],
           ),
         ),
       ),

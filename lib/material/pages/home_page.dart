@@ -42,8 +42,9 @@ class _HomePageState extends State<HomePage> {
   };
 
   static const List<FontVariation> introFontNormal = [
-    FontVariation('wght', 320),
+    FontVariation('wght', 520),
     FontVariation('GRAD', 18),
+    FontVariation('ROND', 50),
   ];
 
   static const List<FontVariation> introFontEmphasized = [
@@ -472,8 +473,8 @@ class _HomePageState extends State<HomePage> {
                 style: theme.textTheme.headlineLarge?.copyWith(
                   color: theme.colorScheme.onSurface,
                   fontVariations: const [
-                    FontVariation('wght', 180),
-                    FontVariation('wdth', 18),
+                    FontVariation('wght', 350),
+                    FontVariation('wdth', 50),
                     FontVariation('opsz', 19),
                     FontVariation('GRAD', 30),
                   ],

@@ -223,6 +223,10 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   Widget _buildAboutMeContent(BuildContext context, ThemeData theme) {
+    const List<FontVariation> _descriptionFont = [
+      FontVariation('ROND', 80),
+      FontVariation('wght', 600),
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -231,6 +235,7 @@ class _AboutPageState extends State<AboutPage> {
           style: theme.textTheme.bodyLarge?.copyWith(
             height: 1.6,
             color: theme.colorScheme.onSurface,
+            fontVariations: _descriptionFont,
           ),
         ),
         SizedBox(height: 16.scale()),
@@ -239,6 +244,7 @@ class _AboutPageState extends State<AboutPage> {
           style: theme.textTheme.bodyLarge?.copyWith(
             height: 1.6,
             color: theme.colorScheme.onSurface,
+            fontVariations: _descriptionFont,
           ),
         ),
         SizedBox(height: 16.scale()),
@@ -247,6 +253,7 @@ class _AboutPageState extends State<AboutPage> {
           style: theme.textTheme.bodyLarge?.copyWith(
             height: 1.6,
             color: theme.colorScheme.onSurface,
+            fontVariations: _descriptionFont,
           ),
         ),
       ],
@@ -332,7 +339,6 @@ class _AboutPageState extends State<AboutPage> {
   ) {
     const List<FontVariation> collegeNameFont = [
       FontVariation('slnt', 0),
-      FontVariation('wdth', 124),
       FontVariation('wght', 640),
       FontVariation('GRAD', -57),
       FontVariation('XOPQ', 50),
@@ -340,7 +346,6 @@ class _AboutPageState extends State<AboutPage> {
       FontVariation('YOPQ', 79),
       FontVariation('YTAS', 750),
       FontVariation('YTLC', 515),
-      FontVariation('opsz', 139),
     ];
     const List<FontVariation> branchNameFont = [
       FontVariation('slnt', -5),
@@ -427,8 +432,8 @@ class _AboutPageState extends State<AboutPage> {
   ) {
     const List<FontVariation> collegeNameFont = [
       FontVariation('slnt', 0),
-      FontVariation('wdth', 124),
-      FontVariation('wght', 640),
+      FontVariation('wdth', 80),
+      FontVariation('wght', 700),
       FontVariation('GRAD', -57),
       FontVariation('XOPQ', 50),
       FontVariation('XTRA', 470),
@@ -439,8 +444,8 @@ class _AboutPageState extends State<AboutPage> {
     ];
     const List<FontVariation> branchNameFont = [
       FontVariation('slnt', -5),
-      FontVariation('wdth', 30),
-      FontVariation('wght', 300),
+      FontVariation('wdth', 60),
+      FontVariation('wght', 500),
       FontVariation('GRAD', -80),
       FontVariation('XOPQ', 135),
       FontVariation('XTRA', 500),
