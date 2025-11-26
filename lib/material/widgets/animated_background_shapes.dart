@@ -43,8 +43,8 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
         colorType: _ColorType.secondary,
       ),
       _ShapeData(
-        top: 0.4,
-        left: -0.1,
+        top: 0.45,
+        left: -0.05,
         size: 300.scale(),
         rotation: 4.0,
         shape: Shapes.square,
@@ -52,7 +52,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
         colorType: _ColorType.tertiary,
       ),
       _ShapeData(
-        top: -0.2,
+        top: -0.1,
         left: 0.7,
         size: 350.scale(),
         rotation: 1.0,
@@ -83,7 +83,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
     // About Section
     NavSection.about: [
       _ShapeData(
-        top: 0.1,
+        top: -0.1,
         left: 0.8,
         size: 480.scale(),
         rotation: 1.5,
