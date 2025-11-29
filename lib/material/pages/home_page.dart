@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:portfolio_web/material/widgets/scroll_animated_fade_in.dart';
@@ -303,9 +305,17 @@ class _HomePageState extends State<HomePage> {
     return SliverAppBar(
       pinned: true,
       floating: true,
-      backgroundColor: theme.colorScheme.surface,
-      surfaceTintColor: theme.colorScheme.surface,
       elevation: 0,
+      backgroundColor: theme.colorScheme.surface.withValues(alpha: 0.1),
+      automaticallyImplyLeading: false,
+      flexibleSpace: ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 7, sigmaY: 10),
+          child: Container(
+            color: theme.colorScheme.surface.withValues(alpha: 0.3),
+          ),
+        ),
+      ),
       title: isMobile
           ? _buildMobileAppBar(context, theme)
           : _buildDesktopAppBar(context, theme),

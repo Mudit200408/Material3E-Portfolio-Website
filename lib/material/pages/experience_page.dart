@@ -30,7 +30,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 24.scale(),
-        vertical: 48.scale(),
+        vertical: 58.scale(),
       ),
       child: Column(
         children: [

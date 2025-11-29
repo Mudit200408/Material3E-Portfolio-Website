@@ -14,10 +14,8 @@ Future<void> main() async {
   );
   ResponsiveScaler.init(
     designWidth: 1920,
-    // Optional: Set min/max scale factors for UI elements.
     minScale: 0.8,
     maxScale: 1.2,
-    // Optional: Clamp the final text size for accessibility to prevent it from getting too large.
     maxAccessibilityScale: 1.8,
   );
   runApp(const AppRoot());
