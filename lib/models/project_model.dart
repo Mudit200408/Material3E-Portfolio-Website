@@ -23,7 +23,7 @@ class ProjectModel {
       tags: List<String>.from(json['tags']),
       description: List<String>.from(json['description']),
       image: json['image'] as String,
-      pubDev: json['pubDev'] as String? ?? '',
+      pubDev: json['pubdev'] as String? ?? '',
       github: json['github'] as String? ?? '',
     );
   }

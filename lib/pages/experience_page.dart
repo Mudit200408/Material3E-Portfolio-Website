@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
-import 'package:portfolio_web/material/widgets/experience_card.dart';
-import 'package:portfolio_web/material/widgets/scroll_animated_fade_in.dart';
+import 'package:portfolio_web/widgets/experience_card.dart';
+import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:portfolio_web/models/experience_model.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';

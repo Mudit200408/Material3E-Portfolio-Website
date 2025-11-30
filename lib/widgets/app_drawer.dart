@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_web/app.dart';
-import 'package:portfolio_web/material/models/nav_section_enums.dart';
-import 'package:portfolio_web/material/widgets/style_toggle.dart';
+
+import 'package:portfolio_web/models/nav_section_enums.dart';
+
 import 'package:responsive_scaler/responsive_scaler.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
             ),
             Divider(
               thickness: 1,
-              color: theme.colorScheme.outline.withOpacity(0.2),
+              color: theme.colorScheme.outline.withValues(alpha: 0.2),
             ),
             SizedBox(height: 8.scale()),
             // Navigation items
@@ -104,27 +104,9 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   Divider(
                     thickness: 1,
-                    color: theme.colorScheme.outline.withOpacity(0.2),
+                    color: theme.colorScheme.outline.withValues(alpha: 0.2),
                   ),
                   SizedBox(height: 12.scale()),
-                  Row(
-                    children: [
-                      Text(
-                        'Theme Style',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const Spacer(),
-                      StyleToggle(
-                        currentStyle: App.controller.appStyle,
-                        onChanged: (style) {
-                          App.controller.setStyle(style);
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16.scale()),
                 ],
               ),
             ),
@@ -147,7 +129,7 @@ class AppDrawer extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 12.scale(), vertical: 4.scale()),
       decoration: BoxDecoration(
         color: isSelected
-            ? theme.colorScheme.primaryContainer.withOpacity(0.6)
+            ? theme.colorScheme.primaryContainer.withValues(alpha: 0.6)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
       ),

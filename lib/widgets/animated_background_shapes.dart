@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_m3shapes/flutter_m3shapes.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
-import 'package:portfolio_web/material/models/nav_section_enums.dart';
+import 'package:portfolio_web/models/nav_section_enums.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 
 class AnimatedBackgroundShapes extends StatefulWidget {

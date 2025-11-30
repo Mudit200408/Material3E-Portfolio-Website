@@ -1,10 +1,10 @@
 // lib/material/pages/about_section.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:portfolio_web/material/widgets/scroll_animated_fade_in.dart';
+import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
-import 'package:portfolio_web/material/widgets/style_toggle.dart';
+import 'package:portfolio_web/widgets/segment_button.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 
 class AboutPage extends StatefulWidget {

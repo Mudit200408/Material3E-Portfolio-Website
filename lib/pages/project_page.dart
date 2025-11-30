@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_custom_caraousel_v2/flutter_custom_caraousel_v2.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
-import 'package:portfolio_web/material/widgets/scroll_animated_fade_in.dart';
+import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
+import 'package:portfolio_web/models/project_model.dart';
+import 'package:portfolio_web/services/supabase_services.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectPage extends StatefulWidget {
   const ProjectPage({super.key});
@@ -15,52 +21,29 @@ class _ProjectPageState extends State<ProjectPage> {
   final CarouselControllerv2 _carouselController = CarouselControllerv2();
   final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
 
-  final List<Map<String, dynamic>> projects = [
-    {
-      'title': 'Responsive Scaler',
-      'tags': ['Flutter', 'Dart', 'Responsive Design', 'package'],
-      'description':
-          'Responsive Scaler takes the pain out of Flutter responsiveness.\n\n'
-          '✨ One utility. Zero MediaQuery boilerplate.\n\n'
-          'It automatically scales padding, fonts, icons, and widgets to keep your UI consistent across phones, tablets, and web — perfectly pixel-balanced.\n\n'
-          '🧩 Design once. Scale everywhere.',
-      'image': 'assets/images/responsive-scaler.jpeg',
-      'pubDev': 'https://pub.dev/packages/responsive_scaler',
-      'github': 'https://github.com/yourrepo/responsive_scaler',
-    },
-    {
-      'title': 'AI Note Sync',
-      'tags': ['Flutter', 'Supabase', 'Gemini API'],
-      'description':
-          'An intelligent note app that syncs across devices and lets you search handwriting with AI. Minimal, seamless, and fast.',
-      'image': 'assets/images/project1.png',
-      'pubDev': '',
-      'github': 'https://github.com/yourrepo/ai_note_sync',
-    },
-    {
-      'title': 'AI Note Sync',
-      'tags': ['Flutter', 'Supabase', 'Gemini API'],
-      'description':
-          'An intelligent note app that syncs across devices and lets you search handwriting with AI. Minimal, seamless, and fast.',
-      'image': 'assets/images/project2.png',
-      'pubDev': '',
-      'github': 'https://github.com/yourrepo/ai_note_sync',
-    },
-    {
-      'title': 'AI Note Sync',
-      'tags': ['Flutter', 'Supabase', 'Gemini API'],
-      'description':
-          'An intelligent note app that syncs across devices and lets you search handwriting with AI. Minimal, seamless, and fast.',
-      'image': 'assets/images/project3.png',
-      'pubDev': '',
-      'github': 'https://github.com/yourrepo/ai_note_sync',
-    },
-  ];
+  final SupabaseServices _supabaseServices = SupabaseServices();
+  late Future<List<ProjectModel>> _projectFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _projectFuture = _supabaseServices.getProjects();
+  }
 
   @override
   void dispose() {
     _currentIndex.dispose();
     super.dispose();
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
+      }
+    }
   }
 
   @override
@@ -94,44 +77,70 @@ class _ProjectPageState extends State<ProjectPage> {
             borderRadius: BorderRadius.circular(52.scale()),
             // color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
           ),
-          child: Column(
-            spacing: ResponsiveSpacing.hLarge,
-            children: [
-              // --- CAROUSEL SECTION ---
-              _buildCarouselWidget(isMobile, isTablet, isDesktop),
+          child: FutureBuilder<List<ProjectModel>>(
+            future: _projectFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: Loader());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No projects found.'));
+              }
 
-              // --- INFO SECTION ---
-              ValueListenableBuilder<int>(
-                valueListenable: _currentIndex,
-                builder: (context, index, child) {
-                  final project = projects[index];
-                  return IntrinsicHeight(
-                    child: Flex(
-                      direction: isMobile ? Axis.vertical : Axis.horizontal,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: ResponsiveSpacing.hSmall,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: _buildInfoCard(theme, project, isMobile),
+              final projects = snapshot.data!;
+
+              return Column(
+                spacing: ResponsiveSpacing.hLarge,
+                children: [
+                  // --- CAROUSEL SECTION ---
+                  _buildCarouselWidget(isMobile, isTablet, isDesktop, projects),
+
+                  // --- INFO SECTION ---
+                  ValueListenableBuilder<int>(
+                    valueListenable: _currentIndex,
+                    builder: (context, index, child) {
+                      // Ensure index is within bounds
+                      if (index >= projects.length) return const SizedBox();
+                      final project = projects[index];
+                      return IntrinsicHeight(
+                        child: Flex(
+                          direction: isMobile ? Axis.vertical : Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          spacing: ResponsiveSpacing.hSmall,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: _buildInfoCard(theme, project, isMobile),
+                            ),
+                            Expanded(
+                              flex: isMobile ? 2 : (isTablet ? 3 : 6),
+                              child: _buildDescription(
+                                theme,
+                                project,
+                                isMobile,
+                              ),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          flex: isMobile ? 2 : (isTablet ? 3 : 6),
-                          child: _buildDescription(theme, project, isMobile),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
     );
   }
 
-  Widget _buildCarouselWidget(bool isMobile, bool isTablet, bool isDesktop) {
+  Widget _buildCarouselWidget(
+    bool isMobile,
+    bool isTablet,
+    bool isDesktop,
+    List<ProjectModel> projects,
+  ) {
     return ScrollAnimatedFadeIn(
       delay: const Duration(milliseconds: 300),
       slideOffset: -0.1,
@@ -172,12 +181,37 @@ class _ProjectPageState extends State<ProjectPage> {
               borderRadius: BorderRadius.circular(52.scale()),
             ),
             children: List.generate(projects.length, (index) {
-              final imagePath = projects[index]['image'];
+              final imagePath = projects[index].image;
               // The package wraps this in Material, so we
               // just need the ClipRRect and Image.
+              Widget imageWidget;
+              if (imagePath.startsWith('http')) {
+                imageWidget = Image.network(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Icon(Icons.broken_image, size: 50),
+                    );
+                  },
+                );
+              } else {
+                imageWidget = Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Icon(Icons.broken_image, size: 50),
+                    );
+                  },
+                );
+              }
+
               return ClipRRect(
                 borderRadius: BorderRadius.circular(52.scale()),
-                child: Image.asset(imagePath, fit: BoxFit.cover),
+                child: imageWidget,
               );
             }),
           ),
@@ -186,11 +220,7 @@ class _ProjectPageState extends State<ProjectPage> {
     );
   }
 
-  Widget _buildInfoCard(
-    ThemeData theme,
-    Map<String, dynamic> project,
-    bool isMobile,
-  ) {
+  Widget _buildInfoCard(ThemeData theme, ProjectModel project, bool isMobile) {
     return ScrollAnimatedFadeIn(
       delay: const Duration(milliseconds: 500),
       slideOffset: 0.4,
@@ -207,7 +237,7 @@ class _ProjectPageState extends State<ProjectPage> {
           children: [
             Center(
               child: Text(
-                project['title'],
+                project.title,
                 style: theme.textTheme.displaySmall?.copyWith(
                   color: theme.colorScheme.onPrimaryContainer,
                   fontVariations: [
@@ -223,7 +253,7 @@ class _ProjectPageState extends State<ProjectPage> {
             Wrap(
               spacing: 4.scale(),
               runSpacing: 4.scale(),
-              children: (project['tags'] as List).map((tag) {
+              children: project.tags.map((tag) {
                 return Chip(
                   label: Text(tag),
                   shape: StadiumBorder(),
@@ -235,25 +265,26 @@ class _ProjectPageState extends State<ProjectPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
-
               children: [
-                if ((project['pubDev'] as String).isNotEmpty)
+                if (project.pubDev != null && project.pubDev!.isNotEmpty)
                   Expanded(
                     child: _buildGithubButton(
                       theme,
                       label: 'Pub Dev',
-                      icon: Icons.public,
-                      url: project['pubDev'],
+                      icon: 'assets/icons/pubdev.svg',
+                      url: project.pubDev!,
+                      onPressed: () => _launchUrl(project.pubDev!),
                     ),
                   ),
                 SizedBox(width: ResponsiveSpacing.wXSmall),
-                if ((project['github'] as String).isNotEmpty)
+                if (project.github != null && project.github!.isNotEmpty)
                   Expanded(
                     child: _buildGithubButton(
                       theme,
                       label: 'GitHub',
-                      icon: Icons.code,
-                      url: project['github'],
+                      icon: 'assets/icons/github.svg',
+                      url: project.github!,
+                      onPressed: () => _launchUrl(project.github!),
                     ),
                   ),
               ],
@@ -266,7 +297,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
   Widget _buildDescription(
     ThemeData theme,
-    Map<String, dynamic> project,
+    ProjectModel project,
     bool isMobile,
   ) {
     return ScrollAnimatedFadeIn(
@@ -276,7 +307,7 @@ class _ProjectPageState extends State<ProjectPage> {
         transitionBuilder: (child, anim) =>
             FadeTransition(opacity: anim, child: child),
         child: Container(
-          key: ValueKey(project['title']),
+          key: ValueKey(project.title),
           width: double.infinity,
           height: double.infinity,
           padding: EdgeInsets.all(24.scale()),
@@ -284,15 +315,17 @@ class _ProjectPageState extends State<ProjectPage> {
             color: theme.colorScheme.primaryFixed,
             borderRadius: BorderRadius.circular(52.scale()),
           ),
-          child: Text(
-            project['description'],
-            style: theme.textTheme.bodyLarge?.copyWith(
-              height: 1.5,
-              color: theme.colorScheme.onPrimaryContainer,
-              fontVariations: const [
-                FontVariation('wght', 620),
-                FontVariation('ROND', 80),
-              ],
+          child: SingleChildScrollView(
+            child: Text(
+              project.description.join('\n\n'),
+              style: theme.textTheme.bodyLarge?.copyWith(
+                height: 1.5,
+                color: theme.colorScheme.onPrimaryContainer,
+                fontVariations: const [
+                  FontVariation('wght', 620),
+                  FontVariation('ROND', 80),
+                ],
+              ),
             ),
           ),
         ),
@@ -303,16 +336,22 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget _buildGithubButton(
     ThemeData theme, {
     required String label,
-    required IconData icon,
+    required String icon,
     required String url,
+    required VoidCallback onPressed,
   }) {
     return ElevatedButton.icon(
-      onPressed: () {
-        // Use url_launcher here
-      },
-      icon: Icon(icon, size: 18),
+      onPressed: onPressed,
+      icon: SvgPicture.asset(
+        icon,
+        width: 18.scale(),
+        height: 18.scale(),
+        colorFilter: ColorFilter.mode(
+          theme.colorScheme.onPrimary,
+          BlendMode.srcIn,
+        ),
+      ),
       label: Text(label),
-
       style: ElevatedButton.styleFrom(
         minimumSize: Size(150.scale(), 75.scale()),
         backgroundColor: theme.colorScheme.onPrimaryContainer,

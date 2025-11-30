@@ -2,24 +2,23 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:portfolio_web/material/widgets/scroll_animated_fade_in.dart';
+import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:m3e_collection/m3e_collection.dart';
-import 'package:portfolio_web/app.dart';
+
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
-import 'package:portfolio_web/material/models/nav_section_enums.dart';
-import 'package:portfolio_web/material/pages/about_page.dart';
-import 'package:portfolio_web/material/pages/contact_page.dart';
-import 'package:portfolio_web/material/pages/experience_page.dart';
-import 'package:portfolio_web/material/pages/project_page.dart';
-import 'package:portfolio_web/material/widgets/animated_background_shapes.dart';
-import 'package:portfolio_web/material/widgets/animated_shape_container.dart';
-import 'package:portfolio_web/material/widgets/app_drawer.dart';
-import 'package:portfolio_web/material/widgets/gradient_button.dart';
-import 'package:portfolio_web/material/widgets/outlined_button.dart';
-import 'package:portfolio_web/material/widgets/skills_chip.dart';
-import 'package:portfolio_web/material/widgets/style_toggle.dart';
+import 'package:portfolio_web/models/nav_section_enums.dart';
+import 'package:portfolio_web/pages/about_page.dart';
+import 'package:portfolio_web/pages/contact_page.dart';
+import 'package:portfolio_web/pages/experience_page.dart';
+import 'package:portfolio_web/pages/project_page.dart';
+import 'package:portfolio_web/widgets/animated_background_shapes.dart';
+import 'package:portfolio_web/widgets/animated_shape_container.dart';
+import 'package:portfolio_web/widgets/app_drawer.dart';
+import 'package:portfolio_web/widgets/gradient_button.dart';
+import 'package:portfolio_web/widgets/outlined_button.dart';
+import 'package:portfolio_web/widgets/skills_chip.dart';
 import 'package:portfolio_web/models/skills_model.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
@@ -323,19 +322,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMobileAppBar(BuildContext context, ThemeData theme) {
-    return Row(
-      children: [
-        const Spacer(),
-        StyleToggle(
-          currentStyle: App.controller.appStyle,
-          onChanged: (style) {
-            setState(() {
-              App.controller.setStyle(style);
-            });
-          },
-        ),
-      ],
-    );
+    return Row(children: [const Spacer()]);
   }
 
   Widget _buildDesktopAppBar(BuildContext context, ThemeData theme) {
@@ -391,14 +378,7 @@ class _HomePageState extends State<HomePage> {
         ),
 
         const Spacer(),
-        StyleToggle(
-          currentStyle: App.controller.appStyle,
-          onChanged: (style) {
-            setState(() {
-              App.controller.setStyle(style);
-            });
-          },
-        ),
+
         const Spacer(flex: 1),
       ],
     );
