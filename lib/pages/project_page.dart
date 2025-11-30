@@ -70,7 +70,7 @@ class _ProjectPageState extends State<ProjectPage> {
           padding: isMobile
               ? EdgeInsets.zero
               : EdgeInsets.symmetric(
-                  vertical: (isTablet ? 12.scale() : 40.scale()),
+                  vertical: (isTablet ? 12.scale() : 50.scale()),
                   horizontal: (isTablet ? 12.scale() : 80.scale()),
                 ),
           decoration: BoxDecoration(

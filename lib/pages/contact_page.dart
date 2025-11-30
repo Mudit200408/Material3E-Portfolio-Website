@@ -106,7 +106,7 @@ class _ContactPageState extends State<ContactPage> {
       padding: EdgeInsets.only(
         left: 24.scale(),
         right: 24.scale(),
-        top: 65.scale(),
+        top: 85.scale(),
         bottom: 32.scale(),
       ),
       child: Column(

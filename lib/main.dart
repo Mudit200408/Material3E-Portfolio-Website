@@ -43,7 +43,7 @@ class AppRoot extends StatelessWidget {
         return ResponsiveScaler.scale(context: context, child: child);
       },
       debugShowCheckedModeBanner: false,
-      theme: appTheme,
+      theme: lightTheme,
       home: const HomePage(),
     );
   }

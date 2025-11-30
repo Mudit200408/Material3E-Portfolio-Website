@@ -22,7 +22,6 @@ const _textTheme = TextTheme(
 final MaterialTheme _materialTheme = MaterialTheme(_textTheme);
 
 final ThemeData lightTheme = _materialTheme.light();
-final ThemeData darkTheme = _materialTheme.dark();
 
 // Keeping appTheme for backward compatibility if needed, defaulting to light
 final ThemeData appTheme = lightTheme;

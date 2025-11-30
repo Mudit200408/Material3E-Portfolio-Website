@@ -88,7 +88,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    // ADD THIS
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
@@ -172,65 +171,6 @@ class _HomePageState extends State<HomePage> {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
 
     return Scaffold(
-      floatingActionButton: FabMenuM3E(
-        controller: _fabController,
-        overlayColor: Colors.transparent,
-        alignment: Alignment.bottomRight,
-        direction: FabMenuDirection.up,
-        primaryFab: FabM3E(
-          icon: SvgPicture.asset('assets/icons/social-media.svg'),
-          onPressed: _fabController.toggle,
-        ),
-
-        items: [
-          FabMenuItem(
-            icon: SvgPicture.asset(
-              'assets/icons/linkedin.svg',
-              height: 25.scale(),
-              width: 25.scale(),
-              colorFilter: ColorFilter.mode(
-                theme.colorScheme.onPrimaryFixed,
-                BlendMode.srcIn,
-              ),
-            ),
-            label: Text(
-              'LinkedIn',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onPrimaryFixed,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            onPressed: () {
-              launchUrl(
-                Uri.parse(
-                  'https://www.linkedin.com/in/mudit-purohit-7759a823a/',
-                ),
-              );
-            },
-          ),
-          FabMenuItem(
-            icon: SvgPicture.asset(
-              'assets/icons/github.svg',
-              height: 25.scale(),
-              width: 25.scale(),
-              colorFilter: ColorFilter.mode(
-                theme.colorScheme.onPrimaryFixed,
-                BlendMode.srcIn,
-              ),
-            ),
-            label: Text(
-              'Github',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onPrimaryFixed,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            onPressed: () {
-              launchUrl(Uri.parse('https://github.com/Mudit200408'));
-            },
-          ),
-        ],
-      ),
       drawer: isMobile
           ? AppDrawer(
               currentSection: _currentSection, // 1. Pass the current state
@@ -306,7 +246,7 @@ class _HomePageState extends State<HomePage> {
       floating: true,
       elevation: 0,
       backgroundColor: theme.colorScheme.surface.withValues(alpha: 0.1),
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: isMobile,
       flexibleSpace: ClipRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 7, sigmaY: 10),
@@ -332,10 +272,8 @@ class _HomePageState extends State<HomePage> {
         const Spacer(flex: 1),
         Container(
           decoration: ShapeDecoration(
-            color: theme
-                .colorScheme
-                .primaryFixed, // Background color of the container
-            shape: StadiumBorder(),
+            color: theme.colorScheme.primaryFixed,
+            shape: const StadiumBorder(),
           ),
           padding: EdgeInsets.symmetric(
             vertical: 8.scale(),
@@ -378,6 +316,7 @@ class _HomePageState extends State<HomePage> {
         ),
 
         const Spacer(),
+        SizedBox(width: 16.scale()),
 
         const Spacer(flex: 1),
       ],
@@ -685,7 +624,10 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomOutlinedButton(buttonName: "Download Resume", onPressed: () {}),
-          GradientButton(buttonName: 'Get in Touch', onPressed: () {}),
+          GradientButton(
+            buttonName: 'Get in Touch',
+            onPressed: () => _scrollToSection(NavSection.contact),
+          ),
         ],
       ),
     );

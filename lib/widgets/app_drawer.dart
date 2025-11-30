@@ -97,19 +97,7 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             const Spacer(),
-            // Style toggle at bottom
-            Padding(
-              padding: EdgeInsets.all(16.scale()),
-              child: Column(
-                children: [
-                  Divider(
-                    thickness: 1,
-                    color: theme.colorScheme.outline.withValues(alpha: 0.2),
-                  ),
-                  SizedBox(height: 12.scale()),
-                ],
-              ),
-            ),
+            SizedBox(height: 16.scale()),
           ],
         ),
       ),
