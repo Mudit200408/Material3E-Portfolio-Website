@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_custom_caraousel_v2/flutter_custom_caraousel_v2.dart';
+import 'package:flutter_m3shapes/flutter_m3shapes.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
@@ -251,12 +252,25 @@ class _ProjectPageState extends State<ProjectPage> {
             ),
             SizedBox(height: ResponsiveSpacing.hMedium),
             Wrap(
-              spacing: 4.scale(),
+              spacing: 3.scale(),
               runSpacing: 4.scale(),
               children: project.tags.map((tag) {
                 return Chip(
-                  label: Text(tag),
+                  label: Text(
+                    tag,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onPrimaryContainer,
+                      fontVariations: const [
+                        FontVariation('wght', 450),
+                        FontVariation('ROND', 100),
+                      ],
+                    ),
+                  ),
                   shape: StadiumBorder(),
+                  side: BorderSide(
+                    color: theme.colorScheme.onPrimaryContainer,
+                    width: 0.5,
+                  ),
                   backgroundColor: theme.colorScheme.surface,
                 );
               }).toList(),
@@ -316,16 +330,58 @@ class _ProjectPageState extends State<ProjectPage> {
             borderRadius: BorderRadius.circular(52.scale()),
           ),
           child: SingleChildScrollView(
-            child: Text(
-              project.description.join('\n\n'),
-              style: theme.textTheme.bodyLarge?.copyWith(
-                height: 1.5,
-                color: theme.colorScheme.onPrimaryContainer,
-                fontVariations: const [
-                  FontVariation('wght', 620),
-                  FontVariation('ROND', 80),
-                ],
-              ),
+            child: Column(
+              children: [
+                ...project.description.take(4).toList().asMap().entries.map((
+                  entry,
+                ) {
+                  final index = entry.key;
+                  final resp = entry.value;
+
+                  // Cycle through shapes
+                  final shapes = [
+                    Shapes.c4_sided_cookie,
+                    Shapes.c6_sided_cookie,
+                    Shapes.c7_sided_cookie,
+                    Shapes.c9_sided_cookie,
+                  ];
+                  final shape = shapes[index % shapes.length];
+
+                  final colors = [
+                    theme.colorScheme.primary,
+                    theme.colorScheme.tertiary,
+                  ];
+                  final shapeColor = colors[index % colors.length];
+
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 12.scale()),
+                    child: Row(
+                      children: [
+                        M3Container(
+                          shape,
+                          width: 16.scale(),
+                          height: 16.scale(),
+                          color: shapeColor,
+                          child: const SizedBox(),
+                        ),
+                        SizedBox(width: 12.scale()),
+                        Expanded(
+                          child: Text(
+                            resp,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: theme.colorScheme.onPrimaryContainer,
+                              fontVariations: const [
+                                FontVariation('wght', 550),
+                                FontVariation('ROND', 100),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ],
             ),
           ),
         ),

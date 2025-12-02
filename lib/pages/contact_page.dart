@@ -172,7 +172,7 @@ class _ContactPageState extends State<ContactPage> {
               constraints: BoxConstraints(maxWidth: 600.scale()),
               padding: EdgeInsets.all(24.scale()),
               decoration: BoxDecoration(
-                color: theme.colorScheme.primaryFixed.withValues(alpha: 0.4),
+                color: theme.colorScheme.primaryFixed.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(32.scale()),
               ),
               child: Form(
