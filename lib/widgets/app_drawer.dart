@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:portfolio_web/models/nav_section_enums.dart';
 
@@ -31,7 +32,7 @@ class AppDrawer extends StatelessWidget {
                   ),
                   SizedBox(width: 12.scale()),
                   Text(
-                    'Portfolio',
+                    'Mudit Purohit',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.primary,
@@ -48,7 +49,7 @@ class AppDrawer extends StatelessWidget {
             // Navigation items
             _buildDrawerItem(
               context,
-              icon: Icons.home_outlined,
+              icon: 'assets/icons/home.svg',
               title: 'Home',
               isSelected: currentSection == NavSection.home,
               onTap: () {
@@ -58,7 +59,7 @@ class AppDrawer extends StatelessWidget {
             ),
             _buildDrawerItem(
               context,
-              icon: Icons.person_outline,
+              icon: 'assets/icons/about.svg',
               title: 'About',
               isSelected: currentSection == NavSection.about,
               onTap: () {
@@ -68,7 +69,7 @@ class AppDrawer extends StatelessWidget {
             ),
             _buildDrawerItem(
               context,
-              icon: Icons.work_outline,
+              icon: 'assets/icons/project.svg',
               title: 'Projects',
               isSelected: currentSection == NavSection.projects,
               onTap: () {
@@ -78,7 +79,7 @@ class AppDrawer extends StatelessWidget {
             ),
             _buildDrawerItem(
               context,
-              icon: Icons.insights_outlined,
+              icon: 'assets/icons/experience.svg',
               title: 'Experience',
               isSelected: currentSection == NavSection.experience,
               onTap: () {
@@ -88,7 +89,7 @@ class AppDrawer extends StatelessWidget {
             ),
             _buildDrawerItem(
               context,
-              icon: Icons.person_outline,
+              icon: 'assets/icons/email.svg',
               title: 'Contact Me',
               isSelected: currentSection == NavSection.contact,
               onTap: () {
@@ -106,7 +107,7 @@ class AppDrawer extends StatelessWidget {
 
   Widget _buildDrawerItem(
     BuildContext context, {
-    required IconData icon,
+    required String icon,
     required String title,
     required VoidCallback onTap,
     bool isSelected = false,
@@ -122,12 +123,13 @@ class AppDrawer extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
-        leading: Icon(
+        leading: SvgPicture.asset(
           icon,
-          color: isSelected
-              ? theme.colorScheme.primary
-              : theme.colorScheme.onSurface,
-          size: 24.scale(),
+          colorFilter: isSelected
+              ? ColorFilter.mode(theme.colorScheme.primary, BlendMode.srcIn)
+              : ColorFilter.mode(theme.colorScheme.onSurface, BlendMode.srcIn),
+          width: 24.scale(),
+          height: 24.scale(),
         ),
         title: Text(
           title,

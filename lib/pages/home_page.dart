@@ -2,10 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:portfolio_web/widgets/resume_viewer_modal.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:m3e_collection/m3e_collection.dart';
-
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:portfolio_web/models/nav_section_enums.dart';
@@ -22,7 +20,7 @@ import 'package:portfolio_web/widgets/skills_chip.dart';
 import 'package:portfolio_web/models/skills_model.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,7 +33,6 @@ class _HomePageState extends State<HomePage> {
   NavSection _currentSection = NavSection.home;
   bool _isProgrammaticScroll = false;
   final _scrollController = ScrollController();
-  final _fabController = FabMenuController();
   // Global keys for different sections
   final Map<NavSection, GlobalKey> _sectionKeys = {
     NavSection.home: GlobalKey(),
@@ -165,6 +162,41 @@ class _HomePageState extends State<HomePage> {
     return false;
   }
 
+  Future<String> _getResumeUrl() async {
+    final envUrl = dotenv.env['RESUME_URL'] ?? '';
+    return envUrl;
+  }
+
+  void _openResumeModal() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    late String url;
+    try {
+      url = await _getResumeUrl();
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Unable to load resume URL: $e')));
+      return;
+    }
+    setState(() {
+      isLoading = false;
+    });
+    if (!mounted) return;
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => ResumeViewerModal(resumeUrl: url),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -269,7 +301,12 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Spacer(flex: 1),
+        Image.asset(
+          'assets/logo/logo.png',
+          height: 50.scale(),
+          width: 50.scale(),
+        ),
+        const Spacer(flex: 4),
         Container(
           decoration: ShapeDecoration(
             color: theme.colorScheme.primaryFixed,
@@ -316,9 +353,6 @@ class _HomePageState extends State<HomePage> {
         ),
 
         const Spacer(),
-        SizedBox(width: 16.scale()),
-
-        const Spacer(flex: 1),
       ],
     );
   }
@@ -623,7 +657,10 @@ class _HomePageState extends State<HomePage> {
         spacing: ResponsiveSpacing.hSmall,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CustomOutlinedButton(buttonName: "Download Resume", onPressed: () {}),
+          CustomOutlinedButton(
+            buttonName: isLoading ? "Loading..." : "View Resume",
+            onPressed: _openResumeModal,
+          ),
           GradientButton(
             buttonName: 'Get in Touch',
             onPressed: () => _scrollToSection(NavSection.contact),

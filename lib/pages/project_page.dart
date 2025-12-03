@@ -251,29 +251,31 @@ class _ProjectPageState extends State<ProjectPage> {
               ),
             ),
             SizedBox(height: ResponsiveSpacing.hMedium),
-            Wrap(
-              spacing: 3.scale(),
-              runSpacing: 4.scale(),
-              children: project.tags.map((tag) {
-                return Chip(
-                  label: Text(
-                    tag,
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: theme.colorScheme.onPrimaryContainer,
-                      fontVariations: const [
-                        FontVariation('wght', 450),
-                        FontVariation('ROND', 100),
-                      ],
+            Center(
+              child: Wrap(
+                spacing: isMobile ? 4.scale() : 3.scale(),
+                runSpacing: isMobile ? 2.scale() : 3.scale(),
+                children: project.tags.map((tag) {
+                  return Chip(
+                    label: Text(
+                      tag,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: theme.colorScheme.onPrimaryContainer,
+                        fontVariations: const [
+                          FontVariation('wght', 450),
+                          FontVariation('ROND', 100),
+                        ],
+                      ),
                     ),
-                  ),
-                  shape: StadiumBorder(),
-                  side: BorderSide(
-                    color: theme.colorScheme.onPrimaryContainer,
-                    width: 0.5,
-                  ),
-                  backgroundColor: theme.colorScheme.surface,
-                );
-              }).toList(),
+                    shape: StadiumBorder(),
+                    side: BorderSide(
+                      color: theme.colorScheme.onPrimaryContainer,
+                      width: 0.5,
+                    ),
+                    backgroundColor: theme.colorScheme.surface,
+                  );
+                }).toList(),
+              ),
             ),
             SizedBox(height: ResponsiveSpacing.hMedium),
             Row(
