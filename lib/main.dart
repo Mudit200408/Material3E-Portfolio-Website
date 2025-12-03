@@ -44,6 +44,7 @@ class AppRoot extends StatelessWidget {
       },
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
+      title: 'Mudit Purohit - Portfolio',
       home: const HomePage(),
     );
   }

@@ -179,7 +179,9 @@ class _ProjectPageState extends State<ProjectPage> {
             shrinkExtent: 10.scale(),
             padding: EdgeInsets.all(8.scale()),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(52.scale()),
+              borderRadius: BorderRadius.circular(
+                isMobile ? 32.scale() : 52.scale(),
+              ),
             ),
             children: List.generate(projects.length, (index) {
               final imagePath = projects[index].image;
@@ -211,7 +213,9 @@ class _ProjectPageState extends State<ProjectPage> {
               }
 
               return ClipRRect(
-                borderRadius: BorderRadius.circular(52.scale()),
+                borderRadius: BorderRadius.circular(
+                  isMobile ? 32.scale() : 52.scale(),
+                ),
                 child: imageWidget,
               );
             }),
@@ -251,32 +255,31 @@ class _ProjectPageState extends State<ProjectPage> {
               ),
             ),
             SizedBox(height: ResponsiveSpacing.hMedium),
-            Center(
-              child: Wrap(
-                spacing: isMobile ? 4.scale() : 3.scale(),
-                runSpacing: isMobile ? 2.scale() : 3.scale(),
-                children: project.tags.map((tag) {
-                  return Chip(
-                    label: Text(
-                      tag,
-                      style: theme.textTheme.labelLarge?.copyWith(
-                        color: theme.colorScheme.onPrimaryContainer,
-                        fontVariations: const [
-                          FontVariation('wght', 450),
-                          FontVariation('ROND', 100),
-                        ],
-                      ),
-                    ),
-                    shape: StadiumBorder(),
-                    side: BorderSide(
+            Wrap(
+              spacing: 4.scale(),
+              runSpacing: 3.scale(),
+              children: project.tags.map((tag) {
+                return Chip(
+                  label: Text(
+                    tag,
+                    style: theme.textTheme.labelLarge?.copyWith(
                       color: theme.colorScheme.onPrimaryContainer,
-                      width: 0.5,
+                      fontVariations: const [
+                        FontVariation('wght', 450),
+                        FontVariation('ROND', 100),
+                      ],
                     ),
-                    backgroundColor: theme.colorScheme.surface,
-                  );
-                }).toList(),
-              ),
+                  ),
+                  shape: StadiumBorder(),
+                  side: BorderSide(
+                    color: theme.colorScheme.onPrimaryContainer,
+                    width: 0.5,
+                  ),
+                  backgroundColor: theme.colorScheme.surface,
+                );
+              }).toList(),
             ),
+
             SizedBox(height: ResponsiveSpacing.hMedium),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

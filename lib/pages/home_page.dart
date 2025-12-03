@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_m3shapes/flutter_m3shapes.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/widgets/resume_viewer_modal.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
@@ -294,17 +296,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMobileAppBar(BuildContext context, ThemeData theme) {
-    return Row(children: [const Spacer()]);
+    return Row(
+      children: [
+        const Spacer(),
+        SvgPicture.asset(
+          'assets/logo/logo.svg',
+          height: 40.scale(),
+          width: 40.scale(),
+        ),
+      ],
+    );
   }
 
   Widget _buildDesktopAppBar(BuildContext context, ThemeData theme) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          'assets/logo/logo.png',
-          height: 50.scale(),
-          width: 50.scale(),
+        SvgPicture.asset(
+          'assets/logo/logo.svg',
+          height: 40.scale(),
+          width: 40.scale(),
         ),
         const Spacer(flex: 4),
         Container(
