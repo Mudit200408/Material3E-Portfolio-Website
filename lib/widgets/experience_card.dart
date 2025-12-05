@@ -74,7 +74,7 @@ class ExperienceCard extends StatelessWidget {
   Widget _buildTimelineLine(ThemeData theme) {
     return Container(
       width: 2,
-      color: theme.colorScheme.primary.withValues(alpha: 0.5),
+      color: theme.colorScheme.primary.withValues(alpha: 0.8),
       margin: EdgeInsets.symmetric(horizontal: 16.scale()),
     );
   }

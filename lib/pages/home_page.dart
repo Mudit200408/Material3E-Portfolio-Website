@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_m3shapes/flutter_m3shapes.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/widgets/resume_viewer_modal.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
@@ -23,6 +22,7 @@ import 'package:portfolio_web/models/skills_model.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:portfolio_web/widgets/footer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -258,6 +258,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     final contactSection = ContactPage(key: _sectionKeys[NavSection.contact]);
+    const footerSection = Footer();
 
     // 3. Put all sections in a list
     final sections = [
@@ -266,6 +267,7 @@ class _HomePageState extends State<HomePage> {
       projectsSection,
       experienceSection,
       contactSection,
+      footerSection,
     ];
 
     // 4. Convert each section widget into a Sliver and return the list

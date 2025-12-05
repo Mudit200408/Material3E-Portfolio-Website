@@ -111,7 +111,7 @@ class _ProjectPageState extends State<ProjectPage> {
                           spacing: ResponsiveSpacing.hSmall,
                           children: [
                             Expanded(
-                              flex: 2,
+                              flex: isMobile ? 2 : 3,
                               child: _buildInfoCard(theme, project, isMobile),
                             ),
                             Expanded(
@@ -231,7 +231,6 @@ class _ProjectPageState extends State<ProjectPage> {
       slideOffset: 0.4,
       child: Container(
         padding: EdgeInsets.all(24.scale()),
-        constraints: isMobile ? BoxConstraints(maxWidth: 150.scale()) : null,
         decoration: BoxDecoration(
           color: theme.colorScheme.primaryFixed,
           borderRadius: BorderRadius.circular(52.scale()),
@@ -257,7 +256,7 @@ class _ProjectPageState extends State<ProjectPage> {
             SizedBox(height: ResponsiveSpacing.hMedium),
             Wrap(
               spacing: 4.scale(),
-              runSpacing: 3.scale(),
+              runSpacing: 4.scale(),
               children: project.tags.map((tag) {
                 return Chip(
                   label: Text(

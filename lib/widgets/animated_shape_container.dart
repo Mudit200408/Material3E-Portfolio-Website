@@ -38,7 +38,6 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
     Shapes.square,
     Shapes.c7_sided_cookie,
     Shapes.pill,
-    Shapes.circle,
     Shapes.c9_sided_cookie,
     Shapes.slanted,
     Shapes.arrow,
