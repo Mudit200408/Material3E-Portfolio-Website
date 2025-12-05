@@ -25,10 +25,10 @@ class AppDrawer extends StatelessWidget {
               padding: EdgeInsets.all(16.scale()),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.person,
-                    size: 32.scale(),
-                    color: theme.colorScheme.primary,
+                  SvgPicture.asset(
+                    'assets/logo/logo.svg',
+                    height: 40.scale(),
+                    width: 40.scale(),
                   ),
                   SizedBox(width: 12.scale()),
                   Text(

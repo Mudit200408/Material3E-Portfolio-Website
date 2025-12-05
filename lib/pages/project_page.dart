@@ -115,7 +115,7 @@ class _ProjectPageState extends State<ProjectPage> {
                               child: _buildInfoCard(theme, project, isMobile),
                             ),
                             Expanded(
-                              flex: isMobile ? 2 : (isTablet ? 3 : 6),
+                              flex: isMobile ? 2 : (isTablet ? 4 : 6),
                               child: _buildDescription(
                                 theme,
                                 project,
@@ -168,7 +168,7 @@ class _ProjectPageState extends State<ProjectPage> {
           child: CarouselViewV2.weighted(
             // Pass the controller
             controller: _carouselController,
-            flexWeights: isMobile ? const [1, 18, 1] : const [2, 8, 2],
+            flexWeights: isMobile ? const [2, 18, 2] : const [2, 8, 2],
             elevation: 3,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 15),

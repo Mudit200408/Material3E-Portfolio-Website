@@ -298,16 +298,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMobileAppBar(BuildContext context, ThemeData theme) {
-    return Row(
-      children: [
-        const Spacer(),
-        SvgPicture.asset(
-          'assets/logo/logo.svg',
-          height: 40.scale(),
-          width: 40.scale(),
-        ),
-      ],
-    );
+    return Row(children: [const Spacer()]);
   }
 
   Widget _buildDesktopAppBar(BuildContext context, ThemeData theme) {
