@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_custom_caraousel_v2/flutter_custom_caraousel_v2.dart';
-import 'package:flutter_m3shapes/flutter_m3shapes.dart';
+import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';

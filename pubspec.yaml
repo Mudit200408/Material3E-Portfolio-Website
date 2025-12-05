@@ -16,8 +16,7 @@ dependencies:
   responsive_framework: ^1.5.1
   responsive_scaler: ^0.1.0
   supabase_flutter: ^2.10.3
-  flutter_m3shapes:
-    path: "../flutter_m3shapes/"
+  flutter_m3shapes_extended: ^1.0.0
   avatar_glow: ^3.0.1
   m3e_collection: ^0.3.7
   flutter_custom_caraousel_v2: ^0.2.0

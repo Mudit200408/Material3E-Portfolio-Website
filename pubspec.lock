@@ -246,13 +246,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
-  flutter_m3shapes:
+  flutter_m3shapes_extended:
     dependency: "direct main"
     description:
-      path: "../flutter_m3shapes"
-      relative: true
-    source: path
-    version: "1.1.0"
+      name: flutter_m3shapes_extended
+      sha256: d5acc1a08918c85c9ba6004634cae5d71c0d8705909e01e2a3805ae311db3b07
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_shaders:
     dependency: transitive
     description:
