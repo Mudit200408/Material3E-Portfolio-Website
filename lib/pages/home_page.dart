@@ -325,10 +325,7 @@ class _HomePageState extends State<HomePage> {
             color: theme.colorScheme.primaryFixed,
             shape: const StadiumBorder(),
           ),
-          padding: EdgeInsets.symmetric(
-            vertical: 8.scale(),
-            horizontal: 8.scale(),
-          ),
+          padding: EdgeInsets.all(8.scale()),
           child: Row(
             children: [
               _buildTab(
@@ -364,7 +361,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-
         const Spacer(),
       ],
     );

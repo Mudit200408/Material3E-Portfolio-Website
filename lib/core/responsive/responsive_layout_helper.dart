@@ -5,7 +5,8 @@ import 'package:responsive_scaler/responsive_scaler.dart';
 class ResponsiveLayoutHelper {
   // Breakpoint helpers
   static bool isMobile(BuildContext context) =>
-      ResponsiveBreakpoints.of(context).isMobile;
+      ResponsiveBreakpoints.of(context).isMobile ||
+      MediaQuery.of(context).size.width < 600;
 
   static bool isTablet(BuildContext context) =>
       ResponsiveBreakpoints.of(context).isTablet;
