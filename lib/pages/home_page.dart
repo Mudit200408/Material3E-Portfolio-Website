@@ -199,6 +199,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  String _getProfileUrl() {
+    final profileUrl = dotenv.env['PROFILE_URL'] ?? '';
+    return profileUrl;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -432,11 +437,12 @@ class _HomePageState extends State<HomePage> {
           color: theme.colorScheme.onPrimaryContainer,
           width: 2,
         ),
-        child: Image.asset(
-          'assets/images/profile.png',
-          width: imageSize.scale(),
-          height: imageSize.scale(),
-        ),
+        child: Image.network(_getProfileUrl()),
+        // child: Image.asset(
+        //   'assets/images/profile.png',
+        //   width: imageSize.scale(),
+        //   height: imageSize.scale(),
+        // ),
       ),
     );
   }
