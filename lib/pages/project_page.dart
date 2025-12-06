@@ -229,85 +229,106 @@ class _ProjectPageState extends State<ProjectPage> {
     return ScrollAnimatedFadeIn(
       delay: const Duration(milliseconds: 500),
       slideOffset: 0.4,
-      child: Container(
-        padding: EdgeInsets.all(24.scale()),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.primaryFixed,
-          borderRadius: BorderRadius.circular(52.scale()),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Center(
-              child: Text(
-                project.title,
-                style: theme.textTheme.displaySmall?.copyWith(
-                  color: theme.colorScheme.onPrimaryContainer,
-                  fontVariations: [
-                    const FontVariation('wght', 790),
-                    const FontVariation('wdth', 80),
-                    const FontVariation('slnt', -5),
-                    const FontVariation('opsz', 35),
-                  ],
-                ),
-              ),
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn, // Smooth expansion/contraction
+        alignment: Alignment.topCenter, // Anchors content to top while resizing
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          // Use a layout builder to ensure size changes are detected correctly
+          layoutBuilder: (currentChild, previousChildren) {
+            return Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                ...previousChildren,
+                if (currentChild != null) currentChild,
+              ],
+            );
+          },
+          transitionBuilder: (child, anim) =>
+              FadeTransition(opacity: anim, child: child),
+          child: Container(
+            key: ValueKey(project.image),
+            padding: EdgeInsets.all(24.scale()),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primaryFixed,
+              borderRadius: BorderRadius.circular(52.scale()),
             ),
-            SizedBox(height: ResponsiveSpacing.hMedium),
-            Wrap(
-              spacing: isMobile ? 2.scale() : 4.scale(),
-              runSpacing: isMobile ? 2.scale() : 4.scale(),
-              children: project.tags.map((tag) {
-                return Chip(
-                  label: Text(
-                    tag,
-                    style: theme.textTheme.labelLarge?.copyWith(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Center(
+                  child: Text(
+                    project.title,
+                    style: theme.textTheme.displaySmall?.copyWith(
                       color: theme.colorScheme.onPrimaryContainer,
-                      fontVariations: const [
-                        FontVariation('wght', 450),
-                        FontVariation('ROND', 100),
+                      fontVariations: [
+                        const FontVariation('wght', 790),
+                        const FontVariation('wdth', 80),
+                        const FontVariation('slnt', -5),
+                        const FontVariation('opsz', 35),
                       ],
                     ),
                   ),
-                  shape: StadiumBorder(),
-                  side: BorderSide(
-                    color: theme.colorScheme.onPrimaryContainer,
-                    width: 0.5,
-                  ),
-                  backgroundColor: theme.colorScheme.surface,
-                );
-              }).toList(),
-            ),
+                ),
+                SizedBox(height: ResponsiveSpacing.hMedium),
+                Wrap(
+                  spacing: isMobile ? 2.scale() : 4.scale(),
+                  runSpacing: isMobile ? 2.scale() : 4.scale(),
+                  children: project.tags.map((tag) {
+                    return Chip(
+                      label: Text(
+                        tag,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onPrimaryContainer,
+                          fontVariations: const [
+                            FontVariation('wght', 450),
+                            FontVariation('ROND', 100),
+                          ],
+                        ),
+                      ),
+                      shape: StadiumBorder(),
+                      side: BorderSide(
+                        color: theme.colorScheme.onPrimaryContainer,
+                        width: 0.5,
+                      ),
+                      backgroundColor: theme.colorScheme.surface,
+                    );
+                  }).toList(),
+                ),
 
-            SizedBox(height: ResponsiveSpacing.hMedium),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                if (project.pubDev != null && project.pubDev!.isNotEmpty)
-                  Expanded(
-                    child: _buildGithubButton(
-                      theme,
-                      label: 'Pub Dev',
-                      icon: 'assets/icons/pubdev.svg',
-                      url: project.pubDev!,
-                      onPressed: () => _launchUrl(project.pubDev!),
-                    ),
-                  ),
-                SizedBox(width: ResponsiveSpacing.wXSmall),
-                if (project.github != null && project.github!.isNotEmpty)
-                  Expanded(
-                    child: _buildGithubButton(
-                      theme,
-                      label: 'GitHub',
-                      icon: 'assets/icons/github.svg',
-                      url: project.github!,
-                      onPressed: () => _launchUrl(project.github!),
-                    ),
-                  ),
+                SizedBox(height: ResponsiveSpacing.hMedium),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    if (project.pubDev != null && project.pubDev!.isNotEmpty)
+                      Expanded(
+                        child: _buildGithubButton(
+                          theme,
+                          label: 'Pub Dev',
+                          icon: 'assets/icons/pubdev.svg',
+                          url: project.pubDev!,
+                          onPressed: () => _launchUrl(project.pubDev!),
+                        ),
+                      ),
+                    SizedBox(width: ResponsiveSpacing.wXSmall),
+                    if (project.github != null && project.github!.isNotEmpty)
+                      Expanded(
+                        child: _buildGithubButton(
+                          theme,
+                          label: 'GitHub',
+                          icon: 'assets/icons/github.svg',
+                          url: project.github!,
+                          onPressed: () => _launchUrl(project.github!),
+                        ),
+                      ),
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -320,72 +341,87 @@ class _ProjectPageState extends State<ProjectPage> {
   ) {
     return ScrollAnimatedFadeIn(
       delay: const Duration(milliseconds: 800),
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 400),
-        transitionBuilder: (child, anim) =>
-            FadeTransition(opacity: anim, child: child),
-        child: Container(
-          key: ValueKey(project.title),
-          width: double.infinity,
-          height: double.infinity,
-          padding: EdgeInsets.all(24.scale()),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.primaryFixed,
-            borderRadius: BorderRadius.circular(52.scale()),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ...project.description.take(4).toList().asMap().entries.map((
-                  entry,
-                ) {
-                  final index = entry.key;
-                  final resp = entry.value;
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.fastOutSlowIn,
+        alignment: Alignment.topCenter,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 600),
+          layoutBuilder: (currentChild, previousChildren) {
+            // Keeps the layout stable during transition
+            return Stack(
+              alignment: Alignment.topLeft,
+              children: <Widget>[
+                ...previousChildren,
+                if (currentChild != null) currentChild,
+              ],
+            );
+          },
+          transitionBuilder: (child, anim) =>
+              FadeTransition(opacity: anim, child: child),
+          child: Container(
+            key: ValueKey(project.title),
+            width: double.infinity,
+            height: double.infinity,
+            padding: EdgeInsets.all(24.scale()),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primaryFixed,
+              borderRadius: BorderRadius.circular(52.scale()),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  ...project.description.take(4).toList().asMap().entries.map((
+                    entry,
+                  ) {
+                    final index = entry.key;
+                    final resp = entry.value;
 
-                  // Cycle through shapes
-                  final shapes = [
-                    Shapes.c4_sided_cookie,
-                    Shapes.c6_sided_cookie,
-                    Shapes.c7_sided_cookie,
-                    Shapes.c9_sided_cookie,
-                  ];
-                  final shape = shapes[index % shapes.length];
+                    // Cycle through shapes
+                    final shapes = [
+                      Shapes.c4_sided_cookie,
+                      Shapes.c6_sided_cookie,
+                      Shapes.c7_sided_cookie,
+                      Shapes.c9_sided_cookie,
+                    ];
+                    final shape = shapes[index % shapes.length];
 
-                  final colors = [
-                    theme.colorScheme.primary,
-                    theme.colorScheme.tertiary,
-                  ];
-                  final shapeColor = colors[index % colors.length];
+                    final colors = [
+                      theme.colorScheme.primary,
+                      theme.colorScheme.tertiary,
+                    ];
+                    final shapeColor = colors[index % colors.length];
 
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 12.scale()),
-                    child: Row(
-                      children: [
-                        M3Container(
-                          shape,
-                          width: 16.scale(),
-                          height: 16.scale(),
-                          color: shapeColor,
-                          child: const SizedBox(),
-                        ),
-                        SizedBox(width: 12.scale()),
-                        Expanded(
-                          child: Text(
-                            resp,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              color: theme.colorScheme.onPrimaryContainer,
-                              fontVariations: const [
-                                FontVariation('wght', 550),
-                                FontVariation('ROND', 100),
-                              ],
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 12.scale()),
+                      child: Row(
+                        children: [
+                          M3Container(
+                            shape,
+                            width: 16.scale(),
+                            height: 16.scale(),
+                            color: shapeColor,
+                            child: const SizedBox(),
+                          ),
+                          SizedBox(width: 12.scale()),
+                          Expanded(
+                            child: Text(
+                              resp,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                color: theme.colorScheme.onPrimaryContainer,
+                                fontVariations: const [
+                                  FontVariation('wght', 550),
+                                  FontVariation('ROND', 100),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-              ],
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
         ),
