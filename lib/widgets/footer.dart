@@ -28,7 +28,7 @@ class Footer extends StatelessWidget {
           children: [
             if (isMobile) ...[
               _buildCopyright(theme),
-              SizedBox(height: 8.scale()),
+              SizedBox(height: 4.scale()),
               _buildLicense(theme),
               SizedBox(height: 16.scale()),
               _buildMadeWithFlutter(theme),
@@ -56,6 +56,7 @@ class Footer extends StatelessWidget {
 
   Widget _buildCopyright(ThemeData theme) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           'Copyright',
@@ -70,6 +71,7 @@ class Footer extends StatelessWidget {
           color: theme.colorScheme.onSurfaceVariant,
           size: 14.scale(),
         ),
+
         SizedBox(width: 3.scale()),
         Text(
           '2025 Mudit Purohit',
