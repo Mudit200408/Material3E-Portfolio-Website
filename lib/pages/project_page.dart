@@ -305,7 +305,7 @@ class _ProjectPageState extends State<ProjectPage> {
                   children: [
                     if (project.pubDev != null && project.pubDev!.isNotEmpty)
                       Expanded(
-                        child: _buildGithubButton(
+                        child: _buildButton(
                           theme,
                           label: 'Pub Dev',
                           icon: 'assets/icons/pubdev.svg',
@@ -316,7 +316,7 @@ class _ProjectPageState extends State<ProjectPage> {
                     SizedBox(width: ResponsiveSpacing.wXSmall),
                     if (project.github != null && project.github!.isNotEmpty)
                       Expanded(
-                        child: _buildGithubButton(
+                        child: _buildButton(
                           theme,
                           label: 'GitHub',
                           icon: 'assets/icons/github.svg',
@@ -429,7 +429,7 @@ class _ProjectPageState extends State<ProjectPage> {
     );
   }
 
-  Widget _buildGithubButton(
+  Widget _buildButton(
     ThemeData theme, {
     required String label,
     required String icon,
@@ -440,14 +440,19 @@ class _ProjectPageState extends State<ProjectPage> {
       onPressed: onPressed,
       icon: SvgPicture.asset(
         icon,
-        width: 18.scale(),
-        height: 18.scale(),
+        width: 22.scale(),
+        height: 22.scale(),
         colorFilter: ColorFilter.mode(
           theme.colorScheme.onPrimary,
           BlendMode.srcIn,
         ),
       ),
-      label: Text(label),
+      label: Text(
+        label,
+        style: theme.textTheme.labelLarge?.copyWith(
+          color: theme.colorScheme.onPrimary,
+        ),
+      ),
       style: ElevatedButton.styleFrom(
         minimumSize: Size(150.scale(), 75.scale()),
         backgroundColor: theme.colorScheme.onPrimaryContainer,
