@@ -19,7 +19,7 @@ const _textTheme = TextTheme(
   labelSmall: TextStyle(fontFamily: 'GoogleSansFlex'),
 );
 
-final MaterialTheme _materialTheme = MaterialTheme(_textTheme);
+const MaterialTheme _materialTheme = MaterialTheme(_textTheme);
 
 final ThemeData lightTheme = _materialTheme.light();
 

@@ -15,7 +15,7 @@ dependencies:
   motor: ^1.1.0
   responsive_framework: ^1.5.1
   responsive_scaler: ^0.1.0
-  supabase_flutter: ^2.10.3
+  supabase_flutter: ^2.12.0
   flutter_m3shapes_extended: ^1.0.0
   avatar_glow: ^3.0.1
   m3e_collection: ^0.3.7
@@ -27,14 +27,13 @@ dependencies:
   dio: ^5.9.0
   pdfx: ^2.9.2
   open_file: ^3.5.10
-  path_provider: ^2.0.11
+  path_provider: ^2.1.5
   web: ^1.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
@@ -49,13 +48,3 @@ flutter:
     - family: GoogleSansFlex
       fonts:
         - asset: assets/fonts/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf
-
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "web/favicon.png"
-  web:
-    generate: true
-    image_path: "web/favicon.png"
-    background_color: "#0175C2"
-    theme_color: "#0175C2"

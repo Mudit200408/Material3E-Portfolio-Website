@@ -24,14 +24,14 @@ class SegmentButton extends StatelessWidget {
     return InkWell(
       splashColor: selectedColor.withValues(alpha: 0.4),
       onTap: onTap,
-      customBorder: StadiumBorder(),
+      customBorder: const StadiumBorder(),
       child: AnimatedContainer(
         width: width,
         height: height,
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOutCubic,
         decoration: ShapeDecoration(
-          shape: StadiumBorder(),
+          shape: const StadiumBorder(),
           color: isSelected ? selectedColor : Colors.transparent,
         ),
         padding: EdgeInsets.symmetric(

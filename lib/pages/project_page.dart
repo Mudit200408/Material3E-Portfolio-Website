@@ -66,7 +66,7 @@ class _ProjectPageState extends State<ProjectPage> {
       child: ConstrainedBox(
         constraints: isDesktop
             ? BoxConstraints(maxWidth: 600.scale(), minHeight: 800.scale())
-            : BoxConstraints(),
+            : const BoxConstraints(),
         child: Container(
           padding: isMobile
               ? EdgeInsets.zero
@@ -142,6 +142,7 @@ class _ProjectPageState extends State<ProjectPage> {
     bool isDesktop,
     List<ProjectModel> projects,
   ) {
+    final isWeb = isDesktop || isTablet;
     return ScrollAnimatedFadeIn(
       delay: const Duration(milliseconds: 300),
       slideOffset: -0.1,
@@ -174,7 +175,7 @@ class _ProjectPageState extends State<ProjectPage> {
             autoPlayInterval: const Duration(seconds: 15),
             consumeMaxWeight: true,
             enableSplash: false,
-            isWeb: isDesktop,
+            isWeb: isWeb,
             itemSnapping: true,
             shrinkExtent: 10.scale(),
             padding: EdgeInsets.all(8.scale()),
@@ -288,7 +289,7 @@ class _ProjectPageState extends State<ProjectPage> {
                           ],
                         ),
                       ),
-                      shape: StadiumBorder(),
+                      shape: const StadiumBorder(),
                       side: BorderSide(
                         color: theme.colorScheme.onPrimaryContainer,
                         width: 0.5,

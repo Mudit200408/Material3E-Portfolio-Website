@@ -40,7 +40,9 @@ class AppRoot extends StatelessWidget {
           ],
         );
         // Then apply ResponsiveScaler
-        return ResponsiveScaler.scale(context: context, child: child);
+        return SelectionArea(
+          child: ResponsiveScaler.scale(context: context, child: child),
+        );
       },
       debugShowCheckedModeBanner: false,
       theme: lightTheme,

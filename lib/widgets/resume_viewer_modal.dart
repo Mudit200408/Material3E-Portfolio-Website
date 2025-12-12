@@ -122,7 +122,7 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
             ),
             Expanded(
               child: _error != null
-                  ? Center(child: Text('Error loading PDF'))
+                  ? const Center(child: Text('Error loading PDF'))
                   : PdfViewPinch(controller: _pdfController),
             ),
             Padding(

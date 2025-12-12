@@ -303,7 +303,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMobileAppBar(BuildContext context, ThemeData theme) {
-    return Row(children: [const Spacer()]);
+    return const Row(children: [Spacer()]);
   }
 
   Widget _buildDesktopAppBar(BuildContext context, ThemeData theme) {
@@ -691,7 +691,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: isSelected
               ? theme.colorScheme.primary
               : Colors.transparent,
-          shape: StadiumBorder(),
+          shape: const StadiumBorder(),
           padding: EdgeInsets.symmetric(
             horizontal: ResponsiveSpacing.wXSmall,
             vertical: ResponsiveSpacing.hXSmall,

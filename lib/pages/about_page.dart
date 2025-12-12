@@ -178,7 +178,7 @@ class _AboutPageState extends State<AboutPage> {
     return Container(
       decoration: ShapeDecoration(
         color: theme.colorScheme.inversePrimary,
-        shape: StadiumBorder(),
+        shape: const StadiumBorder(),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
