@@ -22,14 +22,15 @@ Future<void> main() async {
   runApp(const AppRoot());
 }
 
+// lib/main.dart
 class AppRoot extends StatelessWidget {
   const AppRoot({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // ✅ REMOVED SelectionArea from here
       builder: (context, child) {
-        // Wrap with ResponsiveBreakpoints
         child = ResponsiveBreakpoints.builder(
           child: child!,
           breakpoints: [
@@ -39,10 +40,8 @@ class AppRoot extends StatelessWidget {
             const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
           ],
         );
-        // Then apply ResponsiveScaler
-        return SelectionArea(
-          child: ResponsiveScaler.scale(context: context, child: child),
-        );
+        // We only keep the scaler here
+        return ResponsiveScaler.scale(context: context, child: child);
       },
       debugShowCheckedModeBanner: false,
       theme: lightTheme,

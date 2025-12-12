@@ -209,31 +209,33 @@ class _HomePageState extends State<HomePage> {
     final theme = Theme.of(context);
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
 
-    return Scaffold(
-      drawer: isMobile
-          ? AppDrawer(
-              currentSection: _currentSection, // 1. Pass the current state
-              onNavigate: _scrollToSection, // 2. Pass the scroll function
-            )
-          : null,
-      body: NotificationListener<UserScrollNotification>(
-        onNotification: _onUserScroll,
-        child: Stack(
-          children: [
-            // Background Shapes
-            AnimatedBackgroundShapes(
-              scrollController: _scrollController,
-              currentSection: _currentSection,
-            ),
-            // Main Content
-            CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                _buildAppBar(context, theme, isMobile),
-                ..._buildPageSections(context, theme, isMobile),
-              ],
-            ),
-          ],
+    return SelectionArea(
+      child: Scaffold(
+        drawer: isMobile
+            ? AppDrawer(
+                currentSection: _currentSection, // 1. Pass the current state
+                onNavigate: _scrollToSection, // 2. Pass the scroll function
+              )
+            : null,
+        body: NotificationListener<UserScrollNotification>(
+          onNotification: _onUserScroll,
+          child: Stack(
+            children: [
+              // Background Shapes
+              AnimatedBackgroundShapes(
+                scrollController: _scrollController,
+                currentSection: _currentSection,
+              ),
+              // Main Content
+              CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  _buildAppBar(context, theme, isMobile),
+                  ..._buildPageSections(context, theme, isMobile),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -453,9 +455,9 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          RichText(
+          Text.rich(
             textAlign: TextAlign.center,
-            text: TextSpan(
+            TextSpan(
               children: [
                 TextSpan(
                   text: 'Hello, I am ',
@@ -524,9 +526,9 @@ class _HomePageState extends State<HomePage> {
           color: theme.colorScheme.primaryFixed.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(18),
         ),
-        child: RichText(
+        child: Text.rich(
           textAlign: TextAlign.center,
-          text: TextSpan(
+          TextSpan(
             children: [
               TextSpan(
                 text: 'I am a skilled ',
