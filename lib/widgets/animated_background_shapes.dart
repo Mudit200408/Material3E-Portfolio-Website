@@ -374,15 +374,12 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
               child: Transform.rotate(
                 angle:
                     data.rotation + (scrollOffset * 0.0005), // Slower rotation
-                child: Opacity(
-                  opacity: 0.5, // Subtle opacity
-                  child: M3Container(
-                    data.shape,
-                    width: shapeSize,
-                    height: shapeSize,
-                    color: color,
-                    child: const SizedBox(),
-                  ),
+                child: M3Container(
+                  data.shape,
+                  width: shapeSize,
+                  height: shapeSize,
+                  color: color.withValues(alpha: 0.5),
+                  child: const SizedBox(),
                 ),
               ),
             );
