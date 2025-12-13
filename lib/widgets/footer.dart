@@ -4,10 +4,16 @@ import 'package:flutter/material.dart';
 
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class Footer extends StatelessWidget {
+class Footer extends StatefulWidget {
   const Footer({super.key});
 
+  @override
+  State<Footer> createState() => _FooterState();
+}
+
+class _FooterState extends State<Footer> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -54,6 +60,16 @@ class Footer extends StatelessWidget {
     );
   }
 
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
+      }
+    }
+  }
+
   Widget _buildCopyright(ThemeData theme) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -85,12 +101,17 @@ class Footer extends StatelessWidget {
   }
 
   Widget _buildLicense(ThemeData theme) {
-    return Text(
-      'Open-sourced under the MIT License',
-      style: theme.textTheme.bodySmall?.copyWith(
-        color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+    return InkWell(
+      onTap: () => _launchUrl(
+        'https://github.com/Mudit200408/Material3E-Portfolio-Website',
       ),
-      textAlign: TextAlign.center,
+      child: Text(
+        'Open-sourced under the MIT License',
+        style: theme.textTheme.bodySmall?.copyWith(
+          color: theme.colorScheme.primary,
+        ),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 

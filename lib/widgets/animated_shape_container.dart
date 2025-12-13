@@ -1,5 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:motor/motor.dart';
 
@@ -40,10 +41,13 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
     Shapes.pill,
     Shapes.c9_sided_cookie,
     Shapes.slanted,
-    Shapes.arrow,
+    Shapes.l4_leaf_clover,
   ];
 
   void _onTap() {
+    // Add Haptics
+    HapticFeedback.mediumImpact();
+
     // Trigger bounce before changing shape for smooth transition
     setState(() {
       _bounceScale = 1.2; // Scale up first
