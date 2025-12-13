@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +21,7 @@ class _ContactPageState extends State<ContactPage> {
   final _emailController = TextEditingController();
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
+  final haptic = HapticFeedback.lightImpact();
 
   final String _myEmail = '[EMAIL_ADDRESS]'; //TODO: Add your email address
   final String _githubUrl = '[GITHUB_URL]'; //TODO: Add your github url
@@ -37,6 +39,8 @@ class _ContactPageState extends State<ContactPage> {
   }
 
   Future<void> _launchUrl(String url) async {
+    haptic;
+
     if (!await launchUrl(Uri.parse(url))) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -47,6 +51,8 @@ class _ContactPageState extends State<ContactPage> {
   }
 
   Future<void> _sendEmail() async {
+    haptic;
+
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSending = true;

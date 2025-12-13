@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:portfolio_web/models/nav_section_enums.dart';
@@ -13,6 +14,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final haptic = HapticFeedback.lightImpact();
 
     return Drawer(
       backgroundColor: theme.colorScheme.surface,
@@ -53,6 +55,7 @@ class AppDrawer extends StatelessWidget {
               title: 'Home',
               isSelected: currentSection == NavSection.home,
               onTap: () {
+                haptic;
                 Navigator.pop(context);
                 onNavigate?.call(NavSection.home);
               },
@@ -63,6 +66,7 @@ class AppDrawer extends StatelessWidget {
               title: 'About',
               isSelected: currentSection == NavSection.about,
               onTap: () {
+                haptic;
                 Navigator.pop(context);
                 onNavigate?.call(NavSection.about);
               },
@@ -73,6 +77,7 @@ class AppDrawer extends StatelessWidget {
               title: 'Projects',
               isSelected: currentSection == NavSection.projects,
               onTap: () {
+                haptic;
                 Navigator.pop(context);
                 onNavigate?.call(NavSection.projects);
               },
@@ -83,6 +88,7 @@ class AppDrawer extends StatelessWidget {
               title: 'Experience',
               isSelected: currentSection == NavSection.experience,
               onTap: () {
+                haptic;
                 Navigator.pop(context);
                 onNavigate?.call(NavSection.experience);
               },
@@ -93,6 +99,7 @@ class AppDrawer extends StatelessWidget {
               title: 'Contact Me',
               isSelected: currentSection == NavSection.contact,
               onTap: () {
+                haptic;
                 Navigator.pop(context);
                 onNavigate?.call(NavSection.contact);
               },

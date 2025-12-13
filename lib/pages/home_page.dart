@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/widgets/resume_viewer_modal.dart';
@@ -35,6 +36,8 @@ class _HomePageState extends State<HomePage> {
   NavSection _currentSection = NavSection.home;
   bool _isProgrammaticScroll = false;
   final _scrollController = ScrollController();
+  final haptic = HapticFeedback.lightImpact();
+
   // Global keys for different sections
   final Map<NavSection, GlobalKey> _sectionKeys = {
     NavSection.home: GlobalKey(),
@@ -131,6 +134,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _scrollToSection(NavSection section) async {
+    haptic;
     // 1. Update state immediately on click
     setState(() {
       _currentSection = section;
@@ -170,6 +174,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openResumeModal() async {
+    haptic;
     setState(() {
       isLoading = true;
     });

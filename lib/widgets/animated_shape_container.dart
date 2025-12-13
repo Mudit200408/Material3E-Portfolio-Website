@@ -46,7 +46,7 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
 
   void _onTap() {
     // Add Haptics
-    HapticFeedback.mediumImpact();
+    HapticFeedback.lightImpact();
 
     // Trigger bounce before changing shape for smooth transition
     setState(() {
