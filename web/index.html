@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,23 +28,118 @@
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
   <title>Mudit's Portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Loading Animation Script & Styles -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    body {
+      background-color: #fef7ff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    #loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fef7ff;
+      z-index: 9999;
+    }
+
+    .loading-text {
+      margin-top: 20px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 18px;
+      color: #333;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
+  <div id="loader">
+    <lottie-player src="loading.json" background="transparent" speed="1" style="width: 250px; height: 250px;" loop
+      autoplay>
+    </lottie-player>
+    <div class="loading-text" id="loading-msg">Inhaling pixels...</div>
+  </div>
+
   <script src='https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.min.mjs' type='module'></script>
   <script type='module'>
-  var { pdfjsLib } = globalThis;
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.mjs';
+    var { pdfjsLib } = globalThis;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.mjs';
 
-  var pdfRenderOptions = {
-    cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/cmaps/',
-    cMapPacked: true,
-  }
+    var pdfRenderOptions = {
+      cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/cmaps/',
+      cMapPacked: true,
+    }
   </script>
+
+  <script>
+    // Yoga texts
+    const messages = [
+      "Inhaling pixels...",
+      "Exhaling bugs...",
+      "Stretching the responsiveness...",
+      "Aligning the chakras...",
+      "Balancing the digital energy...",
+      "Finding inner peace...",
+      "Namaste, loading..."
+    ];
+    let msgIndex = 0;
+    const msgElement = document.getElementById('loading-msg');
+
+    // Cycle text
+    const textInterval = setInterval(() => {
+      msgIndex = (msgIndex + 1) % messages.length;
+      if (msgElement) msgElement.innerText = messages[msgIndex];
+    }, 1500);
+
+    // Robust removal logic
+    function removeLoader() {
+      const loader = document.getElementById('loader');
+      if (loader) {
+        loader.style.opacity = '0';
+        loader.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => {
+          loader.remove();
+          clearInterval(textInterval);
+        }, 500);
+      }
+    }
+
+    // Observer for Flutter elements
+    const observer = new MutationObserver((mutations) => {
+      if (document.querySelector('flt-glass-pane') || document.querySelector('flutter-view')) {
+        removeLoader();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Failsafe: When window loads, simpler check (optional, but good)
+    window.addEventListener('load', () => {
+      // Wait a bit for flutter to potentially start
+    });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
+
 </html>
