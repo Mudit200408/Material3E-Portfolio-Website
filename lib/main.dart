@@ -29,7 +29,6 @@ class AppRoot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // ✅ REMOVED SelectionArea from here
       builder: (context, child) {
         child = ResponsiveBreakpoints.builder(
           child: child!,
@@ -37,10 +36,8 @@ class AppRoot extends StatelessWidget {
             const Breakpoint(start: 0, end: 600, name: MOBILE),
             const Breakpoint(start: 601, end: 1200, name: TABLET),
             const Breakpoint(start: 1201, end: 1920, name: DESKTOP),
-            const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
           ],
         );
-        // We only keep the scaler here
         return ResponsiveScaler.scale(context: context, child: child);
       },
       debugShowCheckedModeBanner: false,

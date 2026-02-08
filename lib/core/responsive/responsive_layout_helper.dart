@@ -14,17 +14,6 @@ class ResponsiveLayoutHelper {
   static bool isDesktop(BuildContext context) =>
       ResponsiveBreakpoints.of(context).isDesktop;
 
-  // Get adaptive padding
-  static EdgeInsets getHorizontalPadding(BuildContext context) {
-    if (isMobile(context)) {
-      return EdgeInsets.symmetric(horizontal: 16.scale());
-    } else if (isTablet(context)) {
-      return EdgeInsets.symmetric(horizontal: 32.scale());
-    } else {
-      return EdgeInsets.symmetric(horizontal: 48.scale());
-    }
-  }
-
   // Get max content width
   static double getMaxContentWidth(BuildContext context) {
     if (isMobile(context)) {
@@ -34,23 +23,6 @@ class ResponsiveLayoutHelper {
     } else {
       return 1200.scale();
     }
-  }
-
-  // Get responsive axis for Wrap/Flex
-  static Axis getFlexDirection(BuildContext context) {
-    return isMobile(context) ? Axis.vertical : Axis.horizontal;
-  }
-
-  // Get number of columns for grid
-  static int getGridCrossAxisCount(
-    BuildContext context, {
-    int mobile = 1,
-    int tablet = 2,
-    int desktop = 3,
-  }) {
-    if (isMobile(context)) return mobile;
-    if (isTablet(context)) return tablet;
-    return desktop;
   }
 
   // Responsive value selector

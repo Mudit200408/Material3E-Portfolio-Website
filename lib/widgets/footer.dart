@@ -24,9 +24,7 @@ class _FooterState extends State<Footer> {
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: 24.scale(),
-          horizontal: ResponsiveLayoutHelper.getHorizontalPadding(
-            context,
-          ).horizontal,
+          horizontal: 48.scale(),
         ),
         color: theme.colorScheme.surfaceContainer.withValues(alpha: 0.5),
         child: Column(

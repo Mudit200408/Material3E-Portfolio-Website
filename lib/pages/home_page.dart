@@ -375,7 +375,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         SizedBox(height: ResponsiveSpacing.hCustom(0.05)),
         Padding(
-          padding: ResponsiveLayoutHelper.getHorizontalPadding(context),
+          padding: EdgeInsets.symmetric(horizontal: 48.scale()),
           child: Column(
             children: [
               _buildProfileSection(context, theme),
@@ -406,7 +406,7 @@ class _HomePageState extends State<HomePage> {
               maxWidth: ResponsiveLayoutHelper.getMaxContentWidth(context),
             ),
             child: Padding(
-              padding: ResponsiveLayoutHelper.getHorizontalPadding(context),
+              padding: EdgeInsets.symmetric(horizontal: 48.scale()),
               child: Column(
                 children: [
                   _buildProfileSection(context, theme),
