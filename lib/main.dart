@@ -14,9 +14,9 @@ Future<void> main() async {
     anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
   ResponsiveScaler.init(
-    designWidth: 1920,
+    designWidth: 1680,
     minScale: 0.8,
-    maxScale: 1.2,
+    maxScale: 1.5,
     maxAccessibilityScale: 1.8,
   );
   runApp(const AppRoot());

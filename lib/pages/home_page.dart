@@ -213,6 +213,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
+    // final devWidth = MediaQuery.of(context).size.width;
+    // print(devWidth);
 
     return SelectionArea(
       child: Scaffold(
