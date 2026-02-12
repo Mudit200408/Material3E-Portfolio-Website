@@ -21,7 +21,7 @@ class ResponsiveLayoutHelper {
     } else if (isTablet(context)) {
       return 800;
     } else {
-      return 1200.scale();
+      return 1200.r;
     }
   }
 

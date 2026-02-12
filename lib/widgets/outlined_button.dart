@@ -27,10 +27,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
       child: GestureDetector(
         onTap: widget.onPressed,
         child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 24.scale(),
-            vertical: 18.scale(),
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 24.r, vertical: 18.r),
           decoration: ShapeDecoration(
             shape: StadiumBorder(
               side: BorderSide(
@@ -54,7 +51,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
                       : theme.colorScheme.primary,
                 ),
               ),
-              SizedBox(width: 8.scale()),
+              SizedBox(width: 8.w),
               SvgPicture.asset(
                 'assets/icons/document.svg',
                 colorFilter: ColorFilter.mode(
@@ -63,8 +60,8 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
                       : theme.colorScheme.primary,
                   BlendMode.srcIn,
                 ),
-                width: 28.scale(),
-                height: 28.scale(),
+                width: 28.r,
+                height: 28.r,
               ),
             ],
           ),

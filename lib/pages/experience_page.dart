@@ -28,10 +28,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
     final theme = Theme.of(context);
 
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 24.scale(),
-        vertical: 58.scale(),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 24.r, vertical: 58.r),
       child: Column(
         children: [
           ScrollAnimatedFadeIn(
@@ -46,7 +43,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
               ),
             ),
           ),
-          SizedBox(height: 8.scale()),
+          SizedBox(height: 8.r),
           ScrollAnimatedFadeIn(
             delay: const Duration(milliseconds: 200),
             child: Text(
@@ -57,7 +54,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 58.scale()),
+          SizedBox(height: 58.r),
           FutureBuilder<List<ExperienceModel>>(
             future: _experienceFuture,
             builder: (context, snapshot) {

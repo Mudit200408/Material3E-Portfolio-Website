@@ -105,9 +105,9 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                   Expanded(
                     child: Text(
                       'Resume',
-                      style: theme.textTheme.titleLarge?.copyWith(
+                      style: theme.textTheme.headlineMedium?.copyWith(
                         fontVariations: const [
-                          FontVariation('wght', 600),
+                          FontVariation('wght', 800),
                           FontVariation('ROND', 100),
                         ],
                       ),
@@ -126,17 +126,14 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                   : PdfViewPinch(controller: _pdfController),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.scale(),
-                vertical: 6.scale(),
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 6.r),
               child: Column(
                 children: [
                   if (_isDownloading)
                     Column(
                       children: [
                         LinearProgressIndicator(value: _downloadProgress),
-                        SizedBox(height: 8.scale()),
+                        SizedBox(height: 8.h),
                         Text(
                           '${(_downloadProgress * 100).toStringAsFixed(0)}% downloading...',
                         ),
@@ -147,7 +144,7 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                       children: [
                         Expanded(
                           child: SizedBox(
-                            height: 48.scale(),
+                            height: 48.h,
                             child: ElevatedButton.icon(
                               icon: const Icon(Icons.open_in_new),
                               label: const Text('Open'),
@@ -175,10 +172,10 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 12.scale()),
+                        SizedBox(width: 12.w),
                         Expanded(
                           child: SizedBox(
-                            height: 48.scale(),
+                            height: 48.h,
                             child: ElevatedButton.icon(
                               onPressed: _downloadAndOpen,
                               icon: const Icon(Icons.download),

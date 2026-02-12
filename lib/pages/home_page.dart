@@ -324,8 +324,8 @@ class _HomePageState extends State<HomePage> {
       children: [
         SvgPicture.asset(
           'assets/logo/logo.svg',
-          height: 40.scale(),
-          width: 40.scale(),
+          height: 40.r,
+          width: 40.r,
         ),
         const Spacer(flex: 4),
         Container(
@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> {
             color: theme.colorScheme.primaryFixed,
             shape: const StadiumBorder(),
           ),
-          padding: EdgeInsets.all(8.scale()),
+          padding: EdgeInsets.all(8.r),
           child: Row(
             children: [
               _buildTab(
@@ -385,19 +385,19 @@ class _HomePageState extends State<HomePage> {
       children: [
         SizedBox(height: ResponsiveSpacing.hCustom(0.05)),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 48.scale()),
+          padding: EdgeInsets.symmetric(horizontal: 48.r),
           child: Column(
             children: [
               _buildProfileSection(context, theme),
-              SizedBox(height: ResponsiveSpacing.hXLarge),
+              SizedBox(height: 32.h),
               _buildIntroText(context, theme),
-              SizedBox(height: ResponsiveSpacing.hMedium),
+              SizedBox(height: 16.h),
               _buildInfoBox(context, theme),
-              SizedBox(height: ResponsiveSpacing.hSmall),
+              SizedBox(height: 8.h),
               _buildSkillsSection(context, theme),
-              SizedBox(height: ResponsiveSpacing.hMedium),
+              SizedBox(height: 16.h),
               _buildActionButtons(context, isMobile: true),
-              SizedBox(height: ResponsiveSpacing.hLarge),
+              SizedBox(height: 24.h),
             ],
           ),
         ),
@@ -409,25 +409,24 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: ResponsiveSpacing.hCustom(0.1)),
         Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: ResponsiveLayoutHelper.getMaxContentWidth(context),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 48.scale()),
+              padding: EdgeInsets.symmetric(horizontal: 48.r),
               child: Column(
                 children: [
                   _buildProfileSection(context, theme),
-                  SizedBox(height: ResponsiveSpacing.hXLarge),
+                  SizedBox(height: 32.h),
                   _buildIntroText(context, theme),
-                  SizedBox(height: ResponsiveSpacing.hXSmall),
+                  SizedBox(height: 4.h),
                   _buildInfoBox(context, theme),
                   _buildSkillsSection(context, theme),
-                  SizedBox(height: ResponsiveSpacing.hCustom(0.04)),
+                  SizedBox(height: 12.h),
                   _buildActionButtons(context, isMobile: false),
-                  SizedBox(height: ResponsiveSpacing.hLarge),
+                  SizedBox(height: 24.h),
                 ],
               ),
             ),
@@ -447,8 +446,8 @@ class _HomePageState extends State<HomePage> {
 
     return ScrollAnimatedFadeIn(
       child: AnimatedShapeContainer(
-        width: imageSize.scale(),
-        height: imageSize.scale(),
+        width: imageSize.r,
+        height: imageSize.r,
         color: theme.colorScheme.primaryFixed,
         border: BorderSide(
           color: theme.colorScheme.onPrimaryContainer,
@@ -457,8 +456,8 @@ class _HomePageState extends State<HomePage> {
         child: Image.network(_getProfileUrl()),
         // child: Image.asset(
         //   'assets/images/profile.png',
-        //   width: imageSize.scale(),
-        //   height: imageSize.scale(),
+        //   width: imageSize.r,
+        //   height: imageSize.r,
         // ),
       ),
     );
@@ -484,7 +483,7 @@ class _HomePageState extends State<HomePage> {
                       FontVariation('opsz', 19),
                       FontVariation('GRAD', 30),
                     ],
-                    letterSpacing: 0.2.scale(),
+                    letterSpacing: 0.2.r,
                   ),
                 ),
                 TextSpan(
@@ -503,7 +502,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          SizedBox(height: ResponsiveSpacing.hSmall),
+          SizedBox(height: 8.h),
           Text(
             'Cross Platform App Developer',
             textAlign: TextAlign.center,
@@ -525,21 +524,18 @@ class _HomePageState extends State<HomePage> {
     return ScrollAnimatedFadeIn(
       delay: 400.ms,
       child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: ResponsiveSpacing.wSmall,
-          vertical: ResponsiveSpacing.hSmall,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 8.r),
         margin: EdgeInsets.symmetric(
           horizontal: ResponsiveLayoutHelper.responsiveValue(
             context,
-            mobile: ResponsiveSpacing.wXSmall,
-            desktop: ResponsiveSpacing.wMedium,
+            mobile: 4.r,
+            desktop: 16.r,
           ),
-          vertical: ResponsiveSpacing.hMedium,
+          vertical: 16.r,
         ),
         decoration: BoxDecoration(
           color: theme.colorScheme.primaryFixed.withValues(alpha: 0.5),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(18.r),
         ),
         child: Text.rich(
           textAlign: TextAlign.center,
@@ -649,15 +645,12 @@ class _HomePageState extends State<HomePage> {
     return ScrollAnimatedFadeIn(
       delay: 600.ms,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: ResponsiveSpacing.wMedium,
-          vertical: ResponsiveSpacing.hMedium,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 16.r),
         child: isLoading
             ? const Loader()
             : Wrap(
-                spacing: ResponsiveSpacing.wXSmall,
-                runSpacing: ResponsiveSpacing.hXSmall,
+                spacing: 4.r,
+                runSpacing: 4.r,
                 alignment: WrapAlignment.center,
                 children: skills.asMap().entries.map((entry) {
                   final index = entry.key;
@@ -677,7 +670,7 @@ class _HomePageState extends State<HomePage> {
       delay: 800.ms,
       child: Flex(
         direction: isMobile ? Axis.vertical : Axis.horizontal,
-        spacing: ResponsiveSpacing.hSmall,
+        spacing: 8.r,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomOutlinedButton(
@@ -721,7 +714,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Padding(
-      padding: EdgeInsets.only(left: 6.scale()),
+      padding: EdgeInsets.only(left: 6.r),
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
@@ -729,18 +722,15 @@ class _HomePageState extends State<HomePage> {
               ? theme.colorScheme.primary
               : Colors.transparent,
           shape: const StadiumBorder(),
-          padding: EdgeInsets.symmetric(
-            horizontal: ResponsiveSpacing.wMedium,
-            vertical: ResponsiveSpacing.hXSmall,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 4.r),
         ),
         child: Row(
           children: [
             if (isSelected) ...[
               SvgPicture.asset(
                 iconPath,
-                height: 18.scale(),
-                width: 18.scale(),
+                height: 18.r,
+                width: 18.r,
                 colorFilter: const ColorFilter.mode(
                   Colors.white,
                   BlendMode.srcIn,
@@ -752,7 +742,7 @@ class _HomePageState extends State<HomePage> {
               text,
               style: theme.textTheme.labelLarge?.copyWith(
                 color: isSelected ? Colors.white : Colors.black,
-                fontWeight: FontWeight.w500,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
               ),
             ),
           ],

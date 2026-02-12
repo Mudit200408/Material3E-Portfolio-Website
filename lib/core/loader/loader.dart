@@ -10,7 +10,7 @@ class Loader extends StatelessWidget {
     final theme = Theme.of(context);
     return Center(
       child: Container(
-        padding: EdgeInsets.all(4.scale()),
+        padding: EdgeInsets.all(4.r),
         decoration: BoxDecoration(
           color: theme.colorScheme.primaryFixed,
           shape: BoxShape.circle,

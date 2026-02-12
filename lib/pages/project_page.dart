@@ -56,26 +56,23 @@ class _ProjectPageState extends State<ProjectPage> {
     return Container(
       color: Colors.transparent,
       margin: isMobile
-          ? EdgeInsets.all(21.scale())
+          ? EdgeInsets.all(21.r)
           : (isTablet
-                ? EdgeInsetsGeometry.all(21.scale())
-                : EdgeInsets.symmetric(
-                    horizontal: 180.scale(),
-                    vertical: 28.scale(),
-                  )),
+                ? EdgeInsetsGeometry.all(21.r)
+                : EdgeInsets.symmetric(horizontal: 180.r, vertical: 28.r)),
       child: ConstrainedBox(
         constraints: isDesktop
-            ? BoxConstraints(maxWidth: 600.scale(), minHeight: 800.scale())
+            ? BoxConstraints(maxWidth: 600.w, minHeight: 800.h)
             : const BoxConstraints(),
         child: Container(
           padding: isMobile
               ? EdgeInsets.zero
               : EdgeInsets.symmetric(
-                  vertical: (isTablet ? 12.scale() : 50.scale()),
-                  horizontal: (isTablet ? 12.scale() : 80.scale()),
+                  vertical: (isTablet ? 12.r : 50.r),
+                  horizontal: (isTablet ? 12.r : 80.r),
                 ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(52.scale()),
+            borderRadius: BorderRadius.circular(52.r),
             // color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
           ),
           child: FutureBuilder<List<ProjectModel>>(
@@ -92,7 +89,7 @@ class _ProjectPageState extends State<ProjectPage> {
               final projects = snapshot.data!;
 
               return Column(
-                spacing: ResponsiveSpacing.hLarge,
+                spacing: 24.r,
                 children: [
                   // --- CAROUSEL SECTION ---
                   _buildCarouselWidget(isMobile, isTablet, isDesktop, projects),
@@ -108,7 +105,7 @@ class _ProjectPageState extends State<ProjectPage> {
                         child: Flex(
                           direction: isMobile ? Axis.vertical : Axis.horizontal,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          spacing: ResponsiveSpacing.hSmall,
+                          spacing: 8.r,
                           children: [
                             Expanded(
                               flex: isMobile ? 2 : 3,
@@ -148,7 +145,7 @@ class _ProjectPageState extends State<ProjectPage> {
       slideOffset: -0.1,
       autoRebuild: true,
       child: SizedBox(
-        height: isMobile ? 280.scale() : (isTablet ? 350.scale() : 500.scale()),
+        height: isMobile ? 280.r : (isTablet ? 350.r : 500.r),
         // We add a NotificationListener to get the current index
         child: NotificationListener<ScrollNotification>(
           onNotification: (notification) {
@@ -177,12 +174,10 @@ class _ProjectPageState extends State<ProjectPage> {
             enableSplash: false,
             isWeb: isWeb,
             itemSnapping: true,
-            shrinkExtent: 10.scale(),
-            padding: EdgeInsets.all(8.scale()),
+            shrinkExtent: 10.r,
+            padding: EdgeInsets.all(8.r),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                isMobile ? 32.scale() : 52.scale(),
-              ),
+              borderRadius: BorderRadius.circular(isMobile ? 32.r : 52.r),
             ),
             children: List.generate(projects.length, (index) {
               final imagePath = projects[index].image;
@@ -196,7 +191,7 @@ class _ProjectPageState extends State<ProjectPage> {
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       color: Colors.grey[300],
-                      child: const Icon(Icons.broken_image, size: 50),
+                      child: Icon(Icons.broken_image, size: 50.r),
                     );
                   },
                 );
@@ -214,9 +209,7 @@ class _ProjectPageState extends State<ProjectPage> {
               }
 
               return ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  isMobile ? 32.scale() : 52.scale(),
-                ),
+                borderRadius: BorderRadius.circular(isMobile ? 32.r : 52.r),
                 child: imageWidget,
               );
             }),
@@ -250,10 +243,10 @@ class _ProjectPageState extends State<ProjectPage> {
               FadeTransition(opacity: anim, child: child),
           child: Container(
             key: ValueKey(project.image),
-            padding: EdgeInsets.all(24.scale()),
+            padding: EdgeInsets.all(24.r),
             decoration: BoxDecoration(
               color: theme.colorScheme.primaryFixed,
-              borderRadius: BorderRadius.circular(52.scale()),
+              borderRadius: BorderRadius.circular(52.r),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -273,10 +266,10 @@ class _ProjectPageState extends State<ProjectPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: ResponsiveSpacing.hMedium),
+                SizedBox(height: 16.r),
                 Wrap(
-                  spacing: isMobile ? 2.scale() : 4.scale(),
-                  runSpacing: isMobile ? 1.5.scale() : 4.scale(),
+                  spacing: isMobile ? 2.r : 4.r,
+                  runSpacing: isMobile ? 1.5.r : 4.r,
                   children: project.tags.map((tag) {
                     return Chip(
                       label: Text(
@@ -299,7 +292,7 @@ class _ProjectPageState extends State<ProjectPage> {
                   }).toList(),
                 ),
 
-                SizedBox(height: ResponsiveSpacing.hMedium),
+                SizedBox(height: 16.r),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -314,7 +307,7 @@ class _ProjectPageState extends State<ProjectPage> {
                           onPressed: () => _launchUrl(project.pubDev!),
                         ),
                       ),
-                    SizedBox(width: ResponsiveSpacing.wXSmall),
+                    SizedBox(width: 4.r),
                     if (project.github != null && project.github!.isNotEmpty)
                       Expanded(
                         child: _buildButton(
@@ -364,10 +357,10 @@ class _ProjectPageState extends State<ProjectPage> {
             key: ValueKey(project.title),
             width: double.infinity,
             height: double.infinity,
-            padding: EdgeInsets.all(24.scale()),
+            padding: EdgeInsets.all(24.r),
             decoration: BoxDecoration(
               color: theme.colorScheme.primaryFixed,
-              borderRadius: BorderRadius.circular(52.scale()),
+              borderRadius: BorderRadius.circular(52.r),
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -394,17 +387,17 @@ class _ProjectPageState extends State<ProjectPage> {
                     final shapeColor = colors[index % colors.length];
 
                     return Padding(
-                      padding: EdgeInsets.only(bottom: 12.scale()),
+                      padding: EdgeInsets.only(bottom: 12.r),
                       child: Row(
                         children: [
                           M3Container(
                             shape,
-                            width: 16.scale(),
-                            height: 16.scale(),
+                            width: 16.w,
+                            height: 16.h,
                             color: shapeColor,
                             child: const SizedBox(),
                           ),
-                          SizedBox(width: 12.scale()),
+                          SizedBox(width: 12.w),
                           Expanded(
                             child: Text(
                               resp,
@@ -441,8 +434,8 @@ class _ProjectPageState extends State<ProjectPage> {
       onPressed: onPressed,
       icon: SvgPicture.asset(
         icon,
-        width: 22.scale(),
-        height: 22.scale(),
+        width: 22.w,
+        height: 22.h,
         colorFilter: ColorFilter.mode(
           theme.colorScheme.onPrimary,
           BlendMode.srcIn,
@@ -455,7 +448,7 @@ class _ProjectPageState extends State<ProjectPage> {
         ),
       ),
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(150.scale(), 75.scale()),
+        minimumSize: Size(150.w, 75.h),
         backgroundColor: theme.colorScheme.onPrimaryContainer,
         foregroundColor: theme.colorScheme.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21)),

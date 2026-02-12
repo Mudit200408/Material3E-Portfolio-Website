@@ -22,19 +22,16 @@ class _FooterState extends State<Footer> {
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 24.scale(),
-          horizontal: 48.scale(),
-        ),
+        padding: EdgeInsets.symmetric(vertical: 24.r, horizontal: 48.r),
         color: theme.colorScheme.surfaceContainer.withValues(alpha: 0.5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isMobile) ...[
               _buildCopyright(theme),
-              SizedBox(height: 4.scale()),
+              SizedBox(height: 4.h),
               _buildLicense(theme),
-              SizedBox(height: 16.scale()),
+              SizedBox(height: 16.h),
               _buildMadeWithFlutter(theme),
             ] else ...[
               Row(
@@ -44,7 +41,7 @@ class _FooterState extends State<Footer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildCopyright(theme),
-                      SizedBox(height: 4.scale()),
+                      SizedBox(height: 4.h),
                       _buildLicense(theme),
                     ],
                   ),
@@ -79,14 +76,14 @@ class _FooterState extends State<Footer> {
           ),
           textAlign: TextAlign.center,
         ),
-        SizedBox(width: 3.scale()),
+        SizedBox(width: 3.w),
         Icon(
           Icons.copyright,
           color: theme.colorScheme.onSurfaceVariant,
-          size: 14.scale(),
+          size: 14.r,
         ),
 
-        SizedBox(width: 3.scale()),
+        SizedBox(width: 3.w),
         Text(
           '2025 Mudit Purohit',
           style: theme.textTheme.bodyMedium?.copyWith(
@@ -115,10 +112,7 @@ class _FooterState extends State<Footer> {
 
   Widget _buildMadeWithFlutter(ThemeData theme) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 12.scale(),
-        vertical: 6.scale(),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 12.r, vertical: 6.r),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
@@ -133,9 +127,9 @@ class _FooterState extends State<Footer> {
               color: theme.colorScheme.onSurface,
             ),
           ),
-          SizedBox(width: 6.scale()),
+          SizedBox(width: 6.w),
           const FlutterLogo(size: 16),
-          SizedBox(width: 6.scale()),
+          SizedBox(width: 6.w),
           Text(
             'Flutter',
             style: theme.textTheme.labelMedium?.copyWith(

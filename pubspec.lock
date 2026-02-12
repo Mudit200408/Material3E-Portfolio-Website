@@ -723,10 +723,11 @@ packages:
   responsive_scaler:
     dependency: "direct main"
     description:
-      path: "../responsive_scaler"
-      relative: true
-    source: path
-    version: "0.1.0"
+      name: responsive_scaler
+      sha256: "0a8e6e436cf5d51e55f74cf0a68b23efc10ba96193e47222e1f20501a58587f0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   retry:
     dependency: transitive
     description:

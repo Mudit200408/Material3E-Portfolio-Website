@@ -35,8 +35,8 @@ class SegmentButton extends StatelessWidget {
           color: isSelected ? selectedColor : Colors.transparent,
         ),
         padding: EdgeInsets.symmetric(
-          horizontal: ResponsiveSpacing.wXSmall,
-          vertical: ResponsiveSpacing.hSmall,
+          horizontal: 4.r,
+          vertical: 8.r,
         ),
         child: child,
       ),

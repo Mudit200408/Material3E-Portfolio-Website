@@ -30,10 +30,7 @@ class _GradientButtonState extends State<GradientButton> {
         onTap: widget.onPressed,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: EdgeInsets.symmetric(
-            horizontal: 24.scale(),
-            vertical: 18.scale(),
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 24.r, vertical: 18.r),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(120),
             boxShadow: [
@@ -65,11 +62,11 @@ class _GradientButtonState extends State<GradientButton> {
                   color: theme.colorScheme.surface,
                 ),
               ),
-              SizedBox(width: 8.scale()),
+              SizedBox(width: 8.w),
               Icon(
                 Icons.arrow_forward_rounded,
                 color: theme.colorScheme.surface,
-                size: 28.scale(),
+                size: 28.r,
               ),
             ],
           ),

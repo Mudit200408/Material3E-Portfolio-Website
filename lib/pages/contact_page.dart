@@ -110,10 +110,10 @@ class _ContactPageState extends State<ContactPage> {
 
     return Container(
       padding: EdgeInsets.only(
-        left: 24.scale(),
-        right: 24.scale(),
-        top: 85.scale(),
-        bottom: 32.scale(),
+        left: 24.r,
+        right: 24.r,
+        top: 85.r,
+        bottom: 32.r,
       ),
       child: Column(
         children: [
@@ -129,7 +129,7 @@ class _ContactPageState extends State<ContactPage> {
               ),
             ),
           ),
-          SizedBox(height: 8.scale()),
+          SizedBox(height: 8.h),
           ScrollAnimatedFadeIn(
             delay: const Duration(milliseconds: 200),
             child: Text(
@@ -140,14 +140,14 @@ class _ContactPageState extends State<ContactPage> {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 32.scale()),
+          SizedBox(height: 32.h),
 
           // Social Buttons
           ScrollAnimatedFadeIn(
             delay: const Duration(milliseconds: 300),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 16.scale(),
+              spacing: 16.r,
               children: [
                 _SocialButton(
                   iconPath: 'assets/icons/email.svg',
@@ -169,17 +169,17 @@ class _ContactPageState extends State<ContactPage> {
             ),
           ),
 
-          SizedBox(height: 48.scale()),
+          SizedBox(height: 48.h),
 
           // Contact Form
           ScrollAnimatedFadeIn(
             delay: const Duration(milliseconds: 400),
             child: Container(
-              constraints: BoxConstraints(maxWidth: 600.scale()),
-              padding: EdgeInsets.all(24.scale()),
+              constraints: BoxConstraints(maxWidth: 600.w),
+              padding: EdgeInsets.all(24.r),
               decoration: BoxDecoration(
                 color: theme.colorScheme.primaryFixed.withValues(alpha: 0.8),
-                borderRadius: BorderRadius.circular(32.scale()),
+                borderRadius: BorderRadius.circular(32.r),
               ),
               child: Form(
                 key: _formKey,
@@ -197,7 +197,7 @@ class _ContactPageState extends State<ContactPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 24.scale()),
+                    SizedBox(height: 24.h),
                     _buildTextField(
                       theme: theme,
                       controller: _nameController,
@@ -206,7 +206,7 @@ class _ContactPageState extends State<ContactPage> {
                           ? 'Please enter your name'
                           : null,
                     ),
-                    SizedBox(height: 16.scale()),
+                    SizedBox(height: 16.h),
                     _buildTextField(
                       theme: theme,
                       controller: _emailController,
@@ -222,7 +222,7 @@ class _ContactPageState extends State<ContactPage> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16.scale()),
+                    SizedBox(height: 16.h),
                     _buildTextField(
                       theme: theme,
                       controller: _subjectController,
@@ -231,7 +231,7 @@ class _ContactPageState extends State<ContactPage> {
                           ? 'Please enter a subject'
                           : null,
                     ),
-                    SizedBox(height: 16.scale()),
+                    SizedBox(height: 16.h),
                     _buildTextField(
                       theme: theme,
                       controller: _messageController,
@@ -241,20 +241,20 @@ class _ContactPageState extends State<ContactPage> {
                           ? 'Please enter a message'
                           : null,
                     ),
-                    SizedBox(height: 32.scale()),
+                    SizedBox(height: 32.h),
                     FilledButton.icon(
                       onPressed: _isSending ? null : _sendEmail,
                       label: Text(_isSending ? 'Sending...' : 'Send Message'),
                       icon: _isSending
                           ? SizedBox(
-                              width: 24.scale(),
-                              height: 24.scale(),
+                              width: 24.r,
+                              height: 24.r,
                               child: const Loader(),
                             )
                           : SvgPicture.asset(
                               'assets/icons/send.svg',
-                              width: 24.scale(),
-                              height: 24.scale(),
+                              width: 24.r,
+                              height: 24.r,
                               colorFilter: ColorFilter.mode(
                                 theme.colorScheme.onPrimary,
                                 BlendMode.srcIn,
@@ -262,9 +262,9 @@ class _ContactPageState extends State<ContactPage> {
                             ),
                       style: FilledButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24.scale()),
+                          borderRadius: BorderRadius.circular(24.r),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 32.scale()),
+                        padding: EdgeInsets.symmetric(vertical: 32.r),
                       ),
                     ),
                   ],
@@ -288,17 +288,14 @@ class _ContactPageState extends State<ContactPage> {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(
-          vertical: 22.scale(),
-          horizontal: 16.scale(),
-        ),
+        contentPadding: EdgeInsets.symmetric(vertical: 22.r, horizontal: 16.r),
         labelText: label,
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
             color: theme.colorScheme.onSurfaceVariant,
           ),
-          borderRadius: BorderRadius.circular(24.scale()),
+          borderRadius: BorderRadius.circular(24.r),
         ),
         filled: false,
       ),
@@ -329,16 +326,16 @@ class _SocialButton extends StatelessWidget {
       icon: iconPath != null
           ? SvgPicture.asset(
               iconPath!,
-              width: 24.scale(),
-              height: 24.scale(),
+              width: 24.r,
+              height: 24.r,
               colorFilter: ColorFilter.mode(
                 Theme.of(context).colorScheme.onSecondaryContainer,
                 BlendMode.srcIn,
               ),
             )
-          : Icon(icon, size: 24.scale()),
+          : Icon(icon, size: 24.r),
       tooltip: tooltip,
-      style: IconButton.styleFrom(padding: EdgeInsets.all(16.scale())),
+      style: IconButton.styleFrom(padding: EdgeInsets.all(16.r)),
     );
   }
 }

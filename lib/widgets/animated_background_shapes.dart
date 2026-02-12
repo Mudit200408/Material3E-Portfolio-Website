@@ -27,7 +27,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: -0.1,
         left: -0.1,
-        size: 450.scale(),
+        size: 450.r,
         rotation: 0.5,
         shape: Shapes.c6_sided_cookie,
         parallaxSpeed: 0.05,
@@ -36,7 +36,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.7,
         left: 0.8,
-        size: 500.scale(),
+        size: 500.r,
         rotation: 2.0,
         shape: Shapes.c9_sided_cookie,
         parallaxSpeed: 0.08,
@@ -45,7 +45,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.45,
         left: -0.05,
-        size: 300.scale(),
+        size: 300.r,
         rotation: 4.0,
         shape: Shapes.square,
         parallaxSpeed: 0.03,
@@ -54,7 +54,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: -0.1,
         left: 0.7,
-        size: 350.scale(),
+        size: 350.r,
         rotation: 1.0,
         shape: Shapes.pill,
         parallaxSpeed: 0.06,
@@ -63,7 +63,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.8,
         left: 0.1,
-        size: 400.scale(),
+        size: 400.r,
         rotation: 3.5,
         shape: Shapes.c7_sided_cookie,
         parallaxSpeed: 0.04,
@@ -72,7 +72,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.2,
         left: 0.9,
-        size: 320.scale(),
+        size: 320.r,
         rotation: 5.5,
         shape: Shapes.l4_leaf_clover,
         parallaxSpeed: 0.07,
@@ -85,7 +85,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: -0.1,
         left: 0.8,
-        size: 480.scale(),
+        size: 480.r,
         rotation: 1.5,
         shape: Shapes.c6_sided_cookie,
         parallaxSpeed: 0.05,
@@ -94,7 +94,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.8,
         left: -0.1,
-        size: 520.scale(),
+        size: 520.r,
         rotation: 3.0,
         shape: Shapes.c9_sided_cookie,
         parallaxSpeed: 0.08,
@@ -103,7 +103,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: -0.1,
         left: 0.2,
-        size: 350.scale(),
+        size: 350.r,
         rotation: 5.0,
         shape: Shapes.square,
         parallaxSpeed: 0.03,
@@ -112,7 +112,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.6,
         left: 0.9,
-        size: 380.scale(),
+        size: 380.r,
         rotation: 2.0,
         shape: Shapes.pill,
         parallaxSpeed: 0.06,
@@ -121,7 +121,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.9,
         left: 0.5,
-        size: 420.scale(),
+        size: 420.r,
         rotation: 4.5,
         shape: Shapes.c7_sided_cookie,
         parallaxSpeed: 0.04,
@@ -130,7 +130,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.3,
         left: -0.1,
-        size: 340.scale(),
+        size: 340.r,
         rotation: 0.5,
         shape: Shapes.l4_leaf_clover,
         parallaxSpeed: 0.07,
@@ -143,7 +143,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: -0.15,
         left: 0.5,
-        size: 500.scale(),
+        size: 500.r,
         rotation: 2.5,
         shape: Shapes.c6_sided_cookie,
         parallaxSpeed: 0.05,
@@ -152,7 +152,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.85,
         left: -0.1,
-        size: 450.scale(),
+        size: 450.r,
         rotation: 4.0,
         shape: Shapes.c9_sided_cookie,
         parallaxSpeed: 0.08,
@@ -161,7 +161,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.2,
         left: -0.1,
-        size: 320.scale(),
+        size: 320.r,
         rotation: 6.0,
         shape: Shapes.square,
         parallaxSpeed: 0.03,
@@ -170,7 +170,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.5,
         left: 0.85,
-        size: 360.scale(),
+        size: 360.r,
         rotation: 1.0,
         shape: Shapes.pill,
         parallaxSpeed: 0.06,
@@ -179,7 +179,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.9,
         left: 0.8,
-        size: 400.scale(),
+        size: 400.r,
         rotation: 3.5,
         shape: Shapes.c7_sided_cookie,
         parallaxSpeed: 0.04,
@@ -188,7 +188,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.1,
         left: 0.9,
-        size: 300.scale(),
+        size: 300.r,
         rotation: 5.5,
         shape: Shapes.l4_leaf_clover,
         parallaxSpeed: 0.07,
@@ -201,7 +201,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.2,
         left: -0.15,
-        size: 460.scale(),
+        size: 460.r,
         rotation: 3.5,
         shape: Shapes.c6_sided_cookie,
         parallaxSpeed: 0.05,
@@ -210,7 +210,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.6,
         left: 0.9,
-        size: 480.scale(),
+        size: 480.r,
         rotation: 1.0,
         shape: Shapes.c9_sided_cookie,
         parallaxSpeed: 0.08,
@@ -219,7 +219,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: -0.1,
         left: 0.6,
-        size: 340.scale(),
+        size: 340.r,
         rotation: 5.0,
         shape: Shapes.square,
         parallaxSpeed: 0.03,
@@ -228,7 +228,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.9,
         left: 0.1,
-        size: 370.scale(),
+        size: 370.r,
         rotation: 2.0,
         shape: Shapes.pill,
         parallaxSpeed: 0.06,
@@ -237,7 +237,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: -0.1,
         left: 0.15,
-        size: 410.scale(),
+        size: 410.r,
         rotation: 4.5,
         shape: Shapes.c7_sided_cookie,
         parallaxSpeed: 0.04,
@@ -246,7 +246,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.93,
         left: 0.6,
-        size: 330.scale(),
+        size: 330.r,
         rotation: 0.5,
         shape: Shapes.l4_leaf_clover,
         parallaxSpeed: 0.07,
@@ -259,7 +259,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.8,
         left: 0.8,
-        size: 550.scale(),
+        size: 550.r,
         rotation: 4.5,
         shape: Shapes.c6_sided_cookie,
         parallaxSpeed: 0.05,
@@ -268,7 +268,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.0,
         left: 0.0,
-        size: 550.scale(),
+        size: 550.r,
         rotation: 2.0,
         shape: Shapes.c9_sided_cookie,
         parallaxSpeed: 0.08,
@@ -277,7 +277,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.8,
         left: 0.1,
-        size: 300.scale(),
+        size: 300.r,
         rotation: 6.0,
         shape: Shapes.square,
         parallaxSpeed: 0.03,
@@ -286,7 +286,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.2,
         left: 0.8,
-        size: 350.scale(),
+        size: 350.r,
         rotation: 0.3,
         shape: Shapes.pill,
         parallaxSpeed: 0.06,
@@ -295,7 +295,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.85,
         left: 0.4,
-        size: 400.scale(),
+        size: 400.r,
         rotation: 3.5,
         shape: Shapes.c7_sided_cookie,
         parallaxSpeed: 0.04,
@@ -304,7 +304,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
       _ShapeData(
         top: 0.1,
         left: 0.4,
-        size: 320.scale(),
+        size: 320.r,
         rotation: 5.5,
         shape: Shapes.l4_leaf_clover,
         parallaxSpeed: 0.07,

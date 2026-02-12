@@ -21,18 +21,18 @@ class AppDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 20.scale()),
+            SizedBox(height: 20.h),
             // Logo or header
             Padding(
-              padding: EdgeInsets.all(16.scale()),
+              padding: EdgeInsets.all(16.r),
               child: Row(
                 children: [
                   SvgPicture.asset(
                     'assets/logo/logo.svg',
-                    height: 40.scale(),
-                    width: 40.scale(),
+                    height: 40.r,
+                    width: 40.r,
                   ),
-                  SizedBox(width: 12.scale()),
+                  SizedBox(width: 12.w),
                   Text(
                     'Mudit Purohit',
                     style: theme.textTheme.headlineSmall?.copyWith(
@@ -47,7 +47,7 @@ class AppDrawer extends StatelessWidget {
               thickness: 1,
               color: theme.colorScheme.outline.withValues(alpha: 0.2),
             ),
-            SizedBox(height: 8.scale()),
+            SizedBox(height: 8.h),
             // Navigation items
             _buildDrawerItem(
               context,
@@ -105,7 +105,7 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             const Spacer(),
-            SizedBox(height: 16.scale()),
+            SizedBox(height: 16.h),
           ],
         ),
       ),
@@ -122,7 +122,7 @@ class AppDrawer extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 12.scale(), vertical: 4.scale()),
+      margin: EdgeInsets.symmetric(horizontal: 12.r, vertical: 4.h),
       decoration: BoxDecoration(
         color: isSelected
             ? theme.colorScheme.primaryContainer.withValues(alpha: 0.6)
@@ -135,8 +135,8 @@ class AppDrawer extends StatelessWidget {
           colorFilter: isSelected
               ? ColorFilter.mode(theme.colorScheme.primary, BlendMode.srcIn)
               : ColorFilter.mode(theme.colorScheme.onSurface, BlendMode.srcIn),
-          width: 24.scale(),
-          height: 24.scale(),
+          width: 24.r,
+          height: 24.r,
         ),
         title: Text(
           title,

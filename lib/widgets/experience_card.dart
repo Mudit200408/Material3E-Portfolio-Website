@@ -30,12 +30,12 @@ class ExperienceCard extends StatelessWidget {
             // Content on the right
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 12.scale(), bottom: 32.scale()),
+                padding: EdgeInsets.only(left: 12.r, bottom: 32.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildDateAndTitle(context, theme, false),
-                    SizedBox(height: 16.scale()),
+                    SizedBox(height: 16.h),
                     _buildCard(context, theme, isMobile: true),
                   ],
                 ),
@@ -75,7 +75,7 @@ class ExperienceCard extends StatelessWidget {
     return Container(
       width: 2,
       color: theme.colorScheme.primary.withValues(alpha: 0.8),
-      margin: EdgeInsets.symmetric(horizontal: 16.scale()),
+      margin: EdgeInsets.symmetric(horizontal: 16.r),
     );
   }
 
@@ -101,7 +101,7 @@ class ExperienceCard extends StatelessWidget {
           ),
           textAlign: alignRight ? TextAlign.right : TextAlign.left,
         ),
-        SizedBox(height: 4.scale()),
+        SizedBox(height: 4.h),
         Text(
           experience.jobTitle,
           style: theme.textTheme.titleLarge?.copyWith(
@@ -117,7 +117,7 @@ class ExperienceCard extends StatelessWidget {
           ),
           textAlign: alignRight ? TextAlign.right : TextAlign.left,
         ),
-        SizedBox(height: 4.scale()),
+        SizedBox(height: 4.h),
         if (experience.location.isNotEmpty)
           Text(
             experience.location,
@@ -140,8 +140,8 @@ class ExperienceCard extends StatelessWidget {
     bool isMobile = false,
   }) {
     return Container(
-      margin: EdgeInsets.only(bottom: isMobile ? 0 : 42.scale()),
-      padding: EdgeInsets.all(24.scale()),
+      margin: EdgeInsets.only(bottom: isMobile ? 0 : 42.r),
+      padding: EdgeInsets.all(24.r),
       decoration: BoxDecoration(
         color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(24),
@@ -158,7 +158,7 @@ class ExperienceCard extends StatelessWidget {
               fontVariations: const [FontVariation('wght', 680)],
             ),
           ),
-          SizedBox(height: 16.scale()),
+          SizedBox(height: 16.h),
           ...experience.responsibilities.take(4).toList().asMap().entries.map((
             entry,
           ) {
@@ -182,17 +182,17 @@ class ExperienceCard extends StatelessWidget {
             final shapeColor = colors[index % colors.length];
 
             return Padding(
-              padding: EdgeInsets.only(bottom: 12.scale()),
+              padding: EdgeInsets.only(bottom: 12.r),
               child: Row(
                 children: [
                   M3Container(
                     shape,
-                    width: 16.scale(),
-                    height: 16.scale(),
+                    width: 16.r,
+                    height: 16.r,
                     color: shapeColor,
                     child: const SizedBox(),
                   ),
-                  SizedBox(width: 12.scale()),
+                  SizedBox(width: 12.w),
                   Expanded(
                     child: Text(resp, style: theme.textTheme.titleMedium),
                   ),

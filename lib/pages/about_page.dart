@@ -23,12 +23,10 @@ class _AboutPageState extends State<AboutPage> {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
     final isTablet = ResponsiveLayoutHelper.isTablet(context);
     return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 60.scale() : 210.scale(),
-      ),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 60.r : 210.r),
       child: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 32.scale()),
+          padding: EdgeInsets.symmetric(horizontal: 32.r),
           child: isMobile
               ? _buildMobileLayout(context, theme)
               : _buildDesktopLayout(context, theme, isTablet),
@@ -41,11 +39,11 @@ class _AboutPageState extends State<AboutPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: ResponsiveSpacing.hMedium),
+        SizedBox(height: 16.r),
         _buildQuoteCard(context, theme),
-        SizedBox(height: ResponsiveSpacing.hMedium),
+        SizedBox(height: 16.r),
         _buildInfoCard(context, theme),
-        SizedBox(height: ResponsiveSpacing.hLarge),
+        SizedBox(height: 24.r),
       ],
     );
   }
@@ -58,7 +56,7 @@ class _AboutPageState extends State<AboutPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      spacing: ResponsiveSpacing.wLarge,
+      spacing: 24.r,
       children: [
         Flexible(flex: 2, child: _buildQuoteCard(context, theme)),
         Flexible(flex: isTablet ? 3 : 2, child: _buildInfoCard(context, theme)),
@@ -71,18 +69,17 @@ class _AboutPageState extends State<AboutPage> {
     return ScrollAnimatedFadeIn(
       slideOffset: 0.1,
       child: Container(
-        padding: EdgeInsets.all(isMobile ? 16.scale() : 24.scale()),
+        padding: EdgeInsets.all(isMobile ? 16.r : 24.r),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32.scale()),
+          borderRadius: BorderRadius.circular(32.r),
           color: theme.colorScheme.primaryFixed,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSegmentedButtons(context, theme, isMobile),
-            SizedBox(height: 24.scale()),
+            SizedBox(height: 24.h),
             SizedBox(
-              //height: isMobile ? null : 350.scale(),
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
                 child: selectedTab == 0
@@ -102,21 +99,21 @@ class _AboutPageState extends State<AboutPage> {
       child: Padding(
         padding: EdgeInsets.symmetric(
           // vertical: 12.scale(),
-          horizontal: 8.scale(),
+          horizontal: 8.r,
         ),
         child: MouseRegion(
           onEnter: (_) => setState(() => _isQuoteHovered = true),
           onExit: (_) => setState(() => _isQuoteHovered = false),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            padding: EdgeInsets.all(24.scale()),
+            padding: EdgeInsets.all(24.r),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: _isQuoteHovered
                     ? [theme.colorScheme.primary, theme.colorScheme.secondary]
                     : [theme.colorScheme.surface, theme.colorScheme.surface],
               ),
-              borderRadius: BorderRadius.circular(20.scale()),
+              borderRadius: BorderRadius.circular(20.r),
               boxShadow: [
                 if (_isQuoteHovered)
                   BoxShadow(
@@ -140,7 +137,7 @@ class _AboutPageState extends State<AboutPage> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 12.scale()),
+                SizedBox(height: 12.h),
                 Text(
                   "- Robert C. Martin",
                   style: theme.textTheme.bodyMedium?.copyWith(
@@ -186,7 +183,7 @@ class _AboutPageState extends State<AboutPage> {
           Expanded(
             child: SegmentButton(
               width: double.infinity,
-              height: isMobile ? 50.scale() : 60.scale(),
+              height: isMobile ? 50.h : 60.h,
               isSelected: selectedTab == 0,
               selectedColor: theme.colorScheme.onPrimaryContainer,
               onTap: () => setState(() => selectedTab = 0),
@@ -194,7 +191,7 @@ class _AboutPageState extends State<AboutPage> {
                 child: Text(
                   "About Me",
                   style: theme.textTheme.headlineSmall?.copyWith(
-                    fontSize: isMobile ? 16.scale() : null,
+                    fontSize: isMobile ? 16 : null,
                     color: selectedTab == 0
                         ? theme.colorScheme.onPrimary
                         : theme.colorScheme.onPrimaryContainer,
@@ -207,7 +204,7 @@ class _AboutPageState extends State<AboutPage> {
           Expanded(
             child: SegmentButton(
               width: double.infinity,
-              height: isMobile ? 50.scale() : 60.scale(),
+              height: isMobile ? 50.h : 60.h,
               isSelected: selectedTab == 1,
               selectedColor: theme.colorScheme.onPrimaryContainer,
               onTap: () => setState(() => selectedTab = 1),
@@ -215,7 +212,7 @@ class _AboutPageState extends State<AboutPage> {
                 child: Text(
                   "Education",
                   style: theme.textTheme.headlineSmall?.copyWith(
-                    fontSize: isMobile ? 16.scale() : null,
+                    fontSize: isMobile ? 16 : null,
                     color: selectedTab == 1
                         ? theme.colorScheme.onPrimary
                         : theme.colorScheme.onPrimaryContainer,
@@ -249,7 +246,7 @@ class _AboutPageState extends State<AboutPage> {
               fontVariations: descriptionFont,
             ),
           ),
-          SizedBox(height: 16.scale()),
+          SizedBox(height: 16.h),
           Text(
             "I'm constantly learning and developing my skills, and I've already had amazing experiences integrating advanced features using Firebase services and even Gemini AI. From sketching out intuitive user interfaces in Figma to debugging complex integrations, I approach every project as an opportunity to grow.",
             style: theme.textTheme.bodyLarge?.copyWith(
@@ -258,7 +255,7 @@ class _AboutPageState extends State<AboutPage> {
               fontVariations: descriptionFont,
             ),
           ),
-          SizedBox(height: 16.scale()),
+          SizedBox(height: 16.h),
           Text(
             "I'm on a journey to create innovative and efficient applications, and I can't wait to see what challenge comes next!",
             style: theme.textTheme.bodyLarge?.copyWith(
@@ -288,7 +285,7 @@ class _AboutPageState extends State<AboutPage> {
             years: '2023-2026',
           ),
         ),
-        SizedBox(height: 16.scale()),
+        SizedBox(height: 16.h),
         // Diploma Item
         ScrollAnimatedFadeIn(
           delay: 200.ms,
@@ -301,7 +298,7 @@ class _AboutPageState extends State<AboutPage> {
             years: '2020-2023',
           ),
         ),
-        SizedBox(height: 16.scale()),
+        SizedBox(height: 16.h),
         // School Item
         ScrollAnimatedFadeIn(
           delay: 300.ms,
@@ -329,7 +326,7 @@ class _AboutPageState extends State<AboutPage> {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
 
     return Container(
-      padding: EdgeInsets.all(isMobile ? 12.scale() : 16.scale()),
+      padding: EdgeInsets.all(isMobile ? 12.r : 16.r),
       child: isMobile
           ? _buildMobileEducationItem(
               context,
@@ -392,11 +389,11 @@ class _AboutPageState extends State<AboutPage> {
         Row(
           children: [
             Container(
-              padding: EdgeInsets.all(4.scale()),
-              width: 50.scale(),
-              height: 50.scale(),
+              padding: EdgeInsets.all(4.r),
+              width: 50.w,
+              height: 50.h,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.scale()),
+                borderRadius: BorderRadius.circular(12.r),
                 color: theme.colorScheme.inversePrimary,
               ),
               child: SvgPicture.asset(
@@ -407,7 +404,7 @@ class _AboutPageState extends State<AboutPage> {
                 ),
               ),
             ),
-            SizedBox(width: 12.scale()),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,7 +416,7 @@ class _AboutPageState extends State<AboutPage> {
                       fontVariations: collegeNameFont,
                     ),
                   ),
-                  SizedBox(height: 4.scale()),
+                  SizedBox(height: 4.h),
                   Text(
                     degree,
                     style: theme.textTheme.bodyMedium?.copyWith(
@@ -485,11 +482,11 @@ class _AboutPageState extends State<AboutPage> {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(4.scale()),
-            width: 60.scale(),
-            height: 60.scale(),
+            padding: EdgeInsets.all(4.r),
+            width: 60.w,
+            height: 60.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.scale()),
+              borderRadius: BorderRadius.circular(16.r),
               color: theme.colorScheme.inversePrimary,
             ),
             child: SvgPicture.asset(
@@ -500,7 +497,7 @@ class _AboutPageState extends State<AboutPage> {
               ),
             ),
           ),
-          SizedBox(width: 16.scale()),
+          SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,7 +509,7 @@ class _AboutPageState extends State<AboutPage> {
                     fontVariations: collegeNameFont,
                   ),
                 ),
-                SizedBox(height: 4.scale()),
+                SizedBox(height: 4.h),
                 Text(
                   degree,
                   style: theme.textTheme.titleMedium?.copyWith(
