@@ -14,7 +14,8 @@ dependencies:
   material_shapes: ^0.0.2
   motor: ^1.1.0
   responsive_framework: ^1.5.1
-  responsive_scaler: ^0.1.0
+  responsive_scaler:
+    path: ../responsive_scaler/
   supabase_flutter: ^2.12.0
   flutter_m3shapes_extended: ^1.0.0
   avatar_glow: ^3.0.1

@@ -15,9 +15,9 @@ Future<void> main() async {
   );
   ResponsiveScaler.init(
     designWidth: 1680,
+    designHeight: 900,
     minScale: 0.8,
-    maxScale: 1.5,
-    maxAccessibilityScale: 1.8,
+    maxScale: 1.6,
   );
   runApp(const AppRoot());
 }

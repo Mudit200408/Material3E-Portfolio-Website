@@ -213,9 +213,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
-    // final devWidth = MediaQuery.of(context).size.width;
-    // print(devWidth);
-
     return SelectionArea(
       child: Scaffold(
         drawer: isMobile
@@ -238,6 +235,7 @@ class _HomePageState extends State<HomePage> {
                 controller: _scrollController,
                 slivers: [
                   _buildAppBar(context, theme, isMobile),
+
                   ..._buildPageSections(context, theme, isMobile),
                 ],
               ),
@@ -253,28 +251,33 @@ class _HomePageState extends State<HomePage> {
     ThemeData theme,
     bool isMobile,
   ) {
-    // This is your OLD layout, now just for the "Home" section
+    // Home Section
     final homeSection = Container(
+      margin: EdgeInsets.only(top: 75.r),
       key: _sectionKeys[NavSection.home],
       child: isMobile
           ? _buildMobileHomeContent(context, theme)
           : _buildDesktopHomeContent(context, theme),
     );
 
+    // About Section
     final aboutSection = AboutPage(key: _sectionKeys[NavSection.about]);
 
-    // 2. CREATE STUBS FOR YOUR OTHER SECTIONS
-    //    You will need to build these out
+    // Projects Section
     final projectsSection = ProjectPage(key: _sectionKeys[NavSection.projects]);
 
+    // Experience Section
     final experienceSection = ExperiencePage(
       key: _sectionKeys[NavSection.experience],
     );
 
+    // Contact Section
     final contactSection = ContactPage(key: _sectionKeys[NavSection.contact]);
+
+    // Footer Section
     const footerSection = Footer();
 
-    // 3. Put all sections in a list
+    // Put all sections in a list
     final sections = [
       homeSection,
       aboutSection,
@@ -334,32 +337,37 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             children: [
               _buildTab(
-                'Home',
-                context,
+                text: 'Home',
+                section: NavSection.home,
+                context: context,
                 onPressed: () => _scrollToSection(NavSection.home),
                 isSelected: _currentSection == NavSection.home,
               ),
               _buildTab(
-                'About',
-                context,
+                text: 'About',
+                section: NavSection.about,
+                context: context,
                 onPressed: () => _scrollToSection(NavSection.about),
                 isSelected: _currentSection == NavSection.about,
               ),
               _buildTab(
-                'Projects',
-                context,
+                text: 'Projects',
+                section: NavSection.projects,
+                context: context,
                 onPressed: () => _scrollToSection(NavSection.projects),
                 isSelected: _currentSection == NavSection.projects,
               ),
               _buildTab(
-                'Experience',
-                context,
+                text: 'Experience',
+                section: NavSection.experience,
+                context: context,
                 onPressed: () => _scrollToSection(NavSection.experience),
                 isSelected: _currentSection == NavSection.experience,
               ),
               _buildTab(
-                'Contact Me',
-                context,
+                text: 'Contact Me',
+                section: NavSection.contact,
+                context: context,
                 onPressed: () => _scrollToSection(NavSection.contact),
                 isSelected: _currentSection == NavSection.contact,
               ),
@@ -685,13 +693,33 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTab(
-    String text,
-    BuildContext context, {
+  Widget _buildTab({
+    required String text,
+    required NavSection section,
+    required BuildContext context,
     required VoidCallback onPressed,
     bool isSelected = false,
   }) {
     final theme = Theme.of(context);
+    String iconPath;
+    switch (section) {
+      case NavSection.home:
+        iconPath = 'assets/icons/home.svg';
+        break;
+      case NavSection.about:
+        iconPath = 'assets/icons/about.svg';
+        break;
+      case NavSection.projects:
+        iconPath = 'assets/icons/project.svg';
+        break;
+      case NavSection.experience:
+        iconPath = 'assets/icons/experience.svg';
+        break;
+      case NavSection.contact:
+        iconPath = 'assets/icons/email.svg';
+        break;
+    }
+
     return Padding(
       padding: EdgeInsets.only(left: 6.scale()),
       child: TextButton(
@@ -702,16 +730,32 @@ class _HomePageState extends State<HomePage> {
               : Colors.transparent,
           shape: const StadiumBorder(),
           padding: EdgeInsets.symmetric(
-            horizontal: ResponsiveSpacing.wXSmall,
+            horizontal: ResponsiveSpacing.wMedium,
             vertical: ResponsiveSpacing.hXSmall,
           ),
         ),
-        child: Text(
-          text,
-          style: theme.textTheme.labelLarge?.copyWith(
-            color: isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
+        child: Row(
+          children: [
+            if (isSelected) ...[
+              SvgPicture.asset(
+                iconPath,
+                height: 18.scale(),
+                width: 18.scale(),
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
+              ),
+              SizedBox(width: 6.r),
+            ],
+            Text(
+              text,
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: isSelected ? Colors.white : Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
       ),
     );
