@@ -26,8 +26,8 @@ class _ContactPageState extends State<ContactPage> {
   final String _myEmail = '[EMAIL_ADDRESS]'; //TODO: Add your email address
   final String _githubUrl = '[GITHUB_URL]'; //TODO: Add your github url
   final String _linkedinUrl = '[LINKEDIN_URL]'; //TODO: Add your linkedin url
-  final String _accessKey =
-      '[ACCESS_KEY]'; //TODO: Add your access key  bool _isSending = false;
+  final String _accessKey = '[ACCESS_KEY]'; //TODO: Add your access key
+  bool _isSending = false;
 
   @override
   void dispose() {
