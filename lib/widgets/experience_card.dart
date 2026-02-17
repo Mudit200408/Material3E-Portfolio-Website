@@ -166,7 +166,7 @@ class ExperienceCard extends StatelessWidget {
             final resp = entry.value;
 
             // Cycle through shapes
-            final shapes = [
+            const shapes = [
               Shapes.c7_sided_cookie,
               Shapes.square,
               Shapes.arch,
@@ -187,8 +187,8 @@ class ExperienceCard extends StatelessWidget {
                 children: [
                   M3Container(
                     shape,
-                    width: 16.r,
-                    height: 16.r,
+                    width: 18.r,
+                    height: 18.r,
                     color: shapeColor,
                     child: const SizedBox(),
                   ),

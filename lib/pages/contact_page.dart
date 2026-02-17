@@ -21,7 +21,6 @@ class _ContactPageState extends State<ContactPage> {
   final _emailController = TextEditingController();
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
-  final haptic = HapticFeedback.lightImpact();
 
   final String _myEmail = '[EMAIL_ADDRESS]'; //TODO: Add your email address
   final String _githubUrl = '[GITHUB_URL]'; //TODO: Add your github url
@@ -39,7 +38,7 @@ class _ContactPageState extends State<ContactPage> {
   }
 
   Future<void> _launchUrl(String url) async {
-    haptic;
+    HapticFeedback.lightImpact();
 
     if (!await launchUrl(Uri.parse(url))) {
       if (mounted) {
@@ -51,7 +50,7 @@ class _ContactPageState extends State<ContactPage> {
   }
 
   Future<void> _sendEmail() async {
-    haptic;
+    HapticFeedback.lightImpact();
 
     if (_formKey.currentState!.validate()) {
       setState(() {

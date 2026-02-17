@@ -392,8 +392,8 @@ class _ProjectPageState extends State<ProjectPage> {
                         children: [
                           M3Container(
                             shape,
-                            width: 16.w,
-                            height: 16.h,
+                            width: 18.r,
+                            height: 18.r,
                             color: shapeColor,
                             child: const SizedBox(),
                           ),

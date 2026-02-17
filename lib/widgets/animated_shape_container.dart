@@ -88,55 +88,57 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => _onHover(true),
-      onExit: (_) => _onHover(false),
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: _onTap,
-        child: SingleMotionBuilder(
-          motion: const CupertinoMotion.bouncy(extraBounce: 0.07),
-          value: _scale,
-          builder: (context, scale, child) {
-            return Transform.scale(
-              scale: scale,
-              child: SingleMotionBuilder(
-                motion: const CupertinoMotion.bouncy(extraBounce: 0.25),
-                value: _bounceScale,
-                builder: (context, bounceScale, child) {
-                  return Transform.scale(
-                    scale: bounceScale,
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 400),
-                      switchInCurve: Curves.easeOutCubic,
-                      switchOutCurve: Curves.easeInCubic,
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: ScaleTransition(
-                            scale: Tween<double>(
-                              begin: 0.8,
-                              end: 1.0,
-                            ).animate(animation),
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: AvatarGlow(
-                        startDelay: const Duration(milliseconds: 300),
-                        glowCount: 3,
-                        glowRadiusFactor: 0.25,
-                        glowColor: widget.color ?? Colors.blue,
-                        glowShape: BoxShape.circle,
-                        curve: Curves.fastEaseInToSlowEaseOut,
-                        child: _buildShapeContainer(),
+    return RepaintBoundary(
+      child: MouseRegion(
+        onEnter: (_) => _onHover(true),
+        onExit: (_) => _onHover(false),
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: _onTap,
+          child: SingleMotionBuilder(
+            motion: const CupertinoMotion.bouncy(extraBounce: 0.07),
+            value: _scale,
+            builder: (context, scale, child) {
+              return Transform.scale(
+                scale: scale,
+                child: SingleMotionBuilder(
+                  motion: const CupertinoMotion.bouncy(extraBounce: 0.25),
+                  value: _bounceScale,
+                  builder: (context, bounceScale, child) {
+                    return Transform.scale(
+                      scale: bounceScale,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 400),
+                        switchInCurve: Curves.easeOutCubic,
+                        switchOutCurve: Curves.easeInCubic,
+                        transitionBuilder: (child, animation) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: ScaleTransition(
+                              scale: Tween<double>(
+                                begin: 0.8,
+                                end: 1.0,
+                              ).animate(animation),
+                              child: child,
+                            ),
+                          );
+                        },
+                        child: AvatarGlow(
+                          startDelay: const Duration(milliseconds: 300),
+                          glowCount: 3,
+                          glowRadiusFactor: 0.25,
+                          glowColor: widget.color ?? Colors.blue,
+                          glowShape: BoxShape.circle,
+                          curve: Curves.fastEaseInToSlowEaseOut,
+                          child: _buildShapeContainer(),
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

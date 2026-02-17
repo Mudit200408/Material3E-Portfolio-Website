@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:portfolio_web/widgets/animated_skill_chip.dart';
 import 'package:portfolio_web/widgets/resume_viewer_modal.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
@@ -18,7 +19,6 @@ import 'package:portfolio_web/widgets/animated_shape_container.dart';
 import 'package:portfolio_web/widgets/app_drawer.dart';
 import 'package:portfolio_web/widgets/gradient_button.dart';
 import 'package:portfolio_web/widgets/outlined_button.dart';
-import 'package:portfolio_web/widgets/skills_chip.dart';
 import 'package:portfolio_web/models/skills_model.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
   NavSection _currentSection = NavSection.home;
   bool _isProgrammaticScroll = false;
   final _scrollController = ScrollController();
-  final haptic = HapticFeedback.lightImpact();
 
   // Global keys for different sections
   final Map<NavSection, GlobalKey> _sectionKeys = {
@@ -46,6 +45,9 @@ class _HomePageState extends State<HomePage> {
     NavSection.experience: GlobalKey(),
     NavSection.contact: GlobalKey(),
   };
+
+  // Cache Profile URL for better performance
+  late final String _profileUrl = _getProfileUrl();
 
   static const List<FontVariation> introFontNormal = [
     FontVariation('wght', 520),
@@ -134,7 +136,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _scrollToSection(NavSection section) async {
-    haptic;
+    HapticFeedback.lightImpact();
     // 1. Update state immediately on click
     setState(() {
       _currentSection = section;
@@ -174,7 +176,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openResumeModal() async {
-    haptic;
+    HapticFeedback.lightImpact();
     setState(() {
       isLoading = true;
     });
@@ -226,9 +228,11 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: [
               // Background Shapes
-              AnimatedBackgroundShapes(
-                scrollController: _scrollController,
-                currentSection: _currentSection,
+              RepaintBoundary(
+                child: AnimatedBackgroundShapes(
+                  scrollController: _scrollController,
+                  currentSection: _currentSection,
+                ),
               ),
               // Main Content
               CustomScrollView(
@@ -322,11 +326,7 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SvgPicture.asset(
-          'assets/logo/logo.svg',
-          height: 40.r,
-          width: 40.r,
-        ),
+        SvgPicture.asset('assets/logo/logo.svg', height: 40.r, width: 40.r),
         const Spacer(flex: 4),
         Container(
           decoration: ShapeDecoration(
@@ -453,7 +453,7 @@ class _HomePageState extends State<HomePage> {
           color: theme.colorScheme.onPrimaryContainer,
           width: 2,
         ),
-        child: Image.network(_getProfileUrl()),
+        child: Image.network(_profileUrl),
         // child: Image.asset(
         //   'assets/images/profile.png',
         //   width: imageSize.r,
@@ -655,10 +655,7 @@ class _HomePageState extends State<HomePage> {
                 children: skills.asMap().entries.map((entry) {
                   final index = entry.key;
                   final skill = entry.value;
-                  return SkillsChip(skill: skill)
-                      .animate()
-                      .fadeIn(delay: (100 * index).ms, duration: 400.ms)
-                      .scale(curve: Curves.easeOutBack);
+                  return AnimatedSkillChip(skill: skill, index: index);
                 }).toList(),
               ),
       ),
