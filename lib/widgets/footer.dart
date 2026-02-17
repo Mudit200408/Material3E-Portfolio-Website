@@ -19,37 +19,39 @@ class _FooterState extends State<Footer> {
     final theme = Theme.of(context);
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
 
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 24.r, horizontal: 48.r),
-        color: theme.colorScheme.surfaceContainer.withValues(alpha: 0.5),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isMobile) ...[
-              _buildCopyright(theme),
-              SizedBox(height: 4.h),
-              _buildLicense(theme),
-              SizedBox(height: 16.h),
-              _buildMadeWithFlutter(theme),
-            ] else ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildCopyright(theme),
-                      SizedBox(height: 4.h),
-                      _buildLicense(theme),
-                    ],
-                  ),
-                  _buildMadeWithFlutter(theme),
-                ],
-              ),
+    return ClipRRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 24.r, horizontal: 48.r),
+          color: theme.colorScheme.surfaceContainer.withValues(alpha: 0.5),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (isMobile) ...[
+                _buildCopyright(theme),
+                SizedBox(height: 4.h),
+                _buildLicense(theme),
+                SizedBox(height: 16.h),
+                _buildMadeWithFlutter(theme),
+              ] else ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildCopyright(theme),
+                        SizedBox(height: 4.h),
+                        _buildLicense(theme),
+                      ],
+                    ),
+                    _buildMadeWithFlutter(theme),
+                  ],
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
