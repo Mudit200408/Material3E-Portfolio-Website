@@ -266,10 +266,10 @@ class _ProjectPageState extends State<ProjectPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.r),
+                SizedBox(height: 8.r),
                 Wrap(
                   spacing: isMobile ? 2.r : 4.r,
-                  runSpacing: isMobile ? 1.5.r : 4.r,
+                  runSpacing: 4.r,
                   children: project.tags.map((tag) {
                     return Chip(
                       label: Text(
@@ -292,7 +292,7 @@ class _ProjectPageState extends State<ProjectPage> {
                   }).toList(),
                 ),
 
-                SizedBox(height: 16.r),
+                SizedBox(height: 8.r),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -372,7 +372,7 @@ class _ProjectPageState extends State<ProjectPage> {
                     final resp = entry.value;
 
                     // Cycle through shapes
-                    final shapes = [
+                    const shapes = [
                       Shapes.c4_sided_cookie,
                       Shapes.c6_sided_cookie,
                       Shapes.c7_sided_cookie,
@@ -392,8 +392,8 @@ class _ProjectPageState extends State<ProjectPage> {
                         children: [
                           M3Container(
                             shape,
-                            width: 18.r,
-                            height: 18.r,
+                            width: 20.r,
+                            height: 20.r,
                             color: shapeColor,
                             child: const SizedBox(),
                           ),
