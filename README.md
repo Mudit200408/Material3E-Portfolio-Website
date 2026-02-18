@@ -106,6 +106,19 @@ create policy "Allow public read access" on project
 
 Create a **Storage Bucket** (e.g., named `portfolio-assets`) to store your project images, profile pic and resume pdf. Ensure the bucket is public or has appropriate policies for read access.
 
+### 4. Contact Page Links
+
+Open `lib/pages/contact_page.dart` and replace the placeholder values with your own:
+
+```dart
+final String _myEmail = '[EMAIL_ADDRESS]';   // Your email address
+final String _githubUrl = '[GITHUB_URL]';     // Your GitHub profile URL
+final String _linkedinUrl = '[LINKEDIN_URL]'; // Your LinkedIn profile URL
+final String _accessKey = '[ACCESS_KEY]';     // Your Web3Forms access key
+```
+
+> You can get a free access key from [Web3Forms](https://web3forms.com/).
+
 ## 🚀 Running the Project
 
 1.  **Clone the repository**:
