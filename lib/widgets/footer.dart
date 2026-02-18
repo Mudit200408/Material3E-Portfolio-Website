@@ -102,12 +102,19 @@ class _FooterState extends State<Footer> {
       onTap: () => _launchUrl(
         'https://github.com/Mudit200408/Material3E-Portfolio-Website',
       ),
-      child: Text(
-        'Open-sourced under the MIT License',
-        style: theme.textTheme.bodySmall?.copyWith(
-          color: theme.colorScheme.primary,
-        ),
-        textAlign: TextAlign.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Open-sourced under the MIT License',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.primary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(width: 3.w),
+          Icon(Icons.open_in_new, color: theme.colorScheme.primary, size: 14.r),
+        ],
       ),
     );
   }
