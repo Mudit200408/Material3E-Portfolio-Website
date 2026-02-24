@@ -6,7 +6,11 @@ import 'package:portfolio_web/widgets/skills_chip.dart';
 class AnimatedSkillChip extends StatelessWidget {
   final SkillsModel skill;
   final int index;
-  const AnimatedSkillChip({super.key, required this.skill, required this.index});
+  const AnimatedSkillChip({
+    super.key,
+    required this.skill,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -255,6 +255,7 @@ class _ProjectPageState extends State<ProjectPage> {
                 Center(
                   child: Text(
                     project.title,
+                    textAlign: TextAlign.center,
                     style: theme.textTheme.displaySmall?.copyWith(
                       color: theme.colorScheme.onPrimaryContainer,
                       fontVariations: [

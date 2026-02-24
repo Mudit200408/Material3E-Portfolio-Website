@@ -1,154 +1,122 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:portfolio_web/core/utils/navigation_provider.dart';
 import 'package:portfolio_web/models/nav_section_enums.dart';
-
+import 'package:provider/provider.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 
 class AppDrawer extends StatelessWidget {
-  final Function(NavSection)? onNavigate;
-  final NavSection currentSection;
-  const AppDrawer({super.key, this.onNavigate, required this.currentSection});
+  const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final haptic = HapticFeedback.lightImpact();
+    // Watch for scroll changes to highlight active section
+    final navProvider = context.watch<NavigationProvider>();
 
     return Drawer(
       backgroundColor: theme.colorScheme.surface,
+      elevation: 0,
+      width: 280.w,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
       child: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 20.h),
-            // Logo or header
-            Padding(
-              padding: EdgeInsets.all(16.r),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/logo/logo.svg',
-                    height: 40.r,
-                    width: 40.r,
-                  ),
-                  SizedBox(width: 12.w),
-                  Text(
-                    'Mudit Purohit',
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
+            SizedBox(height: 32.h),
+            // Header Image/Logo
+            SvgPicture.asset(
+              'assets/logo/logo.svg',
+              height: 100.r,
+              width: 100.r,
             ),
-            Divider(
-              thickness: 1,
-              color: theme.colorScheme.outline.withValues(alpha: 0.2),
-            ),
-            SizedBox(height: 8.h),
-            // Navigation items
+            SizedBox(height: 48.h),
             _buildDrawerItem(
-              context,
-              icon: 'assets/icons/home.svg',
+              context: context,
               title: 'Home',
-              isSelected: currentSection == NavSection.home,
-              onTap: () {
-                haptic;
-                Navigator.pop(context);
-                onNavigate?.call(NavSection.home);
-              },
+              iconPath: 'assets/icons/home.svg',
+              section: NavSection.home,
+              navProvider: navProvider,
             ),
             _buildDrawerItem(
-              context,
-              icon: 'assets/icons/about.svg',
+              context: context,
               title: 'About',
-              isSelected: currentSection == NavSection.about,
-              onTap: () {
-                haptic;
-                Navigator.pop(context);
-                onNavigate?.call(NavSection.about);
-              },
+              iconPath: 'assets/icons/about.svg',
+              section: NavSection.about,
+              navProvider: navProvider,
             ),
             _buildDrawerItem(
-              context,
-              icon: 'assets/icons/project.svg',
+              context: context,
               title: 'Projects',
-              isSelected: currentSection == NavSection.projects,
-              onTap: () {
-                haptic;
-                Navigator.pop(context);
-                onNavigate?.call(NavSection.projects);
-              },
+              iconPath: 'assets/icons/project.svg',
+              section: NavSection.projects,
+              navProvider: navProvider,
             ),
             _buildDrawerItem(
-              context,
-              icon: 'assets/icons/experience.svg',
+              context: context,
               title: 'Experience',
-              isSelected: currentSection == NavSection.experience,
-              onTap: () {
-                haptic;
-                Navigator.pop(context);
-                onNavigate?.call(NavSection.experience);
-              },
+              iconPath: 'assets/icons/experience.svg',
+              section: NavSection.experience,
+              navProvider: navProvider,
             ),
             _buildDrawerItem(
-              context,
-              icon: 'assets/icons/email.svg',
-              title: 'Contact Me',
-              isSelected: currentSection == NavSection.contact,
-              onTap: () {
-                haptic;
-                Navigator.pop(context);
-                onNavigate?.call(NavSection.contact);
-              },
+              context: context,
+              title: 'Contact',
+              iconPath: 'assets/icons/email.svg',
+              section: NavSection.contact,
+              navProvider: navProvider,
             ),
-            const Spacer(),
-            SizedBox(height: 16.h),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDrawerItem(
-    BuildContext context, {
-    required String icon,
+  Widget _buildDrawerItem({
+    required BuildContext context,
     required String title,
-    required VoidCallback onTap,
-    bool isSelected = false,
+    required String iconPath,
+    required NavSection section,
+    required NavigationProvider navProvider,
   }) {
     final theme = Theme.of(context);
+    final isSelected = navProvider.currentSection == section;
 
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 12.r, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: isSelected
-            ? theme.colorScheme.primaryContainer.withValues(alpha: 0.6)
-            : Colors.transparent,
-        borderRadius: BorderRadius.circular(12),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 8.r),
       child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        tileColor: isSelected
+            ? theme.colorScheme.primaryFixed
+            : Colors.transparent,
         leading: SvgPicture.asset(
-          icon,
-          colorFilter: isSelected
-              ? ColorFilter.mode(theme.colorScheme.primary, BlendMode.srcIn)
-              : ColorFilter.mode(theme.colorScheme.onSurface, BlendMode.srcIn),
-          width: 24.r,
+          iconPath,
           height: 24.r,
+          width: 24.r,
+          colorFilter: ColorFilter.mode(
+            isSelected
+                ? theme.colorScheme.onPrimaryContainer
+                : theme.colorScheme.onSurfaceVariant,
+            BlendMode.srcIn,
+          ),
         ),
         title: Text(
           title,
-          style: theme.textTheme.bodyLarge?.copyWith(
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+          style: theme.textTheme.titleMedium?.copyWith(
             color: isSelected
-                ? theme.colorScheme.primary
-                : theme.colorScheme.onSurface,
+                ? theme.colorScheme.onPrimaryContainer
+                : theme.colorScheme.onSurfaceVariant,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
           ),
         ),
-        onTap: onTap,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        onTap: () {
+          Navigator.pop(context); // Close the drawer
+          navProvider.scrollToSection(section);
+        },
       ),
     );
   }

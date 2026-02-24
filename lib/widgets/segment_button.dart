@@ -34,10 +34,7 @@ class SegmentButton extends StatelessWidget {
           shape: const StadiumBorder(),
           color: isSelected ? selectedColor : Colors.transparent,
         ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 4.r,
-          vertical: 8.r,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 4.r, vertical: 8.r),
         child: child,
       ),
     );
