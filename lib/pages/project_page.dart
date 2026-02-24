@@ -270,7 +270,7 @@ class _ProjectPageState extends State<ProjectPage> {
                 SizedBox(height: 8.r),
                 Wrap(
                   spacing: isMobile ? 2.r : 4.r,
-                  runSpacing: 4.r,
+                  runSpacing: isMobile ? 2.r : 4.r,
                   children: project.tags.map((tag) {
                     return Chip(
                       label: Text(
