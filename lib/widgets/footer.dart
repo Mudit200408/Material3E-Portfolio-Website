@@ -85,9 +85,9 @@ class _FooterState extends State<Footer> {
           size: 14.r,
         ),
 
-        SizedBox(width: 3.w),
+        SizedBox(width: 6.w),
         Text(
-          '2025 Mudit Purohit',
+          '2026 Mudit Purohit',
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),

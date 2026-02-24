@@ -26,6 +26,10 @@ class _ContactPageState extends State<ContactPage> {
   final String _githubUrl = '[GITHUB_URL]'; //TODO: Add your github url
   final String _linkedinUrl = '[LINKEDIN_URL]'; //TODO: Add your linkedin url
   final String _accessKey = '[ACCESS_KEY]'; //TODO: Add your access key
+  final String _whatsappUrl = '[WHATSAPP_URL]'; //TODO: Add your whatsapp url
+  final String _telegramUrl = '[TELEGRAM_URL]'; //TODO: Add your telegram url
+  final String _phoneUrl = 'tel:+91XXXXXXXXXX'; //TODO: Add your phone number
+
   bool _isSending = false;
 
   @override
@@ -144,21 +148,47 @@ class _ContactPageState extends State<ContactPage> {
           // Social Buttons
           ScrollAnimatedFadeIn(
             delay: const Duration(milliseconds: 300),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Wrap(
+              alignment: WrapAlignment.center,
               spacing: 16.r,
+              runSpacing: 6.r,
               children: [
+                // Phone
+                _SocialButton(
+                  iconPath: 'assets/icons/phone.svg',
+                  onPressed: () => _launchUrl(_phoneUrl),
+                  tooltip: 'Phone Call',
+                ),
+
+                // Whatsapp
+                _SocialButton(
+                  iconPath: 'assets/icons/whatsapp.svg',
+                  onPressed: () => _launchUrl(_whatsappUrl),
+                  tooltip: 'Whatsapp',
+                ),
+
+                // Email
                 _SocialButton(
                   iconPath: 'assets/icons/email.svg',
                   onPressed: () => _launchUrl('mailto:$_myEmail'),
                   tooltip: 'Email',
                 ),
 
+                // Telegram
+                _SocialButton(
+                  iconPath: 'assets/icons/telegram.svg',
+                  onPressed: () => _launchUrl(_telegramUrl),
+                  tooltip: 'Telegram',
+                ),
+
+                // Github
                 _SocialButton(
                   iconPath: 'assets/icons/github.svg',
                   onPressed: () => _launchUrl(_githubUrl),
                   tooltip: 'GitHub',
                 ),
+
+                // LinkedIn
                 _SocialButton(
                   iconPath: 'assets/icons/linkedin.svg',
                   onPressed: () => _launchUrl(_linkedinUrl),
@@ -306,33 +336,30 @@ class _ContactPageState extends State<ContactPage> {
 }
 
 class _SocialButton extends StatelessWidget {
-  final String? iconPath;
-  final IconData? icon;
+  final String iconPath;
   final VoidCallback onPressed;
   final String tooltip;
 
   const _SocialButton({
-    this.iconPath,
-    this.icon,
+    required this.iconPath,
     required this.onPressed,
     required this.tooltip,
-  }) : assert(iconPath != null || icon != null);
+  });
 
   @override
   Widget build(BuildContext context) {
     return IconButton.filledTonal(
       onPressed: onPressed,
-      icon: iconPath != null
-          ? SvgPicture.asset(
-              iconPath!,
-              width: 24.r,
-              height: 24.r,
-              colorFilter: ColorFilter.mode(
-                Theme.of(context).colorScheme.onSecondaryContainer,
-                BlendMode.srcIn,
-              ),
-            )
-          : Icon(icon, size: 24.r),
+      icon: SvgPicture.asset(
+        iconPath,
+        width: 24.r,
+        height: 24.r,
+        colorFilter: ColorFilter.mode(
+          Theme.of(context).colorScheme.onSecondaryContainer,
+          BlendMode.srcIn,
+        ),
+      ),
+
       tooltip: tooltip,
       style: IconButton.styleFrom(padding: EdgeInsets.all(16.r)),
     );
