@@ -114,6 +114,9 @@ Open `lib/pages/contact_page.dart` and replace the placeholder values with your 
 final String _myEmail = '[EMAIL_ADDRESS]';   // Your email address
 final String _githubUrl = '[GITHUB_URL]';     // Your GitHub profile URL
 final String _linkedinUrl = '[LINKEDIN_URL]'; // Your LinkedIn profile URL
+final String _whatsappUrl = '[WHATSAPP_URL]'; //Your Whatsapp URL
+final String _telegramUrl = '[TELEGRAM_URL]'; //Your Telegram URL
+final String _phoneUrl = 'tel:+91XXXXXXXXXX'; // Your Phone number
 final String _accessKey = '[ACCESS_KEY]';     // Your Web3Forms access key
 ```
 
