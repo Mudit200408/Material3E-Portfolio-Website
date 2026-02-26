@@ -183,7 +183,7 @@ class _AboutPageState extends State<AboutPage> {
           Expanded(
             child: SegmentButton(
               width: double.infinity,
-              height: isMobile ? 50.h : 60.h,
+              height: isMobile ? 50.r : 60.r,
               isSelected: selectedTab == 0,
               selectedColor: theme.colorScheme.onPrimaryContainer,
               onTap: () => setState(() => selectedTab = 0),
@@ -204,7 +204,7 @@ class _AboutPageState extends State<AboutPage> {
           Expanded(
             child: SegmentButton(
               width: double.infinity,
-              height: isMobile ? 50.h : 60.h,
+              height: isMobile ? 50.r : 60.r,
               isSelected: selectedTab == 1,
               selectedColor: theme.colorScheme.onPrimaryContainer,
               onTap: () => setState(() => selectedTab = 1),
