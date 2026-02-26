@@ -109,6 +109,11 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                         fontVariations: const [
                           FontVariation('wght', 800),
                           FontVariation('ROND', 100),
+                          FontVariation('slnt', -5),
+                          FontVariation('wdth', 70),
+                          FontVariation('XOPQ', 125),
+                          FontVariation('XTRA', 468),
+                          FontVariation('opsz', 28),
                         ],
                       ),
                     ),
@@ -154,7 +159,7 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                                   uri,
                                   mode: LaunchMode.externalApplication,
                                 )) {
-                                  if (mounted) {
+                                  if (context.mounted) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text(
