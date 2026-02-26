@@ -17,6 +17,7 @@ class HomeSkillsSection extends StatelessWidget {
     final supabase = context.read<SupabaseServices>();
 
     return ScrollAnimatedFadeIn(
+      key: const ValueKey('home_skills_marquee'),
       delay: 600.ms,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 16.r),

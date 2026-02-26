@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
+import 'package:motor/motor.dart';
 
 class SegmentButton extends StatelessWidget {
   final Widget child;
@@ -21,22 +22,33 @@ class SegmentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: selectedColor.withValues(alpha: 0.4),
-      onTap: onTap,
-      customBorder: const StadiumBorder(),
-      child: AnimatedContainer(
-        width: width,
-        height: height,
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeOutCubic,
-        decoration: ShapeDecoration(
-          shape: const StadiumBorder(),
-          color: isSelected ? selectedColor : Colors.transparent,
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 4.r, vertical: 8.r),
-        child: child,
-      ),
+    return SingleMotionBuilder(
+      motion: const MaterialSpringMotion.expressiveEffectsSlow(),
+      value: isSelected ? 1.0 : 0.0,
+      builder: (context, value, _) {
+        final color = Color.lerp(Colors.transparent, selectedColor, value);
+
+        return Material(
+          type: MaterialType.transparency,
+          child: Ink(
+            width: width,
+            height: height,
+            decoration: ShapeDecoration(
+              shape: const StadiumBorder(),
+              color: color,
+            ),
+            child: InkWell(
+              onTap: onTap,
+              customBorder: const StadiumBorder(),
+              splashColor: selectedColor.withValues(alpha: 0.4),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.r, vertical: 8.r),
+                child: child,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

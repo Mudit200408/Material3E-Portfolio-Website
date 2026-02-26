@@ -53,6 +53,7 @@ class _HomeActionButtonsState extends State<HomeActionButtons> {
     final navProvider = context.read<NavigationProvider>();
 
     return ScrollAnimatedFadeIn(
+      key: const ValueKey('home_action_buttons'),
       delay: 800.ms,
       child: Flex(
         direction: widget.isMobile ? Axis.vertical : Axis.horizontal,

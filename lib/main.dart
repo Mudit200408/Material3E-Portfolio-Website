@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:portfolio_web/core/theme/theme_data.dart';
+import 'package:portfolio_web/core/theme/theme_provider.dart';
 import 'package:portfolio_web/core/utils/navigation_provider.dart';
 import 'package:portfolio_web/pages/home_page.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
@@ -34,24 +35,30 @@ class AppRoot extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         Provider<SupabaseServices>(create: (_) => SupabaseServices()),
       ],
-      child: MaterialApp(
-        builder: (context, child) {
-          child = ResponsiveBreakpoints.builder(
-            child: child!,
-            breakpoints: [
-              const Breakpoint(start: 0, end: 600, name: MOBILE),
-              const Breakpoint(start: 601, end: 1200, name: TABLET),
-              const Breakpoint(start: 1201, end: 1920, name: DESKTOP),
-            ],
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
+          return MaterialApp(
+            builder: (context, child) {
+              child = ResponsiveBreakpoints.builder(
+                child: child!,
+                breakpoints: [
+                  const Breakpoint(start: 0, end: 600, name: MOBILE),
+                  const Breakpoint(start: 601, end: 1200, name: TABLET),
+                  const Breakpoint(start: 1201, end: 1920, name: DESKTOP),
+                ],
+              );
+              return ResponsiveScaler.scale(context: context, child: child);
+            },
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            themeMode: ThemeMode.light,
+            title: 'Mudit Purohit - Portfolio',
+            home: const HomePage(),
           );
-          return ResponsiveScaler.scale(context: context, child: child);
         },
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme,
-        title: 'Mudit Purohit - Portfolio',
-        home: const HomePage(),
       ),
     );
   }

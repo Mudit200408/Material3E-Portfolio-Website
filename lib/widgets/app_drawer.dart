@@ -91,7 +91,7 @@ class AppDrawer extends StatelessWidget {
       child: ListTile(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         tileColor: isSelected
-            ? theme.colorScheme.primaryFixed
+            ? theme.colorScheme.primaryContainer
             : Colors.transparent,
         leading: SvgPicture.asset(
           iconPath,

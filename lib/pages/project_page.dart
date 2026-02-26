@@ -141,7 +141,8 @@ class _ProjectPageState extends State<ProjectPage> {
   ) {
     final isWeb = isDesktop || isTablet;
     return ScrollAnimatedFadeIn(
-      delay: const Duration(milliseconds: 300),
+      key: const ValueKey('project_header'),
+      delay: const Duration(milliseconds: 200),
       slideOffset: -0.1,
       autoRebuild: true,
       child: SizedBox(
@@ -221,8 +222,9 @@ class _ProjectPageState extends State<ProjectPage> {
 
   Widget _buildInfoCard(ThemeData theme, ProjectModel project, bool isMobile) {
     return ScrollAnimatedFadeIn(
-      delay: const Duration(milliseconds: 500),
-      slideOffset: 0.4,
+      key: ValueKey('project_info_${project.id}'),
+      delay: const Duration(milliseconds: 400),
+      slideOffset: 0.1,
       child: AnimatedSize(
         duration: const Duration(milliseconds: 500),
         curve: Curves.fastOutSlowIn, // Smooth expansion/contraction
@@ -245,7 +247,7 @@ class _ProjectPageState extends State<ProjectPage> {
             key: ValueKey(project.image),
             padding: EdgeInsets.all(24.r),
             decoration: BoxDecoration(
-              color: theme.colorScheme.primaryFixed,
+              color: theme.colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(52.r),
             ),
             child: Column(
@@ -278,7 +280,7 @@ class _ProjectPageState extends State<ProjectPage> {
                         style: theme.textTheme.labelLarge?.copyWith(
                           color: theme.colorScheme.onPrimaryContainer,
                           fontVariations: const [
-                            FontVariation('wght', 450),
+                            FontVariation('wght', 500),
                             FontVariation('ROND', 100),
                           ],
                         ),
@@ -288,7 +290,8 @@ class _ProjectPageState extends State<ProjectPage> {
                         color: theme.colorScheme.onPrimaryContainer,
                         width: 0.5,
                       ),
-                      backgroundColor: theme.colorScheme.surface,
+                      backgroundColor: theme.colorScheme.primaryContainer
+                          .withValues(alpha: 0.6),
                     );
                   }).toList(),
                 ),
@@ -335,7 +338,9 @@ class _ProjectPageState extends State<ProjectPage> {
     bool isMobile,
   ) {
     return ScrollAnimatedFadeIn(
-      delay: const Duration(milliseconds: 800),
+      key: ValueKey('project_mockup_${project.id}'),
+      delay: const Duration(milliseconds: 600),
+      slideOffset: 0.1,
       child: AnimatedSize(
         duration: const Duration(milliseconds: 600),
         curve: Curves.fastOutSlowIn,
@@ -360,7 +365,7 @@ class _ProjectPageState extends State<ProjectPage> {
             height: double.infinity,
             padding: EdgeInsets.all(24.r),
             decoration: BoxDecoration(
-              color: theme.colorScheme.primaryFixed,
+              color: theme.colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(52.r),
             ),
             child: Column(
@@ -449,7 +454,7 @@ class _ProjectPageState extends State<ProjectPage> {
       ),
       style: ElevatedButton.styleFrom(
         minimumSize: Size(150.w, 75.h),
-        backgroundColor: theme.colorScheme.onPrimaryContainer,
+        backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21)),
       ),

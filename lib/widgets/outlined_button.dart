@@ -17,28 +17,32 @@ class CustomOutlinedButton extends StatefulWidget {
 
 class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
   bool _isHovered = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    // Animate border width on hover
+    final borderWidth = _isHovered ? 2.5 : 1.5;
+
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: widget.onPressed,
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOutCubic,
           padding: EdgeInsets.symmetric(horizontal: 24.r, vertical: 18.r),
           decoration: ShapeDecoration(
             shape: StadiumBorder(
               side: BorderSide(
-                color: _isHovered
-                    ? theme.colorScheme.onPrimaryContainer
-                    : theme.colorScheme.primary,
-                width: 1.5,
+                color: theme.colorScheme.primary,
+                width: borderWidth,
               ),
             ),
           ),
-
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -46,18 +50,14 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
                 widget.buttonName,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontVariations: [const FontVariation('wght', 530)],
-                  color: _isHovered
-                      ? theme.colorScheme.onPrimaryContainer
-                      : theme.colorScheme.primary,
+                  color: theme.colorScheme.primary,
                 ),
               ),
               SizedBox(width: 8.w),
               SvgPicture.asset(
                 'assets/icons/document.svg',
                 colorFilter: ColorFilter.mode(
-                  _isHovered
-                      ? theme.colorScheme.onPrimaryContainer
-                      : theme.colorScheme.primary,
+                  theme.colorScheme.primary,
                   BlendMode.srcIn,
                 ),
                 width: 28.r,

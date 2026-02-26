@@ -11,7 +11,7 @@ import 'package:portfolio_web/widgets/home_widgets/home_skills_section.dart';
 import 'package:portfolio_web/pages/project_page.dart';
 import 'package:portfolio_web/widgets/animated_background_shapes.dart';
 import 'package:portfolio_web/widgets/app_drawer.dart';
-import 'package:portfolio_web/widgets/custom_portfolio_app_bar.dart';
+import 'package:portfolio_web/widgets/nav_bar.dart';
 import 'package:portfolio_web/widgets/footer.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
               CustomScrollView(
                 controller: navProvider.scrollController,
                 slivers: [
-                  CustomPortfolioAppBar(isMobile: isMobile),
+                  NavBar(isMobile: isMobile),
                   ..._buildPageSections(context, theme, isMobile, navProvider),
                 ],
               ),

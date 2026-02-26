@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
+import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/models/experience_model.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 
@@ -73,8 +74,8 @@ class ExperienceCard extends StatelessWidget {
 
   Widget _buildTimelineLine(ThemeData theme) {
     return Container(
-      width: 2,
-      color: theme.colorScheme.primary.withValues(alpha: 0.8),
+      width: 2.2,
+      color: theme.colorScheme.primary,
       margin: EdgeInsets.symmetric(horizontal: 16.r),
     );
   }
@@ -94,10 +95,7 @@ class ExperienceCard extends StatelessWidget {
           '${experience.startDate} - ${experience.endDate ?? "Present"}',
           style: theme.textTheme.labelLarge?.copyWith(
             color: theme.colorScheme.tertiary,
-            fontVariations: const [
-              FontVariation('wght', 600),
-              FontVariation('ROND', 80),
-            ],
+            fontVariations: AppConstants.experienceFontNormal,
           ),
           textAlign: alignRight ? TextAlign.right : TextAlign.left,
         ),
@@ -105,7 +103,7 @@ class ExperienceCard extends StatelessWidget {
         Text(
           experience.jobTitle,
           style: theme.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w700,
+            fontVariations: AppConstants.experienceFontEmphasized,
           ),
           textAlign: alignRight ? TextAlign.right : TextAlign.left,
         ),
@@ -113,7 +111,7 @@ class ExperienceCard extends StatelessWidget {
           experience.companyName,
           style: theme.textTheme.titleMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.w500,
+            fontVariations: AppConstants.experienceFontNormal,
           ),
           textAlign: alignRight ? TextAlign.right : TextAlign.left,
         ),
@@ -121,12 +119,9 @@ class ExperienceCard extends StatelessWidget {
         if (experience.location.isNotEmpty)
           Text(
             experience.location,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onPrimaryContainer,
-              fontVariations: const [
-                FontVariation('wght', 740),
-                FontVariation('ROND', 80),
-              ],
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontVariations: AppConstants.experienceFontNormal,
             ),
             textAlign: alignRight ? TextAlign.right : TextAlign.left,
           ),
@@ -143,11 +138,8 @@ class ExperienceCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: isMobile ? 0 : 42.r),
       padding: EdgeInsets.all(24.r),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+        color: theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +147,8 @@ class ExperienceCard extends StatelessWidget {
           Text(
             'Key Responsibilities & Achievements',
             style: theme.textTheme.titleLarge?.copyWith(
-              fontVariations: const [FontVariation('wght', 680)],
+              color: theme.colorScheme.onPrimaryContainer,
+              fontVariations: AppConstants.experienceFontEmphasized,
             ),
           ),
           SizedBox(height: 16.h),
@@ -192,9 +185,15 @@ class ExperienceCard extends StatelessWidget {
                     color: shapeColor,
                     child: const SizedBox(),
                   ),
-                  SizedBox(width: 12.w),
+                  SizedBox(width: 12.r),
                   Expanded(
-                    child: Text(resp, style: theme.textTheme.titleMedium),
+                    child: Text(
+                      resp,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: theme.colorScheme.onPrimaryContainer,
+                        fontVariations: AppConstants.experienceFontBody,
+                      ),
+                    ),
                   ),
                 ],
               ),

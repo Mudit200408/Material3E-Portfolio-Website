@@ -16,6 +16,8 @@ class ResumeViewerModal extends StatefulWidget {
 
 class _ResumeViewerModalState extends State<ResumeViewerModal> {
   late PdfControllerPinch _pdfController;
+  final Dio _dio = Dio();
+  final CancelToken _cancelToken = CancelToken();
   bool _isDownloading = false;
   double _downloadProgress = 0.0;
   String? _error;
@@ -30,13 +32,16 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
 
   @override
   void dispose() {
+    _cancelToken.cancel('Widget disposed');
+    _dio.close();
     _pdfController.dispose();
     super.dispose();
   }
 
   Future<PdfDocument> _fetchPdfDocument(String url) async {
-    final response = await Dio().get(
+    final response = await _dio.get(
       url,
+      cancelToken: _cancelToken,
       options: Options(responseType: ResponseType.bytes),
     );
     final bytes = Uint8List.fromList(response.data);
@@ -51,9 +56,9 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
     });
 
     try {
-      final dio = Dio();
-      final response = await dio.get(
+      final response = await _dio.get(
         widget.resumeUrl,
+        cancelToken: _cancelToken,
         onReceiveProgress: (received, total) {
           if (total != -1 && mounted) {
             setState(() => _downloadProgress = received / total);

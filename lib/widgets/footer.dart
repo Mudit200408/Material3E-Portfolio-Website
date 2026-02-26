@@ -108,12 +108,17 @@ class _FooterState extends State<Footer> {
           Text(
             'Open-sourced under the MIT License',
             style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.primary,
+              color: theme.colorScheme.tertiary,
+              fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
           ),
           SizedBox(width: 3.w),
-          Icon(Icons.open_in_new, color: theme.colorScheme.primary, size: 14.r),
+          Icon(
+            Icons.open_in_new,
+            color: theme.colorScheme.tertiary,
+            size: 14.r,
+          ),
         ],
       ),
     );
@@ -123,9 +128,12 @@ class _FooterState extends State<Footer> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.r, vertical: 6.r),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: theme.colorScheme.primaryFixed.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: theme.colorScheme.outlineVariant),
+        border: Border.all(
+          color: theme.colorScheme.onPrimaryContainer,
+          width: 1,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -133,7 +141,7 @@ class _FooterState extends State<Footer> {
           Text(
             'Made with',
             style: theme.textTheme.labelMedium?.copyWith(
-              color: theme.colorScheme.onSurface,
+              color: theme.colorScheme.onPrimaryContainer,
             ),
           ),
           SizedBox(width: 6.w),
@@ -143,7 +151,7 @@ class _FooterState extends State<Footer> {
             'Flutter',
             style: theme.textTheme.labelMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: theme.colorScheme.primary,
+              color: theme.colorScheme.onPrimaryContainer,
             ),
           ),
         ],

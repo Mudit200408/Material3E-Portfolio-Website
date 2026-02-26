@@ -1,15 +1,16 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:motor/motor.dart';
 import 'package:portfolio_web/core/utils/navigation_provider.dart';
 import 'package:portfolio_web/models/nav_section_enums.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 
-class CustomPortfolioAppBar extends StatelessWidget {
+class NavBar extends StatelessWidget {
   final bool isMobile;
 
-  const CustomPortfolioAppBar({super.key, required this.isMobile});
+  const NavBar({super.key, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class CustomPortfolioAppBar extends StatelessWidget {
   }
 
   Widget _buildMobileAppBar(BuildContext context, ThemeData theme) {
-    return const Row(children: [Spacer()]);
+    return Row(children: [const Spacer()]);
   }
 
   Widget _buildDesktopAppBar(BuildContext context, ThemeData theme) {
@@ -49,7 +50,7 @@ class CustomPortfolioAppBar extends StatelessWidget {
         const Spacer(flex: 4),
         Container(
           decoration: ShapeDecoration(
-            color: theme.colorScheme.primaryFixed,
+            color: theme.colorScheme.primaryContainer,
             shape: const StadiumBorder(),
           ),
           padding: EdgeInsets.all(8.r),
@@ -88,6 +89,7 @@ class CustomPortfolioAppBar extends StatelessWidget {
             ],
           ),
         ),
+        const Spacer(flex: 3),
         const Spacer(),
       ],
     );
@@ -123,38 +125,72 @@ class CustomPortfolioAppBar extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(left: 6.r),
-      child: TextButton(
-        onPressed: () => navProvider.scrollToSection(section),
-        style: TextButton.styleFrom(
-          backgroundColor: isSelected
-              ? theme.colorScheme.primary
-              : Colors.transparent,
-          shape: const StadiumBorder(),
-          padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 4.r),
+      child: SingleMotionBuilder(
+        motion: const MaterialSpringMotion.expressiveSpatialSlow().copyWith(
+          stiffness: 500,
+          damping: 0.5,
         ),
-        child: Row(
-          children: [
-            if (isSelected) ...[
-              SvgPicture.asset(
-                iconPath,
-                height: 18.r,
-                width: 18.r,
-                colorFilter: const ColorFilter.mode(
-                  Colors.white,
-                  BlendMode.srcIn,
-                ),
-              ),
-              SizedBox(width: 6.r),
-            ],
-            Text(
-              text,
-              style: theme.textTheme.labelLarge?.copyWith(
-                color: isSelected ? Colors.white : Colors.black,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-              ),
+        value: isSelected ? 1.0 : 0.0,
+        builder: (context, value, child) {
+          final color =
+              Color.lerp(
+                Colors.transparent,
+                theme.colorScheme.primary,
+                value,
+              ) ??
+              Colors.transparent;
+          final textColor =
+              Color.lerp(
+                theme.colorScheme.onPrimaryContainer,
+                theme.colorScheme.onPrimary,
+                value,
+              ) ??
+              theme.colorScheme.onPrimaryContainer;
+          final safeValue = value < 0.0 ? 0.0 : value;
+          final fontWeight = lerpDouble(520, 600, value) ?? 520;
+
+          return TextButton(
+            onPressed: () => navProvider.scrollToSection(section),
+            style: TextButton.styleFrom(
+              backgroundColor: color,
+              shape: const StadiumBorder(),
+              padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 4.r),
             ),
-          ],
-        ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ClipRect(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    widthFactor: safeValue,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          iconPath,
+                          height: 18.r,
+                          width: 18.r,
+                          colorFilter: ColorFilter.mode(
+                            textColor,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        SizedBox(width: 6.r),
+                      ],
+                    ),
+                  ),
+                ),
+                Text(
+                  text,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: textColor,
+                    fontVariations: [FontVariation('wght', fontWeight)],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -32,6 +32,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
       child: Column(
         children: [
           ScrollAnimatedFadeIn(
+            key: const ValueKey('exp_header'),
             child: Text(
               'Experience',
               style: theme.textTheme.displaySmall?.copyWith(
@@ -45,6 +46,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
           ),
           SizedBox(height: 8.r),
           ScrollAnimatedFadeIn(
+            key: const ValueKey('exp_list_view'),
             delay: const Duration(milliseconds: 200),
             child: Text(
               'A Timeline of my Professional Journey and Key Contributions',
@@ -78,6 +80,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                   final isLeft = index % 2 == 0;
 
                   return ScrollAnimatedFadeIn(
+                    key: ValueKey('exp_item_$index'),
                     delay: Duration(
                       milliseconds: 100 * (index % 3),
                     ), // Staggered delay

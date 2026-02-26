@@ -12,7 +12,7 @@ class Loader extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(4.r),
         decoration: BoxDecoration(
-          color: theme.colorScheme.primaryFixed,
+          color: theme.colorScheme.primaryContainer,
           shape: BoxShape.circle,
         ),
         child: ExpressiveLoadingIndicator(

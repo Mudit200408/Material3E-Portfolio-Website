@@ -34,10 +34,10 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
         colorType: _ColorType.primary,
       ),
       _ShapeData(
-        top: 0.7,
-        left: 0.8,
-        size: 500.r,
-        rotation: 2.0,
+        top: 0.8,
+        left: 0.1,
+        size: 400.r,
+        rotation: 3.5,
         shape: Shapes.c9_sided_cookie,
         parallaxSpeed: 0.08,
         colorType: _ColorType.secondary,
@@ -61,10 +61,10 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
         colorType: _ColorType.tertiary,
       ),
       _ShapeData(
-        top: 0.8,
-        left: 0.1,
-        size: 400.r,
-        rotation: 3.5,
+        top: 0.7,
+        left: 0.8,
+        size: 500.r,
+        rotation: 2.0,
         shape: Shapes.c7_sided_cookie,
         parallaxSpeed: 0.04,
         colorType: _ColorType.primary,
@@ -92,10 +92,10 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
         colorType: _ColorType.primary,
       ),
       _ShapeData(
-        top: 0.8,
-        left: -0.1,
-        size: 520.r,
-        rotation: 3.0,
+        top: 0.9,
+        left: 0.5,
+        size: 420.r,
+        rotation: 4.5,
         shape: Shapes.c9_sided_cookie,
         parallaxSpeed: 0.08,
         colorType: _ColorType.secondary,
@@ -119,10 +119,11 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
         colorType: _ColorType.tertiary,
       ),
       _ShapeData(
-        top: 0.9,
-        left: 0.5,
-        size: 420.r,
-        rotation: 4.5,
+        top: 0.8,
+        left: -0.1,
+        size: 520.r,
+        rotation: 3.0,
+
         shape: Shapes.c7_sided_cookie,
         parallaxSpeed: 0.04,
         colorType: _ColorType.primary,
@@ -353,13 +354,19 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
             Color color;
             switch (data.colorType) {
               case _ColorType.primary:
-                color = theme.colorScheme.primaryContainer;
+                color = theme.colorScheme.primaryContainer.withValues(
+                  alpha: 0.7,
+                );
                 break;
               case _ColorType.secondary:
-                color = theme.colorScheme.secondaryContainer;
+                color = theme.colorScheme.secondaryContainer.withValues(
+                  alpha: 0.7,
+                );
                 break;
               case _ColorType.tertiary:
-                color = theme.colorScheme.tertiaryContainer;
+                color = theme.colorScheme.tertiaryContainer.withValues(
+                  alpha: 0.7,
+                );
                 break;
             }
 
@@ -371,15 +378,18 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
               curve: Curves.easeInOutCubic,
               top: (data.top * size.height) - parallaxOffset,
               left: data.left * size.width,
-              child: Transform.rotate(
-                angle:
-                    data.rotation + (scrollOffset * 0.0005), // Slower rotation
-                child: M3Container(
-                  data.shape,
-                  width: shapeSize,
-                  height: shapeSize,
-                  color: color.withValues(alpha: 0.5),
-                  child: const SizedBox(),
+              child: RepaintBoundary(
+                child: Transform.rotate(
+                  angle:
+                      data.rotation +
+                      (scrollOffset * 0.0005), // Slower rotation
+                  child: M3Container(
+                    data.shape,
+                    width: shapeSize,
+                    height: shapeSize,
+                    color: color,
+                    child: const SizedBox(),
+                  ),
                 ),
               ),
             );

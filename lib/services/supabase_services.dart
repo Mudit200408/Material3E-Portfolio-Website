@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:portfolio_web/models/project_model.dart';
 import 'package:portfolio_web/models/skills_model.dart';
 import 'package:portfolio_web/models/experience_model.dart';
@@ -17,12 +18,12 @@ class SupabaseServices {
   Future<List<SkillsModel>> getSkills({bool forceRefresh = false}) async {
     // Return cached data if available and refresh is not forced
     if (!forceRefresh && _cachedSkills != null) {
-      debugPrint('Returning cached skills');
+      if (kDebugMode) debugPrint('Returning cached skills');
       return _cachedSkills!;
     }
 
     try {
-      debugPrint('Fetching skills from Supabase');
+      if (kDebugMode) debugPrint('Fetching skills from Supabase');
       final response = await _client
           .from('skills')
           .select('skill_name, order')
@@ -37,7 +38,7 @@ class SupabaseServices {
 
       return skills;
     } catch (e) {
-      debugPrint('Error fetching skills: $e');
+      if (kDebugMode) debugPrint('Error fetching skills: $e');
       return [];
     }
   }
@@ -47,12 +48,12 @@ class SupabaseServices {
   }) async {
     // Return cached data if available and refresh is not forced
     if (!forceRefresh && _cachedExperience != null) {
-      debugPrint('Returning cached experience');
+      if (kDebugMode) debugPrint('Returning cached experience');
       return _cachedExperience!;
     }
 
     try {
-      debugPrint('Fetching experience from Supabase');
+      if (kDebugMode) debugPrint('Fetching experience from Supabase');
       final response = await _client
           .from('experience')
           .select()
@@ -62,7 +63,7 @@ class SupabaseServices {
         try {
           return ExperienceModel.fromJson(item);
         } catch (e) {
-          debugPrint('Error parsing item: $item, Error: $e');
+          if (kDebugMode) debugPrint('Error parsing item: $item, Error: $e');
           rethrow;
         }
       }).toList();
@@ -72,7 +73,7 @@ class SupabaseServices {
 
       return experience;
     } catch (e) {
-      debugPrint('Error fetching experience: $e');
+      if (kDebugMode) debugPrint('Error fetching experience: $e');
       // Rethrow to let the UI handle the error state
       throw Exception('Failed to fetch experience: $e');
     }
@@ -81,12 +82,12 @@ class SupabaseServices {
   Future<List<ProjectModel>> getProjects({bool forceRefresh = false}) async {
     // Return cached data if available and refresh is not forced
     if (!forceRefresh && _cachedProjects != null) {
-      debugPrint('Returning cached Projects');
+      if (kDebugMode) debugPrint('Returning cached Projects');
       return _cachedProjects!;
     }
 
     try {
-      debugPrint('Fetching projects from Supabase');
+      if (kDebugMode) debugPrint('Fetching projects from Supabase');
       final response = await _client
           .from('project')
           .select()
@@ -96,7 +97,7 @@ class SupabaseServices {
         try {
           return ProjectModel.fromJson(item);
         } catch (e) {
-          debugPrint('Error parsing items: $item, Error: $e');
+          if (kDebugMode) debugPrint('Error parsing items: $item, Error: $e');
           rethrow;
         }
       }).toList();
@@ -106,7 +107,7 @@ class SupabaseServices {
 
       return projects;
     } catch (e) {
-      debugPrint('Error fetching projects: $e');
+      if (kDebugMode) debugPrint('Error fetching projects: $e');
       // Rethrow to let the UI handle the error state
       throw Exception('Failed to fetch projects: $e');
     }

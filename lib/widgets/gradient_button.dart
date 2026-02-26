@@ -44,10 +44,7 @@ class _GradientButtonState extends State<GradientButton> {
               ),
             ],
             gradient: LinearGradient(
-              colors: [
-                theme.colorScheme.onPrimaryContainer,
-                theme.colorScheme.onTertiaryContainer,
-              ],
+              colors: [theme.colorScheme.primary, theme.colorScheme.tertiary],
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
             ),

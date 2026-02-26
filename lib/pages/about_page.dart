@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:portfolio_web/widgets/segment_button.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
+import 'package:motor/motor.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -67,12 +68,13 @@ class _AboutPageState extends State<AboutPage> {
   Widget _buildInfoCard(BuildContext context, ThemeData theme) {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
     return ScrollAnimatedFadeIn(
+      key: const ValueKey('about_info_card'),
       slideOffset: 0.1,
       child: Container(
         padding: EdgeInsets.all(isMobile ? 16.r : 24.r),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32.r),
-          color: theme.colorScheme.primaryFixed,
+          color: theme.colorScheme.primaryContainer,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,6 +97,7 @@ class _AboutPageState extends State<AboutPage> {
 
   Widget _buildQuoteCard(BuildContext context, ThemeData theme) {
     return ScrollAnimatedFadeIn(
+      key: const ValueKey('about_quote_card'),
       slideOffset: -0.1,
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -111,7 +114,7 @@ class _AboutPageState extends State<AboutPage> {
               gradient: LinearGradient(
                 colors: _isQuoteHovered
                     ? [theme.colorScheme.primary, theme.colorScheme.secondary]
-                    : [theme.colorScheme.surface, theme.colorScheme.surface],
+                    : [Colors.transparent, Colors.transparent],
               ),
               borderRadius: BorderRadius.circular(20.r),
               boxShadow: [
@@ -174,7 +177,7 @@ class _AboutPageState extends State<AboutPage> {
 
     return Container(
       decoration: ShapeDecoration(
-        color: theme.colorScheme.inversePrimary,
+        color: theme.colorScheme.primary.withValues(alpha: 0.2),
         shape: const StadiumBorder(),
       ),
       child: Row(
@@ -185,18 +188,27 @@ class _AboutPageState extends State<AboutPage> {
               width: double.infinity,
               height: isMobile ? 50.r : 60.r,
               isSelected: selectedTab == 0,
-              selectedColor: theme.colorScheme.onPrimaryContainer,
+              selectedColor: theme.colorScheme.primary,
               onTap: () => setState(() => selectedTab = 0),
               child: Center(
-                child: Text(
-                  "About Me",
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontSize: isMobile ? 16 : null,
-                    color: selectedTab == 0
-                        ? theme.colorScheme.onPrimary
-                        : theme.colorScheme.onPrimaryContainer,
-                    fontVariations: segmentedButtonFont,
-                  ),
+                child: SingleMotionBuilder(
+                  motion: const MaterialSpringMotion.expressiveEffectsSlow(),
+                  value: selectedTab == 0 ? 1.0 : 0.0,
+                  builder: (context, value, _) {
+                    final color = Color.lerp(
+                      theme.colorScheme.primary,
+                      theme.colorScheme.onPrimary,
+                      value,
+                    );
+                    return Text(
+                      "About Me",
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontSize: isMobile ? 16 : null,
+                        color: color,
+                        fontVariations: segmentedButtonFont,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -206,18 +218,27 @@ class _AboutPageState extends State<AboutPage> {
               width: double.infinity,
               height: isMobile ? 50.r : 60.r,
               isSelected: selectedTab == 1,
-              selectedColor: theme.colorScheme.onPrimaryContainer,
+              selectedColor: theme.colorScheme.primary,
               onTap: () => setState(() => selectedTab = 1),
               child: Center(
-                child: Text(
-                  "Education",
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontSize: isMobile ? 16 : null,
-                    color: selectedTab == 1
-                        ? theme.colorScheme.onPrimary
-                        : theme.colorScheme.onPrimaryContainer,
-                    fontVariations: segmentedButtonFont,
-                  ),
+                child: SingleMotionBuilder(
+                  motion: const MaterialSpringMotion.expressiveEffectsSlow(),
+                  value: selectedTab == 1 ? 1.0 : 0.0,
+                  builder: (context, value, _) {
+                    final color = Color.lerp(
+                      theme.colorScheme.primary,
+                      theme.colorScheme.onPrimary,
+                      value,
+                    );
+                    return Text(
+                      "Education",
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontSize: isMobile ? 16 : null,
+                        color: color,
+                        fontVariations: segmentedButtonFont,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -233,6 +254,7 @@ class _AboutPageState extends State<AboutPage> {
       FontVariation('wght', 600),
     ];
     return ScrollAnimatedFadeIn(
+      key: const ValueKey('about_me_content'),
       delay: 200.ms,
       slideOffset: 0.1,
       child: Column(
@@ -241,8 +263,8 @@ class _AboutPageState extends State<AboutPage> {
           Text(
             "Hello! I'm Mudit, and I'm genuinely excited to be building in the world of mobile development. I'm a passionate Flutter developer who loves transforming design concepts into smooth, functional apps. I'm focused on mastering best practices like Clean Architecture, SOLID principles, and BLoC state management, because I believe a great app starts with a great foundation!",
             style: theme.textTheme.bodyLarge?.copyWith(
-              height: 1.6,
-              color: theme.colorScheme.onSurface,
+              height: 1.8,
+              color: theme.colorScheme.onPrimaryContainer,
               fontVariations: descriptionFont,
             ),
           ),
@@ -250,8 +272,8 @@ class _AboutPageState extends State<AboutPage> {
           Text(
             "I'm constantly learning and developing my skills, and I've already had amazing experiences integrating advanced features using Firebase services and even Gemini AI. From sketching out intuitive user interfaces in Figma to debugging complex integrations, I approach every project as an opportunity to grow.",
             style: theme.textTheme.bodyLarge?.copyWith(
-              height: 1.6,
-              color: theme.colorScheme.onSurface,
+              height: 1.8,
+              color: theme.colorScheme.onPrimaryContainer,
               fontVariations: descriptionFont,
             ),
           ),
@@ -259,8 +281,8 @@ class _AboutPageState extends State<AboutPage> {
           Text(
             "I'm on a journey to create innovative and efficient applications, and I can't wait to see what challenge comes next!",
             style: theme.textTheme.bodyLarge?.copyWith(
-              height: 1.6,
-              color: theme.colorScheme.onSurface,
+              height: 1.8,
+              color: theme.colorScheme.onPrimaryContainer,
               fontVariations: descriptionFont,
             ),
           ),
@@ -275,6 +297,7 @@ class _AboutPageState extends State<AboutPage> {
       children: [
         // College Item
         ScrollAnimatedFadeIn(
+          key: const ValueKey('about_edu_1'),
           delay: 100.ms,
           child: _buildEducationItem(
             context,
@@ -288,6 +311,7 @@ class _AboutPageState extends State<AboutPage> {
         SizedBox(height: 16.h),
         // Diploma Item
         ScrollAnimatedFadeIn(
+          key: const ValueKey('about_edu_2'),
           delay: 200.ms,
           child: _buildEducationItem(
             context,
@@ -301,6 +325,7 @@ class _AboutPageState extends State<AboutPage> {
         SizedBox(height: 16.h),
         // School Item
         ScrollAnimatedFadeIn(
+          key: const ValueKey('about_edu_3'),
           delay: 300.ms,
           child: _buildEducationItem(
             context,
@@ -394,7 +419,7 @@ class _AboutPageState extends State<AboutPage> {
               height: 50.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.r),
-                color: theme.colorScheme.inversePrimary,
+                color: theme.colorScheme.primaryContainer,
               ),
               child: SvgPicture.asset(
                 assetString,
@@ -487,7 +512,7 @@ class _AboutPageState extends State<AboutPage> {
             height: 60.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.r),
-              color: theme.colorScheme.inversePrimary,
+              color: theme.colorScheme.primaryContainer,
             ),
             child: SvgPicture.asset(
               assetString,

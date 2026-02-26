@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portfolio_web/models/nav_section_enums.dart';
@@ -6,6 +7,7 @@ class NavigationProvider extends ChangeNotifier {
   NavSection _currentSection = NavSection.home;
   bool _isProgrammaticScroll = false;
   final ScrollController _scrollController = ScrollController();
+  Timer? _scrollDebounce;
 
   final Map<NavSection, GlobalKey> sectionKeys = {
     NavSection.home: GlobalKey(),
@@ -25,6 +27,7 @@ class NavigationProvider extends ChangeNotifier {
 
   @override
   void dispose() {
+    _scrollDebounce?.cancel();
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
@@ -39,7 +42,15 @@ class NavigationProvider extends ChangeNotifier {
 
   void _onScroll() {
     if (_isProgrammaticScroll) return;
+    // Debounce: only run the expensive render-tree walk after 50ms of scroll inactivity
+    _scrollDebounce?.cancel();
+    _scrollDebounce = Timer(
+      const Duration(milliseconds: 50),
+      _updateActiveSection,
+    );
+  }
 
+  void _updateActiveSection() {
     BuildContext? anyContext;
     for (final key in sectionKeys.values) {
       if (key.currentContext != null) {

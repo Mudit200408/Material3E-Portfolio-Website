@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
+import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
+import 'package:portfolio_web/widgets/social_button.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -121,6 +123,7 @@ class _ContactPageState extends State<ContactPage> {
       child: Column(
         children: [
           ScrollAnimatedFadeIn(
+            key: const ValueKey('contact_header'),
             child: Text(
               'Get in Touch',
               style: theme.textTheme.displaySmall?.copyWith(
@@ -134,6 +137,7 @@ class _ContactPageState extends State<ContactPage> {
           ),
           SizedBox(height: 8.h),
           ScrollAnimatedFadeIn(
+            key: const ValueKey('contact_subtitle'),
             delay: const Duration(milliseconds: 200),
             child: Text(
               'Feel free to reach out for collaborations or just a friendly hello',
@@ -147,6 +151,7 @@ class _ContactPageState extends State<ContactPage> {
 
           // Social Buttons
           ScrollAnimatedFadeIn(
+            key: const ValueKey('contact_form'),
             delay: const Duration(milliseconds: 300),
             child: Wrap(
               alignment: WrapAlignment.center,
@@ -154,42 +159,42 @@ class _ContactPageState extends State<ContactPage> {
               runSpacing: 6.r,
               children: [
                 // Phone
-                _SocialButton(
+                SocialButton(
                   iconPath: 'assets/icons/phone.svg',
                   onPressed: () => _launchUrl(_phoneUrl),
                   tooltip: 'Phone Call',
                 ),
 
                 // Whatsapp
-                _SocialButton(
+                SocialButton(
                   iconPath: 'assets/icons/whatsapp.svg',
                   onPressed: () => _launchUrl(_whatsappUrl),
                   tooltip: 'Whatsapp',
                 ),
 
                 // Email
-                _SocialButton(
+                SocialButton(
                   iconPath: 'assets/icons/email.svg',
                   onPressed: () => _launchUrl('mailto:$_myEmail'),
                   tooltip: 'Email',
                 ),
 
                 // Telegram
-                _SocialButton(
+                SocialButton(
                   iconPath: 'assets/icons/telegram.svg',
                   onPressed: () => _launchUrl(_telegramUrl),
                   tooltip: 'Telegram',
                 ),
 
                 // Github
-                _SocialButton(
+                SocialButton(
                   iconPath: 'assets/icons/github.svg',
                   onPressed: () => _launchUrl(_githubUrl),
                   tooltip: 'GitHub',
                 ),
 
                 // LinkedIn
-                _SocialButton(
+                SocialButton(
                   iconPath: 'assets/icons/linkedin.svg',
                   onPressed: () => _launchUrl(_linkedinUrl),
                   tooltip: 'LinkedIn',
@@ -202,12 +207,13 @@ class _ContactPageState extends State<ContactPage> {
 
           // Contact Form
           ScrollAnimatedFadeIn(
+            key: const ValueKey('contact_socials'),
             delay: const Duration(milliseconds: 400),
             child: Container(
               constraints: BoxConstraints(maxWidth: 600.w),
               padding: EdgeInsets.all(24.r),
               decoration: BoxDecoration(
-                color: theme.colorScheme.primaryFixed.withValues(alpha: 0.8),
+                color: theme.colorScheme.primaryContainer,
                 borderRadius: BorderRadius.circular(32.r),
               ),
               child: Form(
@@ -217,12 +223,9 @@ class _ContactPageState extends State<ContactPage> {
                   children: [
                     Text(
                       'Send me a message',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontVariations: const [
-                          FontVariation('wght', 700),
-                          FontVariation('wdth', 50),
-                          FontVariation('ROND', 50),
-                        ],
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontVariations: AppConstants.experienceFontEmphasized,
+                        color: theme.colorScheme.onPrimaryContainer,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -290,6 +293,8 @@ class _ContactPageState extends State<ContactPage> {
                               ),
                             ),
                       style: FilledButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                        foregroundColor: theme.colorScheme.onPrimary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24.r),
                         ),
@@ -319,49 +324,33 @@ class _ContactPageState extends State<ContactPage> {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 22.r, horizontal: 16.r),
         labelText: label,
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+        hoverColor: theme.colorScheme.primary,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: theme.colorScheme.primary),
           borderRadius: BorderRadius.circular(24.r),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1.8, color: theme.colorScheme.primary),
+          borderRadius: BorderRadius.circular(24.r),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: theme.colorScheme.error),
+          borderRadius: BorderRadius.circular(24.r),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1.8, color: theme.colorScheme.error),
+          borderRadius: BorderRadius.circular(24.r),
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         filled: false,
+        // Ensure label color also matches the primary theme
+        labelStyle: TextStyle(color: theme.colorScheme.primary),
+        floatingLabelStyle: TextStyle(color: theme.colorScheme.primary),
       ),
+
       maxLines: maxLines,
       keyboardType: keyboardType,
       validator: validator,
-    );
-  }
-}
-
-class _SocialButton extends StatelessWidget {
-  final String iconPath;
-  final VoidCallback onPressed;
-  final String tooltip;
-
-  const _SocialButton({
-    required this.iconPath,
-    required this.onPressed,
-    required this.tooltip,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton.filledTonal(
-      onPressed: onPressed,
-      icon: SvgPicture.asset(
-        iconPath,
-        width: 24.r,
-        height: 24.r,
-        colorFilter: ColorFilter.mode(
-          Theme.of(context).colorScheme.onSecondaryContainer,
-          BlendMode.srcIn,
-        ),
-      ),
-
-      tooltip: tooltip,
-      style: IconButton.styleFrom(padding: EdgeInsets.all(16.r)),
     );
   }
 }
