@@ -168,10 +168,10 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
         colorType: _ColorType.tertiary,
       ),
       _ShapeData(
-        top: 0.5,
-        left: 0.85,
+        top: 0.05,
+        left: 0.12,
         size: 360.r,
-        rotation: 1.0,
+        rotation: 0.5,
         shape: Shapes.pill,
         parallaxSpeed: 0.06,
         colorType: _ColorType.tertiary,

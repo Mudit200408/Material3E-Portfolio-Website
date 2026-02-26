@@ -363,60 +363,59 @@ class _ProjectPageState extends State<ProjectPage> {
               color: theme.colorScheme.primaryFixed,
               borderRadius: BorderRadius.circular(52.r),
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...project.description.take(4).toList().asMap().entries.map((
-                    entry,
-                  ) {
-                    final index = entry.key;
-                    final resp = entry.value;
+            child: Column(
+              mainAxisAlignment: .spaceEvenly,
+              children: [
+                ...project.description.take(4).toList().asMap().entries.map((
+                  entry,
+                ) {
+                  final index = entry.key;
+                  final resp = entry.value;
 
-                    // Cycle through shapes
-                    const shapes = [
-                      Shapes.c4_sided_cookie,
-                      Shapes.c6_sided_cookie,
-                      Shapes.c7_sided_cookie,
-                      Shapes.c9_sided_cookie,
-                    ];
-                    final shape = shapes[index % shapes.length];
+                  // Cycle through shapes
+                  const shapes = [
+                    Shapes.c4_sided_cookie,
+                    Shapes.c6_sided_cookie,
+                    Shapes.c7_sided_cookie,
+                    Shapes.c9_sided_cookie,
+                  ];
+                  final shape = shapes[index % shapes.length];
 
-                    final colors = [
-                      theme.colorScheme.primary,
-                      theme.colorScheme.tertiary,
-                    ];
-                    final shapeColor = colors[index % colors.length];
+                  final colors = [
+                    theme.colorScheme.primary,
+                    theme.colorScheme.tertiary,
+                  ];
+                  final shapeColor = colors[index % colors.length];
 
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 12.r),
-                      child: Row(
-                        children: [
-                          M3Container(
-                            shape,
-                            width: 20.r,
-                            height: 20.r,
-                            color: shapeColor,
-                            child: const SizedBox(),
-                          ),
-                          SizedBox(width: 12.w),
-                          Expanded(
-                            child: Text(
-                              resp,
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                color: theme.colorScheme.onPrimaryContainer,
-                                fontVariations: const [
-                                  FontVariation('wght', 550),
-                                  FontVariation('ROND', 100),
-                                ],
-                              ),
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 12.r),
+                    child: Row(
+                      children: [
+                        M3Container(
+                          shape,
+                          width: 20.r,
+                          height: 20.r,
+                          color: shapeColor,
+                          child: const SizedBox(),
+                        ),
+                        SizedBox(width: 12.w),
+                        Expanded(
+                          child: Text(
+                            resp,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: theme.colorScheme.onPrimaryContainer,
+                              fontVariations: const [
+                                FontVariation('wght', 550),
+                                FontVariation('ROND', 100),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    );
-                  }),
-                ],
-              ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ],
             ),
           ),
         ),
