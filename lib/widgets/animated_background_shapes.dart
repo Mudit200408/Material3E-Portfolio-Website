@@ -360,7 +360,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
                 break;
               case _ColorType.secondary:
                 color = theme.colorScheme.secondaryContainer.withValues(
-                  alpha: 0.7,
+                  alpha: 0.8,
                 );
                 break;
               case _ColorType.tertiary:
