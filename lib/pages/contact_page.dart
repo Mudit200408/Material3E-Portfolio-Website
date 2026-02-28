@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/utils/app_constants.dart';
+import 'package:portfolio_web/core/utils/url_launcher_helper.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:portfolio_web/widgets/social_button.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -24,14 +25,6 @@ class _ContactPageState extends State<ContactPage> {
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
 
-  final String _myEmail = '[EMAIL_ADDRESS]'; //TODO: Add your email address
-  final String _githubUrl = '[GITHUB_URL]'; //TODO: Add your github url
-  final String _linkedinUrl = '[LINKEDIN_URL]'; //TODO: Add your linkedin url
-  final String _accessKey = '[ACCESS_KEY]'; //TODO: Add your access key
-  final String _whatsappUrl = '[WHATSAPP_URL]'; //TODO: Add your whatsapp url
-  final String _telegramUrl = '[TELEGRAM_URL]'; //TODO: Add your telegram url
-  final String _phoneUrl = 'tel:+91XXXXXXXXXX'; //TODO: Add your phone number
-
   bool _isSending = false;
 
   @override
@@ -45,14 +38,7 @@ class _ContactPageState extends State<ContactPage> {
 
   Future<void> _launchUrl(String url) async {
     HapticFeedback.lightImpact();
-
-    if (!await launchUrl(Uri.parse(url))) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
-      }
-    }
+    if (mounted) UrlLauncherHelper.launch(context, url);
   }
 
   Future<void> _sendEmail() async {
@@ -68,7 +54,7 @@ class _ContactPageState extends State<ContactPage> {
           Uri.parse('https://api.web3forms.com/submit'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({
-            'access_key': _accessKey,
+            'access_key': AppConstants.web3FormsKey,
             'name': _nameController.text,
             'email': _emailController.text,
             'subject': _subjectController.text,
@@ -77,9 +63,31 @@ class _ContactPageState extends State<ContactPage> {
         );
 
         if (mounted) {
+          final theme = Theme.of(context);
           if (response.statusCode == 200) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Message sent successfully!')),
+              SnackBar(
+                content: Row(
+                  children: [
+                    M3Container.c9SidedCookie(
+                      color: theme.colorScheme.onPrimaryFixed,
+                      padding: EdgeInsets.all(12.r),
+                      margin: EdgeInsets.only(right: 8.r),
+                      child: Icon(
+                        Icons.check_rounded,
+                        color: theme.colorScheme.primaryFixed,
+                      ),
+                    ),
+                    Text(
+                      'Message sent successfully!',
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.onPrimaryFixed,
+                      ),
+                    ),
+                  ],
+                ),
+                backgroundColor: theme.colorScheme.primaryFixed,
+              ),
             );
             _nameController.clear();
             _emailController.clear();
@@ -88,16 +96,57 @@ class _ContactPageState extends State<ContactPage> {
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Failed to send message: ${response.body}'),
+                content: Row(
+                  children: [
+                    M3Container.sunny(
+                      color: theme.colorScheme.onErrorContainer,
+                      padding: EdgeInsets.all(12.r),
+                      margin: EdgeInsets.only(right: 8.r),
+                      child: Icon(
+                        Icons.error_outline_rounded,
+                        color: theme.colorScheme.errorContainer,
+                      ),
+                    ),
+                    Text(
+                      'Failed to send message: test error',
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.onErrorContainer,
+                      ),
+                    ),
+                  ],
+                ),
+                backgroundColor: theme.colorScheme.errorContainer,
               ),
             );
           }
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Error: $e')));
+          final theme = Theme.of(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Row(
+                children: [
+                  M3Container.sunny(
+                    color: theme.colorScheme.onErrorContainer,
+                    padding: EdgeInsets.all(12.r),
+                    margin: EdgeInsets.only(right: 8.r),
+                    child: Icon(
+                      Icons.error_outline_rounded,
+                      color: theme.colorScheme.errorContainer,
+                    ),
+                  ),
+                  Text(
+                    'Failed to send message: $e',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onErrorContainer,
+                    ),
+                  ),
+                ],
+              ),
+              backgroundColor: theme.colorScheme.errorContainer,
+            ),
+          );
         }
       } finally {
         if (mounted) {
@@ -157,42 +206,42 @@ class _ContactPageState extends State<ContactPage> {
                 // Phone
                 SocialButton(
                   iconPath: 'assets/icons/phone.svg',
-                  onPressed: () => _launchUrl(_phoneUrl),
+                  onPressed: () => _launchUrl(AppConstants.phoneUrl),
                   tooltip: 'Phone Call',
                 ),
 
                 // Whatsapp
                 SocialButton(
                   iconPath: 'assets/icons/whatsapp.svg',
-                  onPressed: () => _launchUrl(_whatsappUrl),
+                  onPressed: () => _launchUrl(AppConstants.whatsappUrl),
                   tooltip: 'Whatsapp',
                 ),
 
                 // Email
                 SocialButton(
                   iconPath: 'assets/icons/email.svg',
-                  onPressed: () => _launchUrl('mailto:$_myEmail'),
+                  onPressed: () => _launchUrl('mailto:${AppConstants.email}'),
                   tooltip: 'Email',
                 ),
 
                 // Telegram
                 SocialButton(
                   iconPath: 'assets/icons/telegram.svg',
-                  onPressed: () => _launchUrl(_telegramUrl),
+                  onPressed: () => _launchUrl(AppConstants.telegramUrl),
                   tooltip: 'Telegram',
                 ),
 
                 // Github
                 SocialButton(
                   iconPath: 'assets/icons/github.svg',
-                  onPressed: () => _launchUrl(_githubUrl),
+                  onPressed: () => _launchUrl(AppConstants.githubUrl),
                   tooltip: 'GitHub',
                 ),
 
                 // LinkedIn
                 SocialButton(
                   iconPath: 'assets/icons/linkedin.svg',
-                  onPressed: () => _launchUrl(_linkedinUrl),
+                  onPressed: () => _launchUrl(AppConstants.linkedinUrl),
                   tooltip: 'LinkedIn',
                 ),
               ],

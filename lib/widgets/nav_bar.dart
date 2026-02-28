@@ -37,7 +37,7 @@ class NavBar extends StatelessWidget {
   }
 
   Widget _buildMobileAppBar(BuildContext context, ThemeData theme) {
-    return Row(children: [const Spacer()]);
+    return const Row(children: [Spacer()]);
   }
 
   Widget _buildDesktopAppBar(BuildContext context, ThemeData theme) {

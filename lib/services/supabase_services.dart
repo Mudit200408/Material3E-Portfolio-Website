@@ -8,12 +8,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class SupabaseServices {
   final SupabaseClient _client = Supabase.instance.client;
 
-  // Static cache to store skills data in memory
-  static List<SkillsModel>? _cachedSkills;
-  // Static cache to store experience data in memory
-  static List<ExperienceModel>? _cachedExperience;
-  // Static cache to store project data in memory
-  static List<ProjectModel>? _cachedProjects;
+  // Instance cache (singleton provided via Provider in main.dart)
+  List<SkillsModel>? _cachedSkills;
+  // Instance cache to store experience data in memory
+  List<ExperienceModel>? _cachedExperience;
+  // Instance cache to store project data in memory
+  List<ProjectModel>? _cachedProjects;
 
   Future<List<SkillsModel>> getSkills({bool forceRefresh = false}) async {
     // Return cached data if available and refresh is not forced
@@ -39,7 +39,8 @@ class SupabaseServices {
       return skills;
     } catch (e) {
       if (kDebugMode) debugPrint('Error fetching skills: $e');
-      return [];
+      // Rethrow to let the UI handle the error state
+      throw Exception('Failed to fetch skills: $e');
     }
   }
 

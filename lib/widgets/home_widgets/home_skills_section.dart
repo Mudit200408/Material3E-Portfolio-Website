@@ -8,21 +8,33 @@ import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 
-class HomeSkillsSection extends StatelessWidget {
+class HomeSkillsSection extends StatefulWidget {
   const HomeSkillsSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Read SupabaseServices provided at the root
-    final supabase = context.read<SupabaseServices>();
+  State<HomeSkillsSection> createState() => _HomeSkillsSectionState();
+}
 
+class _HomeSkillsSectionState extends State<HomeSkillsSection> {
+  late SupabaseServices _supabase;
+  Future<List<SkillsModel>>? _skillsFuture;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _supabase = context.read<SupabaseServices>();
+    _skillsFuture ??= _supabase.getSkills();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ScrollAnimatedFadeIn(
       key: const ValueKey('home_skills_marquee'),
       delay: 600.ms,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 16.r),
         child: FutureBuilder<List<SkillsModel>>(
-          future: supabase.getSkills(),
+          future: _skillsFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Loader();

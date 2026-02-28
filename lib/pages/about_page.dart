@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
+import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
@@ -163,19 +164,6 @@ class _AboutPageState extends State<AboutPage> {
     ThemeData theme,
     bool isMobile,
   ) {
-    const List<FontVariation> segmentedButtonFont = [
-      FontVariation('slnt', -8),
-      FontVariation('wght', 824),
-      FontVariation('wdth', 78),
-      FontVariation('GRAD', 15),
-      FontVariation('XOPQ', 124),
-      FontVariation('XTRA', 500),
-      FontVariation('YOPQ', 100),
-      FontVariation('YTLC', 750),
-      FontVariation('YTAS', 535),
-      FontVariation('opsz', 40),
-    ];
-
     return Container(
       decoration: ShapeDecoration(
         color: theme.colorScheme.primary.withValues(alpha: 0.2),
@@ -206,7 +194,7 @@ class _AboutPageState extends State<AboutPage> {
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontSize: isMobile ? 16 : null,
                         color: color,
-                        fontVariations: segmentedButtonFont,
+                        fontVariations: AppConstants.segmentedButtonFont,
                       ),
                     );
                   },
@@ -236,7 +224,7 @@ class _AboutPageState extends State<AboutPage> {
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontSize: isMobile ? 16 : null,
                         color: color,
-                        fontVariations: segmentedButtonFont,
+                        fontVariations: AppConstants.segmentedButtonFont,
                       ),
                     );
                   },
@@ -250,10 +238,6 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   Widget _buildAboutMeContent(BuildContext context, ThemeData theme) {
-    const List<FontVariation> descriptionFont = [
-      FontVariation('ROND', 80),
-      FontVariation('wght', 600),
-    ];
     return ScrollAnimatedFadeIn(
       key: const ValueKey('about_me_content'),
       delay: 200.ms,
@@ -266,7 +250,7 @@ class _AboutPageState extends State<AboutPage> {
             style: theme.textTheme.bodyLarge?.copyWith(
               height: 1.8,
               color: theme.colorScheme.onPrimaryContainer,
-              fontVariations: descriptionFont,
+              fontVariations: AppConstants.descriptionFont,
             ),
           ),
           SizedBox(height: 16.h),
@@ -275,7 +259,7 @@ class _AboutPageState extends State<AboutPage> {
             style: theme.textTheme.bodyLarge?.copyWith(
               height: 1.8,
               color: theme.colorScheme.onPrimaryContainer,
-              fontVariations: descriptionFont,
+              fontVariations: AppConstants.descriptionFont,
             ),
           ),
           SizedBox(height: 16.h),
@@ -284,7 +268,7 @@ class _AboutPageState extends State<AboutPage> {
             style: theme.textTheme.bodyLarge?.copyWith(
               height: 1.8,
               color: theme.colorScheme.onPrimaryContainer,
-              fontVariations: descriptionFont,
+              fontVariations: AppConstants.descriptionFont,
             ),
           ),
         ],
@@ -388,34 +372,6 @@ class _AboutPageState extends State<AboutPage> {
     String years,
     Shapes shapes,
   ) {
-    const List<FontVariation> collegeNameFont = [
-      FontVariation('slnt', 0),
-      FontVariation('wght', 640),
-      FontVariation('GRAD', -57),
-      FontVariation('XOPQ', 50),
-      FontVariation('XTRA', 470),
-      FontVariation('YOPQ', 79),
-      FontVariation('YTAS', 750),
-      FontVariation('YTLC', 515),
-    ];
-    const List<FontVariation> branchNameFont = [
-      FontVariation('slnt', -5),
-      FontVariation('wdth', 50),
-      FontVariation('wght', 400),
-      FontVariation('GRAD', -80),
-      FontVariation('XOPQ', 135),
-      FontVariation('XTRA', 500),
-      FontVariation('YOPQ', 100),
-      FontVariation('YTAS', 730),
-      FontVariation('YTLC', 480),
-      FontVariation('opsz', 23),
-    ];
-    const List<FontVariation> dateFont = [
-      FontVariation('slnt', -2),
-      FontVariation('wdth', 55),
-      FontVariation('wght', 720),
-      FontVariation('opsz', 23),
-    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -446,7 +402,7 @@ class _AboutPageState extends State<AboutPage> {
                     institution,
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: theme.colorScheme.onSurface,
-                      fontVariations: collegeNameFont,
+                      fontVariations: AppConstants.collegeNameFontMobile,
                     ),
                   ),
                   SizedBox(height: 4.h),
@@ -454,7 +410,7 @@ class _AboutPageState extends State<AboutPage> {
                     degree,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.onSurface.withAlpha(200),
-                      fontVariations: branchNameFont,
+                      fontVariations: AppConstants.branchNameFont,
                     ),
                   ),
                 ],
@@ -464,7 +420,7 @@ class _AboutPageState extends State<AboutPage> {
               years,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onPrimaryContainer,
-                fontVariations: dateFont,
+                fontVariations: AppConstants.dateFont,
               ),
             ),
           ],
@@ -482,36 +438,6 @@ class _AboutPageState extends State<AboutPage> {
     String years,
     Shapes shapes,
   ) {
-    const List<FontVariation> collegeNameFont = [
-      FontVariation('slnt', 0),
-      FontVariation('wdth', 80),
-      FontVariation('wght', 700),
-      FontVariation('GRAD', -57),
-      FontVariation('XOPQ', 50),
-      FontVariation('XTRA', 470),
-      FontVariation('YOPQ', 79),
-      FontVariation('YTAS', 750),
-      FontVariation('YTLC', 515),
-      FontVariation('opsz', 139),
-    ];
-    const List<FontVariation> branchNameFont = [
-      FontVariation('slnt', -5),
-      FontVariation('wdth', 60),
-      FontVariation('wght', 500),
-      FontVariation('GRAD', -80),
-      FontVariation('XOPQ', 135),
-      FontVariation('XTRA', 500),
-      FontVariation('YOPQ', 100),
-      FontVariation('YTAS', 730),
-      FontVariation('YTLC', 480),
-      FontVariation('opsz', 23),
-    ];
-    const List<FontVariation> dateFont = [
-      FontVariation('slnt', -2),
-      FontVariation('wdth', 55),
-      FontVariation('wght', 750),
-      FontVariation('opsz', 23),
-    ];
     return SizedBox(
       child: Row(
         children: [
@@ -540,14 +466,14 @@ class _AboutPageState extends State<AboutPage> {
                   institution,
                   style: theme.textTheme.titleLarge?.copyWith(
                     color: theme.colorScheme.onSurface,
-                    fontVariations: collegeNameFont,
+                    fontVariations: AppConstants.collegeNameFontDesktop,
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   degree,
                   style: theme.textTheme.titleMedium?.copyWith(
-                    fontVariations: branchNameFont,
+                    fontVariations: AppConstants.branchNameFont,
                     color: theme.colorScheme.onSurface.withAlpha(200),
                   ),
                 ),
@@ -557,7 +483,7 @@ class _AboutPageState extends State<AboutPage> {
           Text(
             years,
             style: theme.textTheme.titleMedium?.copyWith(
-              fontVariations: dateFont,
+              fontVariations: AppConstants.dateFont,
               color: theme.colorScheme.onPrimaryContainer,
             ),
           ),

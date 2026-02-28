@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
+import 'package:portfolio_web/core/utils/url_launcher_helper.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Footer extends StatefulWidget {
   const Footer({super.key});
@@ -59,13 +59,7 @@ class _FooterState extends State<Footer> {
   }
 
   Future<void> _launchUrl(String url) async {
-    if (!await launchUrl(Uri.parse(url))) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
-      }
-    }
+    if (mounted) UrlLauncherHelper.launch(context, url);
   }
 
   Widget _buildCopyright(ThemeData theme) {

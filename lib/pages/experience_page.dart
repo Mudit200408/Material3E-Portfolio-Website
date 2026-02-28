@@ -5,6 +5,7 @@ import 'package:portfolio_web/widgets/experience_card.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:portfolio_web/models/experience_model.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 
 class ExperiencePage extends StatefulWidget {
@@ -15,13 +16,14 @@ class ExperiencePage extends StatefulWidget {
 }
 
 class _ExperiencePageState extends State<ExperiencePage> {
-  final SupabaseServices _supabaseServices = SupabaseServices();
-  late Future<List<ExperienceModel>> _experienceFuture;
+  late SupabaseServices _supabaseServices;
+  Future<List<ExperienceModel>>? _experienceFuture;
 
   @override
-  void initState() {
-    super.initState();
-    _experienceFuture = _supabaseServices.getExperience();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _supabaseServices = context.read<SupabaseServices>();
+    _experienceFuture ??= _supabaseServices.getExperience();
   }
 
   @override

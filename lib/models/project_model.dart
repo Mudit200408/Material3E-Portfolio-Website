@@ -1,11 +1,11 @@
 class ProjectModel {
-  int id;
-  String title;
-  List<String> tags;
-  List<String> description;
-  String image;
-  String? pubDev;
-  String? github;
+  final int id;
+  final String title;
+  final List<String> tags;
+  final List<String> description;
+  final String image;
+  final String? pubDev;
+  final String? github;
   ProjectModel({
     required this.id,
     required this.title,

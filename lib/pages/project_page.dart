@@ -5,11 +5,12 @@ import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
+import 'package:portfolio_web/core/utils/url_launcher_helper.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:portfolio_web/models/project_model.dart';
 import 'package:portfolio_web/services/supabase_services.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ProjectPage extends StatefulWidget {
   const ProjectPage({super.key});
@@ -22,13 +23,14 @@ class _ProjectPageState extends State<ProjectPage> {
   final CarouselControllerv2 _carouselController = CarouselControllerv2();
   final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
 
-  final SupabaseServices _supabaseServices = SupabaseServices();
-  late Future<List<ProjectModel>> _projectFuture;
+  late SupabaseServices _supabaseServices;
+  Future<List<ProjectModel>>? _projectFuture;
 
   @override
-  void initState() {
-    super.initState();
-    _projectFuture = _supabaseServices.getProjects();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _supabaseServices = context.read<SupabaseServices>();
+    _projectFuture ??= _supabaseServices.getProjects();
   }
 
   @override
@@ -38,13 +40,7 @@ class _ProjectPageState extends State<ProjectPage> {
   }
 
   Future<void> _launchUrl(String url) async {
-    if (!await launchUrl(Uri.parse(url))) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
-      }
-    }
+    if (mounted) UrlLauncherHelper.launch(context, url);
   }
 
   @override
