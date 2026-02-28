@@ -36,7 +36,17 @@ SUPABASE_URL="your_supabase_url"
 SUPABASE_ANON_KEY="your_supabase_anon_key"
 PROFILE_URL="your_profile_url" // In Supabase Bucket
 RESUME_URL="your_resume_url" // In Supabase Bucket
+WEB3FORMS_KEY = 'your_web3forms_key'
+EMAIL = 'your_email_address'
+PHONE_URL = 'tel:+91XXXXXXXXXX'
+TELEGRAM_URL = 'https://t.me/your_telegram_username'
+GITHUB_URL = 'https://github.com/your_github_username'
+LINKEDIN_URL = 'https://www.linkedin.com/in/your_linkedin_username/'
+WHATSAPP_URL = 'https://wa.me/your_whatsapp_number'
 ```
+
+> You can get a free access key from [Web3Forms](https://web3forms.com/).
+
 
 ### 2. Supabase Setup
 
@@ -106,21 +116,6 @@ create policy "Allow public read access" on project
 
 Create a **Storage Bucket** (e.g., named `portfolio-assets`) to store your project images, profile pic and resume pdf. Ensure the bucket is public or has appropriate policies for read access.
 
-### 4. Contact Page Links
-
-Open `lib/pages/contact_page.dart` and replace the placeholder values with your own:
-
-```dart
-final String _myEmail = '[EMAIL_ADDRESS]';   // Your email address
-final String _githubUrl = '[GITHUB_URL]';     // Your GitHub profile URL
-final String _linkedinUrl = '[LINKEDIN_URL]'; // Your LinkedIn profile URL
-final String _whatsappUrl = '[WHATSAPP_URL]'; //Your Whatsapp URL
-final String _telegramUrl = '[TELEGRAM_URL]'; //Your Telegram URL
-final String _phoneUrl = 'tel:+91XXXXXXXXXX'; // Your Phone number
-final String _accessKey = '[ACCESS_KEY]';     // Your Web3Forms access key
-```
-
-> You can get a free access key from [Web3Forms](https://web3forms.com/).
 
 ## 🚀 Running the Project
 
