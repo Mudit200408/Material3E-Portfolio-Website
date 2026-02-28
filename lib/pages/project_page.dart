@@ -142,7 +142,7 @@ class _ProjectPageState extends State<ProjectPage> {
       slideOffset: -0.1,
       autoRebuild: true,
       child: SizedBox(
-        height: isMobile ? 280.r : (isTablet ? 350.r : 500.r),
+        height: isMobile ? 300.r : (isTablet ? 350.r : 380.r),
         // We add a NotificationListener to get the current index
         child: NotificationListener<ScrollNotification>(
           onNotification: (notification) {
@@ -163,7 +163,7 @@ class _ProjectPageState extends State<ProjectPage> {
           child: CarouselViewV2.weighted(
             // Pass the controller
             controller: _carouselController,
-            flexWeights: isMobile ? const [2, 18, 2] : const [2, 8, 2],
+            flexWeights: isMobile ? const [18, 2] : const [2, 8, 2],
             elevation: 3,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 15),
@@ -174,7 +174,7 @@ class _ProjectPageState extends State<ProjectPage> {
             shrinkExtent: 10.r,
             padding: EdgeInsets.all(8.r),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(isMobile ? 32.r : 52.r),
+              borderRadius: BorderRadius.circular(52.r),
             ),
             children: List.generate(projects.length, (index) {
               final imagePath = projects[index].image;
@@ -206,7 +206,7 @@ class _ProjectPageState extends State<ProjectPage> {
               }
 
               return ClipRRect(
-                borderRadius: BorderRadius.circular(isMobile ? 32.r : 52.r),
+                borderRadius: BorderRadius.circular(52.r),
                 child: imageWidget,
               );
             }),
