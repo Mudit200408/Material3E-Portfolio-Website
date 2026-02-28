@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
@@ -145,10 +146,32 @@ class _FooterState extends State<Footer> {
             ),
           ),
           SizedBox(width: 6.w),
-          const FlutterLogo(size: 16),
+          FlutterLogo(size: 16.r),
           SizedBox(width: 6.w),
           Text(
             'Flutter',
+            style: theme.textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onPrimaryContainer,
+            ),
+          ),
+          SizedBox(width: 6.w),
+          Text(
+            '+',
+            style: theme.textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onPrimaryContainer,
+            ),
+          ),
+          SizedBox(width: 6.w),
+          SvgPicture.asset(
+            'assets/icons/supabase.svg',
+            height: 16.r,
+            width: 16.r,
+          ),
+          SizedBox(width: 6.w),
+          Text(
+            'Supabase',
             style: theme.textTheme.labelMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: theme.colorScheme.onPrimaryContainer,
