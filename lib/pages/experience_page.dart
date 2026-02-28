@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
+import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/widgets/experience_card.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:portfolio_web/models/experience_model.dart';
@@ -36,11 +37,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
             child: Text(
               'Experience',
               style: theme.textTheme.displaySmall?.copyWith(
-                fontVariations: const [
-                  FontVariation('wght', 800),
-                  FontVariation('GRAD', 50),
-                  FontVariation('wdth', 50),
-                ],
+                fontVariations: AppConstants.headingFont,
               ),
             ),
           ),

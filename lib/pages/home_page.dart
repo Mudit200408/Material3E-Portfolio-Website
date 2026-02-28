@@ -98,7 +98,6 @@ class HomePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 48.h), // Replaced deprecated ResponsiveSpacing
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 48.r),
           child: Column(

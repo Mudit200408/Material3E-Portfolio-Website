@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:pdfx/pdfx.dart';
+import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:typed_data';
@@ -111,21 +113,22 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                     child: Text(
                       'Resume',
                       style: theme.textTheme.headlineMedium?.copyWith(
-                        fontVariations: const [
-                          FontVariation('wght', 800),
-                          FontVariation('ROND', 100),
-                          FontVariation('slnt', -5),
-                          FontVariation('wdth', 70),
-                          FontVariation('XOPQ', 125),
-                          FontVariation('XTRA', 468),
-                          FontVariation('opsz', 28),
-                        ],
+                        fontVariations: AppConstants.headingFont,
                       ),
                     ),
                   ),
                   IconButton(
+                    mouseCursor: SystemMouseCursors.click,
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close),
+                    icon: M3Container.c9SidedCookie(
+                      width: 40.r,
+                      height: 40.r,
+                      color: theme.colorScheme.tertiary,
+                      child: Icon(
+                        Icons.close_rounded,
+                        color: theme.colorScheme.onTertiary,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -187,10 +190,12 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                           child: SizedBox(
                             height: 48.h,
                             child: ElevatedButton.icon(
+                              
                               onPressed: _downloadAndOpen,
                               icon: const Icon(Icons.download),
                               label: const Text('Download'),
                               style: ElevatedButton.styleFrom(
+                                
                                 backgroundColor: theme.colorScheme.primary,
                                 foregroundColor: theme.colorScheme.onPrimary,
                               ),

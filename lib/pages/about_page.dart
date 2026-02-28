@@ -1,6 +1,7 @@
 // lib/material/pages/about_section.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
@@ -306,6 +307,7 @@ class _AboutPageState extends State<AboutPage> {
             institution: 'Atharva College of Engineering',
             degree: 'BE - Computer Engineering',
             years: '2023-2026',
+            shapes: Shapes.c4_sided_cookie,
           ),
         ),
         SizedBox(height: 16.h),
@@ -320,6 +322,7 @@ class _AboutPageState extends State<AboutPage> {
             institution: 'Thakur Polytechnic',
             degree: 'Diploma - Information Technology',
             years: '2020-2023',
+            shapes: Shapes.pill,
           ),
         ),
         SizedBox(height: 16.h),
@@ -334,6 +337,7 @@ class _AboutPageState extends State<AboutPage> {
             institution: 'Don Bosco High School',
             degree: 'Xth SSC Board Exams',
             years: '2019-2020',
+            shapes: Shapes.c12_sided_cookie,
           ),
         ),
       ],
@@ -347,6 +351,7 @@ class _AboutPageState extends State<AboutPage> {
     required String institution,
     required String degree,
     required String years,
+    required Shapes shapes,
   }) {
     final isMobile = ResponsiveLayoutHelper.isMobile(context);
 
@@ -360,6 +365,7 @@ class _AboutPageState extends State<AboutPage> {
               institution,
               degree,
               years,
+              shapes,
             )
           : _buildDesktopEducationItem(
               context,
@@ -368,6 +374,7 @@ class _AboutPageState extends State<AboutPage> {
               institution,
               degree,
               years,
+              shapes,
             ),
     );
   }
@@ -379,6 +386,7 @@ class _AboutPageState extends State<AboutPage> {
     String institution,
     String degree,
     String years,
+    Shapes shapes,
   ) {
     const List<FontVariation> collegeNameFont = [
       FontVariation('slnt', 0),
@@ -392,8 +400,8 @@ class _AboutPageState extends State<AboutPage> {
     ];
     const List<FontVariation> branchNameFont = [
       FontVariation('slnt', -5),
-      FontVariation('wdth', 30),
-      FontVariation('wght', 300),
+      FontVariation('wdth', 50),
+      FontVariation('wght', 400),
       FontVariation('GRAD', -80),
       FontVariation('XOPQ', 135),
       FontVariation('XTRA', 500),
@@ -413,19 +421,19 @@ class _AboutPageState extends State<AboutPage> {
       children: [
         Row(
           children: [
-            Container(
-              padding: EdgeInsets.all(4.r),
-              width: 50.w,
-              height: 50.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: theme.colorScheme.primaryContainer,
-              ),
-              child: SvgPicture.asset(
-                assetString,
-                colorFilter: ColorFilter.mode(
-                  theme.colorScheme.onPrimaryContainer,
-                  BlendMode.srcIn,
+            M3Container(
+              shapes,
+              width: 60.r,
+              height: 60.r,
+              color: theme.colorScheme.primary,
+              child: Padding(
+                padding: EdgeInsets.all(6.r),
+                child: SvgPicture.asset(
+                  assetString,
+                  colorFilter: ColorFilter.mode(
+                    theme.colorScheme.primaryContainer,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ),
@@ -444,7 +452,7 @@ class _AboutPageState extends State<AboutPage> {
                   SizedBox(height: 4.h),
                   Text(
                     degree,
-                    style: theme.textTheme.bodyMedium?.copyWith(
+                    style: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.onSurface.withAlpha(200),
                       fontVariations: branchNameFont,
                     ),
@@ -472,6 +480,7 @@ class _AboutPageState extends State<AboutPage> {
     String institution,
     String degree,
     String years,
+    Shapes shapes,
   ) {
     const List<FontVariation> collegeNameFont = [
       FontVariation('slnt', 0),
@@ -506,19 +515,19 @@ class _AboutPageState extends State<AboutPage> {
     return SizedBox(
       child: Row(
         children: [
-          Container(
-            padding: EdgeInsets.all(4.r),
-            width: 60.w,
-            height: 60.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.r),
-              color: theme.colorScheme.primaryContainer,
-            ),
-            child: SvgPicture.asset(
-              assetString,
-              colorFilter: ColorFilter.mode(
-                theme.colorScheme.onPrimaryContainer,
-                BlendMode.srcIn,
+          M3Container(
+            shapes,
+            width: 60.r,
+            height: 60.r,
+            color: theme.colorScheme.primary,
+            child: Padding(
+              padding: EdgeInsets.all(6.r),
+              child: SvgPicture.asset(
+                assetString,
+                colorFilter: ColorFilter.mode(
+                  theme.colorScheme.primaryContainer,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),

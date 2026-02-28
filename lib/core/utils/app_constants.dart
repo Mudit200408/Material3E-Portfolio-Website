@@ -17,6 +17,23 @@ class AppConstants {
     FontVariation('opsz', 28),
   ];
 
+  static const List<FontVariation> headingFont = [
+    FontVariation('wght', 875),
+    FontVariation('GRAD', -85),
+    FontVariation('wdth', 90),
+    FontVariation('slnt', 0),
+    FontVariation('XOPQ', 125),
+    FontVariation('XTRA', 416),
+    FontVariation('opsz', 8),
+    FontVariation('YOPQ', 32),
+    FontVariation('YTAC', 853),
+    FontVariation('YTFI', 715),
+    FontVariation('YTAS', 100),
+    FontVariation('YTLS', 570),
+    FontVariation('YTDE', -189),
+    FontVariation('YTUC', 760),
+  ];
+
   static const List<FontVariation> experienceFontNormal = [
     FontVariation('wght', 600),
     FontVariation('GRAD', 30),

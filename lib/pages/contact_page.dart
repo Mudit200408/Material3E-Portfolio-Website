@@ -127,11 +127,7 @@ class _ContactPageState extends State<ContactPage> {
             child: Text(
               'Get in Touch',
               style: theme.textTheme.displaySmall?.copyWith(
-                fontVariations: const [
-                  FontVariation('wght', 800),
-                  FontVariation('GRAD', 50),
-                  FontVariation('wdth', 50),
-                ],
+                fontVariations: AppConstants.headingFont,
               ),
             ),
           ),
