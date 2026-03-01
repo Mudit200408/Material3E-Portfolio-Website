@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_caraousel_v2/flutter_custom_caraousel_v2.dart';
 import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:m3e_card_list/m3e_card_list.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:portfolio_web/core/utils/url_launcher_helper.dart';
@@ -97,27 +98,37 @@ class _ProjectPageState extends State<ProjectPage> {
                       // Ensure index is within bounds
                       if (index >= projects.length) return const SizedBox();
                       final project = projects[index];
-                      return IntrinsicHeight(
-                        child: Flex(
-                          direction: isMobile ? Axis.vertical : Axis.horizontal,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          spacing: 8.r,
-                          children: [
-                            Expanded(
-                              flex: isMobile ? 2 : 3,
-                              child: _buildInfoCard(theme, project, isMobile),
-                            ),
-                            Expanded(
-                              flex: isMobile ? 2 : (isTablet ? 4 : 6),
-                              child: _buildDescription(
-                                theme,
-                                project,
-                                isMobile,
-                              ),
-                            ),
-                          ],
-                        ),
+                      Widget content = Flex(
+                        direction: isMobile ? Axis.vertical : Axis.horizontal,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        spacing: 8.r,
+                        children: [
+                          isMobile
+                              ? _buildInfoCard(theme, project, isMobile)
+                              : Expanded(
+                                  flex: 3,
+                                  child: _buildInfoCard(
+                                    theme,
+                                    project,
+                                    isMobile,
+                                  ),
+                                ),
+                          isMobile
+                              ? _buildDescription(theme, project, isMobile)
+                              : Expanded(
+                                  flex: isTablet ? 4 : 6,
+                                  child: _buildDescription(
+                                    theme,
+                                    project,
+                                    isMobile,
+                                  ),
+                                ),
+                        ],
                       );
+
+                      return isMobile
+                          ? content
+                          : IntrinsicHeight(child: content);
                     },
                   ),
                 ],
@@ -267,8 +278,8 @@ class _ProjectPageState extends State<ProjectPage> {
                 ),
                 SizedBox(height: 8.r),
                 Wrap(
-                  spacing: 4.r,
-                  runSpacing: 4.r,
+                  spacing: 6.r,
+                  runSpacing: 6.r,
                   children: project.tags.map((tag) {
                     return Chip(
                       label: Text(
@@ -286,8 +297,7 @@ class _ProjectPageState extends State<ProjectPage> {
                         color: theme.colorScheme.onPrimaryContainer,
                         width: 0.5,
                       ),
-                      backgroundColor: theme.colorScheme.primaryContainer
-                          .withValues(alpha: 0.6),
+                      backgroundColor: theme.colorScheme.primaryFixedDim,
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       visualDensity: VisualDensity.compact,
                     );
@@ -360,14 +370,15 @@ class _ProjectPageState extends State<ProjectPage> {
           child: Container(
             key: ValueKey(project.title),
             width: double.infinity,
-            height: double.infinity,
+            height: isMobile ? null : double.infinity,
             padding: EdgeInsets.all(24.r),
             decoration: BoxDecoration(
               color: theme.colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(52.r),
             ),
-            child: Column(
-              mainAxisAlignment: .spaceEvenly,
+            child: M3ECardColumn(
+              outerRadius: 32.r,
+              color: theme.colorScheme.primaryFixedDim.withValues(alpha: 0.6),
               children: [
                 ...project.description.take(4).toList().asMap().entries.map((
                   entry,
@@ -390,32 +401,29 @@ class _ProjectPageState extends State<ProjectPage> {
                   ];
                   final shapeColor = colors[index % colors.length];
 
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 12.r),
-                    child: Row(
-                      children: [
-                        M3Container(
-                          shape,
-                          width: 20.r,
-                          height: 20.r,
-                          color: shapeColor,
-                          child: const SizedBox(),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: Text(
-                            resp,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              color: theme.colorScheme.onPrimaryContainer,
-                              fontVariations: const [
-                                FontVariation('wght', 550),
-                                FontVariation('ROND', 100),
-                              ],
-                            ),
+                  return Row(
+                    children: [
+                      M3Container(
+                        shape,
+                        width: 22.r,
+                        height: 22.r,
+                        color: shapeColor,
+                        child: const SizedBox(),
+                      ),
+                      SizedBox(width: 12.w),
+                      Expanded(
+                        child: Text(
+                          resp,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.colorScheme.onPrimaryContainer,
+                            fontVariations: const [
+                              FontVariation('wght', 550),
+                              FontVariation('ROND', 100),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 }),
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
+import 'package:m3e_card_list/m3e_card_list.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/models/experience_model.dart';
@@ -139,10 +140,10 @@ class ExperienceCard extends StatelessWidget {
       padding: EdgeInsets.all(24.r),
       decoration: BoxDecoration(
         color: theme.colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(42.r),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'Key Responsibilities & Achievements',
@@ -152,53 +153,60 @@ class ExperienceCard extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16.h),
-          ...experience.responsibilities.take(4).toList().asMap().entries.map((
-            entry,
-          ) {
-            final index = entry.key;
-            final resp = entry.value;
+          M3ECardColumn(
+            outerRadius: 32.r,
+            itemPadding: EdgeInsets.symmetric(horizontal: 12.r, vertical: 16.r),
+            color: theme.colorScheme.primaryFixedDim.withValues(alpha: 0.6),
+            children: [
+              ...experience.responsibilities
+                  .take(4)
+                  .toList()
+                  .asMap()
+                  .entries
+                  .map((entry) {
+                    final index = entry.key;
+                    final resp = entry.value;
 
-            // Cycle through shapes
-            const shapes = [
-              Shapes.c7_sided_cookie,
-              Shapes.square,
-              Shapes.arch,
-              Shapes.pill,
-              Shapes.c7_sided_cookie,
-            ];
-            final shape = shapes[index % shapes.length];
+                    // Cycle through shapes
+                    const shapes = [
+                      Shapes.c7_sided_cookie,
+                      Shapes.square,
+                      Shapes.arch,
+                      Shapes.pill,
+                      Shapes.c7_sided_cookie,
+                    ];
+                    final shape = shapes[index % shapes.length];
 
-            final colors = [
-              theme.colorScheme.primary,
-              theme.colorScheme.tertiary,
-            ];
-            final shapeColor = colors[index % colors.length];
+                    final colors = [
+                      theme.colorScheme.primary,
+                      theme.colorScheme.tertiary,
+                    ];
+                    final shapeColor = colors[index % colors.length];
 
-            return Padding(
-              padding: EdgeInsets.only(bottom: 12.r),
-              child: Row(
-                children: [
-                  M3Container(
-                    shape,
-                    width: 18.r,
-                    height: 18.r,
-                    color: shapeColor,
-                    child: const SizedBox(),
-                  ),
-                  SizedBox(width: 12.r),
-                  Expanded(
-                    child: Text(
-                      resp,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: theme.colorScheme.onPrimaryContainer,
-                        fontVariations: AppConstants.experienceFontBody,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }),
+                    return Row(
+                      children: [
+                        M3Container(
+                          shape,
+                          width: 22.r,
+                          height: 22.r,
+                          color: shapeColor,
+                          child: const SizedBox(),
+                        ),
+                        SizedBox(width: 12.r),
+                        Expanded(
+                          child: Text(
+                            resp,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: theme.colorScheme.onPrimaryContainer,
+                              fontVariations: AppConstants.experienceFontBody,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+            ],
+          ),
         ],
       ),
     );

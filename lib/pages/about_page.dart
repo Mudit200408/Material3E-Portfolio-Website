@@ -283,7 +283,7 @@ class _AboutPageState extends State<AboutPage> {
       innerRadius: 6.r,
       itemPadding: EdgeInsets.all(8.r),
       gap: 3.r,
-      color: theme.colorScheme.primaryFixed.withValues(alpha: 0.3),
+      color: theme.colorScheme.primaryFixedDim.withValues(alpha: 0.6),
       children: [
         _buildEducationItem(
           context,
