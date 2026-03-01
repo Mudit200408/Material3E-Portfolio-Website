@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
+import 'package:m3e_card_list/m3e_card_list.dart';
 import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/svg.dart';
@@ -75,7 +76,7 @@ class _AboutPageState extends State<AboutPage> {
       child: Container(
         padding: EdgeInsets.all(isMobile ? 16.r : 24.r),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32.r),
+          borderRadius: BorderRadius.circular(48.r),
           color: theme.colorScheme.primaryContainer,
         ),
         child: Column(
@@ -277,52 +278,39 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   Widget _buildEducationContent(BuildContext context, ThemeData theme) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return M3ECardColumn(
+      outerRadius: 42.r,
+      innerRadius: 6.r,
+      itemPadding: EdgeInsets.all(8.r),
+      gap: 3.r,
+      color: theme.colorScheme.primaryFixed.withValues(alpha: 0.3),
       children: [
-        // College Item
-        ScrollAnimatedFadeIn(
-          key: const ValueKey('about_edu_1'),
-          delay: 100.ms,
-          child: _buildEducationItem(
-            context,
-            theme,
-            assetString: 'assets/icons/graduate.svg',
-            institution: 'Atharva College of Engineering',
-            degree: 'BE - Computer Engineering',
-            years: '2023-2026',
-            shapes: Shapes.c4_sided_cookie,
-          ),
+        _buildEducationItem(
+          context,
+          theme,
+          assetString: 'assets/icons/graduate.svg',
+          institution: 'Atharva College of Engineering',
+          degree: 'BE - Computer Engineering',
+          years: '2023-2026',
+          shapes: Shapes.c4_sided_cookie,
         ),
-        SizedBox(height: 16.h),
-        // Diploma Item
-        ScrollAnimatedFadeIn(
-          key: const ValueKey('about_edu_2'),
-          delay: 200.ms,
-          child: _buildEducationItem(
-            context,
-            theme,
-            assetString: 'assets/icons/diploma.svg',
-            institution: 'Thakur Polytechnic',
-            degree: 'Diploma - Information Technology',
-            years: '2020-2023',
-            shapes: Shapes.pill,
-          ),
+        _buildEducationItem(
+          context,
+          theme,
+          assetString: 'assets/icons/diploma.svg',
+          institution: 'Thakur Polytechnic',
+          degree: 'Diploma - Information Technology',
+          years: '2020-2023',
+          shapes: Shapes.pill,
         ),
-        SizedBox(height: 16.h),
-        // School Item
-        ScrollAnimatedFadeIn(
-          key: const ValueKey('about_edu_3'),
-          delay: 300.ms,
-          child: _buildEducationItem(
-            context,
-            theme,
-            assetString: 'assets/icons/school.svg',
-            institution: 'Don Bosco High School',
-            degree: 'Xth SSC Board Exams',
-            years: '2019-2020',
-            shapes: Shapes.c12_sided_cookie,
-          ),
+        _buildEducationItem(
+          context,
+          theme,
+          assetString: 'assets/icons/school.svg',
+          institution: 'Don Bosco High School',
+          degree: 'Xth SSC Board Exams',
+          years: '2019-2020',
+          shapes: Shapes.c12_sided_cookie,
         ),
       ],
     );
