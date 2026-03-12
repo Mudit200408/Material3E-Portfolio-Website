@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_custom_caraousel_v2/flutter_custom_caraousel_v2.dart';
-import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:m3e_card_list/m3e_card_list.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:portfolio_web/core/utils/url_launcher_helper.dart';
@@ -403,7 +402,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
                   return Row(
                     children: [
-                      M3Container(
+                      M3EContainer(
                         shape,
                         width: 22.r,
                         height: 22.r,

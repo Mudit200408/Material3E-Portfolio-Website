@@ -1,8 +1,7 @@
 // lib/material/pages/about_section.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
-import 'package:m3e_card_list/m3e_card_list.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/svg.dart';
@@ -365,7 +364,7 @@ class _AboutPageState extends State<AboutPage> {
       children: [
         Row(
           children: [
-            M3Container(
+            M3EContainer(
               shapes,
               width: 60.r,
               height: 60.r,
@@ -429,7 +428,7 @@ class _AboutPageState extends State<AboutPage> {
     return SizedBox(
       child: Row(
         children: [
-          M3Container(
+          M3EContainer(
             shapes,
             width: 60.r,
             height: 60.r,

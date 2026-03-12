@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
@@ -120,7 +120,7 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                   IconButton(
                     mouseCursor: SystemMouseCursors.click,
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: M3Container.c9SidedCookie(
+                    icon: M3EContainer.c9SidedCookie(
                       width: 40.r,
                       height: 40.r,
                       color: theme.colorScheme.tertiary,

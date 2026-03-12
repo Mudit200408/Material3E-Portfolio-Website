@@ -1,7 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:motor/motor.dart';
 
 class AnimatedShapeContainer extends StatefulWidget {
@@ -73,7 +73,7 @@ class _AnimatedShapeContainerState extends State<AnimatedShapeContainer> {
   Widget _buildShapeContainer() {
     final shape = _shapes[_currentShapeIndex];
 
-    return M3Container(
+    return M3EContainer(
       shape,
       key: ValueKey(_currentShapeIndex),
       color: widget.color,

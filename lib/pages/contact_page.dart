@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:portfolio_web/core/loader/loader.dart';
 import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/core/utils/url_launcher_helper.dart';
@@ -69,7 +69,7 @@ class _ContactPageState extends State<ContactPage> {
               SnackBar(
                 content: Row(
                   children: [
-                    M3Container.c9SidedCookie(
+                    M3EContainer.c9SidedCookie(
                       color: theme.colorScheme.onPrimaryFixed,
                       padding: EdgeInsets.all(12.r),
                       margin: EdgeInsets.only(right: 8.r),
@@ -98,7 +98,7 @@ class _ContactPageState extends State<ContactPage> {
               SnackBar(
                 content: Row(
                   children: [
-                    M3Container.sunny(
+                    M3EContainer.sunny(
                       color: theme.colorScheme.onErrorContainer,
                       padding: EdgeInsets.all(12.r),
                       margin: EdgeInsets.only(right: 8.r),
@@ -127,7 +127,7 @@ class _ContactPageState extends State<ContactPage> {
             SnackBar(
               content: Row(
                 children: [
-                  M3Container.sunny(
+                  M3EContainer.sunny(
                     color: theme.colorScheme.onErrorContainer,
                     padding: EdgeInsets.all(12.r),
                     margin: EdgeInsets.only(right: 8.r),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_m3shapes_extended/flutter_m3shapes_extended.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
 import 'package:portfolio_web/models/nav_section_enums.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
@@ -383,7 +383,7 @@ class _AnimatedBackgroundShapesState extends State<AnimatedBackgroundShapes> {
                   angle:
                       data.rotation +
                       (scrollOffset * 0.0005), // Slower rotation
-                  child: M3Container(
+                  child: M3EContainer(
                     data.shape,
                     width: shapeSize,
                     height: shapeSize,
