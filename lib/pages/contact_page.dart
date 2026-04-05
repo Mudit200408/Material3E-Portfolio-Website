@@ -319,9 +319,11 @@ class _ContactPageState extends State<ContactPage> {
                           : null,
                     ),
                     SizedBox(height: 32.h),
-                    FilledButton.icon(
+
+                    M3EButton.icon(
                       onPressed: _isSending ? null : _sendEmail,
-                      label: Text(_isSending ? 'Sending...' : 'Send Message'),
+                      size: M3EButtonSize.custom(height: 75.r),
+                      shape: M3EButtonShape.square,
                       icon: _isSending
                           ? SizedBox(
                               width: 24.r,
@@ -337,13 +339,12 @@ class _ContactPageState extends State<ContactPage> {
                                 BlendMode.srcIn,
                               ),
                             ),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: theme.colorScheme.primary,
-                        foregroundColor: theme.colorScheme.onPrimary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24.r),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 32.r),
+                      label: Text(_isSending ? 'Sending...' : 'Send Message'),
+
+                      decoration: M3EButtonDecoration.styleFrom(
+                        hoveredRadius: 12,
+                        pressedRadius: 8,
+                        borderRadius: 18,
                       ),
                     ),
                   ],

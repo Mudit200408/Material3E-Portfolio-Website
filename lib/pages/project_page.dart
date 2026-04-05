@@ -440,8 +440,10 @@ class _ProjectPageState extends State<ProjectPage> {
     required String url,
     required VoidCallback onPressed,
   }) {
-    return ElevatedButton.icon(
+    return M3EButton.icon(
       onPressed: onPressed,
+      size: M3EButtonSize.custom(height: 75.r),
+      shape: M3EButtonShape.square,
       icon: SvgPicture.asset(
         icon,
         width: 22.w,
@@ -457,11 +459,10 @@ class _ProjectPageState extends State<ProjectPage> {
           color: theme.colorScheme.onPrimary,
         ),
       ),
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(150.w, 75.h),
-        backgroundColor: theme.colorScheme.primary,
-        foregroundColor: theme.colorScheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21)),
+      decoration: M3EButtonDecoration.styleFrom(
+        hoveredRadius: 12,
+        pressedRadius: 8,
+        borderRadius: 18,
       ),
     );
   }

@@ -6,9 +6,7 @@ import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio_web/core/responsive/responsive_layout_helper.dart';
-import 'package:portfolio_web/widgets/segment_button.dart';
 import 'package:responsive_scaler/responsive_scaler.dart';
-import 'package:motor/motor.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -164,75 +162,61 @@ class _AboutPageState extends State<AboutPage> {
     ThemeData theme,
     bool isMobile,
   ) {
-    return Container(
-      decoration: ShapeDecoration(
-        color: theme.colorScheme.primary.withValues(alpha: 0.2),
-        shape: const StadiumBorder(),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-            child: SegmentButton(
-              width: double.infinity,
-              height: isMobile ? 50.r : 60.r,
-              isSelected: selectedTab == 0,
-              selectedColor: theme.colorScheme.primary,
-              onTap: () => setState(() => selectedTab = 0),
-              child: Center(
-                child: SingleMotionBuilder(
-                  motion: const MaterialSpringMotion.expressiveEffectsSlow(),
-                  value: selectedTab == 0 ? 1.0 : 0.0,
-                  builder: (context, value, _) {
-                    final color = Color.lerp(
-                      theme.colorScheme.primary,
-                      theme.colorScheme.onPrimary,
-                      value,
-                    );
-                    return Text(
-                      "About Me",
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontSize: isMobile ? 16 : null,
-                        color: color,
-                        fontVariations: AppConstants.segmentedButtonFont,
-                      ),
-                    );
-                  },
+    return SizedBox(
+      width: double.infinity,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final buttonWidth = constraints.maxWidth == double.infinity
+              ? null
+              : constraints.maxWidth / 2.01;
+
+          return M3EToggleButtonGroup(
+            size: M3EButtonSize.custom(height: 64.r),
+            style: M3EButtonStyle.filled,
+            type: M3EButtonGroupType.connected,
+            selectedIndex: selectedTab,
+            onSelectedIndexChanged: (index) =>
+                setState(() => selectedTab = index!),
+            decoration: M3EToggleButtonDecoration.styleFrom(
+              backgroundColor: theme.colorScheme.primaryFixed,
+              foregroundColor: theme.colorScheme.primary,
+              checkedBackgroundColor: theme.colorScheme.primary,
+              checkedForegroundColor: theme.colorScheme.onPrimary,
+              hoveredRadius: 8,
+              connectedInnerRadius: 12,
+              pressedRadius: 4,
+              uncheckedRadius: 12,
+            ),
+            actions: [
+              M3EToggleButtonGroupAction(
+                width: buttonWidth,
+                label: Builder(
+                  builder: (context) => Text(
+                    "About Me",
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontSize: isMobile ? 18 : null,
+                      color: DefaultTextStyle.of(context).style.color,
+                      fontVariations: AppConstants.segmentedButtonFont,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: SegmentButton(
-              width: double.infinity,
-              height: isMobile ? 50.r : 60.r,
-              isSelected: selectedTab == 1,
-              selectedColor: theme.colorScheme.primary,
-              onTap: () => setState(() => selectedTab = 1),
-              child: Center(
-                child: SingleMotionBuilder(
-                  motion: const MaterialSpringMotion.expressiveEffectsSlow(),
-                  value: selectedTab == 1 ? 1.0 : 0.0,
-                  builder: (context, value, _) {
-                    final color = Color.lerp(
-                      theme.colorScheme.primary,
-                      theme.colorScheme.onPrimary,
-                      value,
-                    );
-                    return Text(
-                      "Education",
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontSize: isMobile ? 16 : null,
-                        color: color,
-                        fontVariations: AppConstants.segmentedButtonFont,
-                      ),
-                    );
-                  },
+              M3EToggleButtonGroupAction(
+                width: buttonWidth,
+                label: Builder(
+                  builder: (context) => Text(
+                    "Education",
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontSize: isMobile ? 18 : null,
+                      color: DefaultTextStyle.of(context).style.color,
+                      fontVariations: AppConstants.segmentedButtonFont,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

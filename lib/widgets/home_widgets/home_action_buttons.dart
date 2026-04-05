@@ -4,8 +4,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:portfolio_web/core/utils/app_constants.dart';
 import 'package:portfolio_web/core/utils/navigation_provider.dart';
 import 'package:portfolio_web/models/nav_section_enums.dart';
-import 'package:portfolio_web/widgets/gradient_button.dart';
-import 'package:portfolio_web/widgets/outlined_button.dart';
+import 'package:portfolio_web/widgets/custom_button.dart';
+import 'package:portfolio_web/widgets/custom_outlined_button.dart';
 import 'package:portfolio_web/widgets/resume_viewer_modal.dart';
 import 'package:portfolio_web/widgets/scroll_animated_fade_in.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +64,7 @@ class _HomeActionButtonsState extends State<HomeActionButtons> {
             buttonName: isLoading ? "Loading..." : "View Resume",
             onPressed: _openResumeModal,
           ),
-          GradientButton(
+          CustomButton(
             buttonName: 'Get in Touch',
             onPressed: () => navProvider.scrollToSection(NavSection.contact),
           ),

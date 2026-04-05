@@ -158,7 +158,7 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                         Expanded(
                           child: SizedBox(
                             height: 48.h,
-                            child: ElevatedButton.icon(
+                            child: M3EElevatedButton.icon(
                               icon: const Icon(Icons.open_in_new),
                               label: const Text('Open'),
                               onPressed: () async {
@@ -178,9 +178,12 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                                   }
                                 }
                               },
-                              style: ElevatedButton.styleFrom(
+                              decoration: M3EButtonDecoration.styleFrom(
                                 backgroundColor: theme.colorScheme.primary,
                                 foregroundColor: theme.colorScheme.onPrimary,
+                                borderRadius: 99,
+                                hoveredRadius: 12,
+                                pressedRadius: 6,
                               ),
                             ),
                           ),
@@ -189,15 +192,16 @@ class _ResumeViewerModalState extends State<ResumeViewerModal> {
                         Expanded(
                           child: SizedBox(
                             height: 48.h,
-                            child: ElevatedButton.icon(
-                              
+                            child: M3EElevatedButton.icon(
                               onPressed: _downloadAndOpen,
                               icon: const Icon(Icons.download),
                               label: const Text('Download'),
-                              style: ElevatedButton.styleFrom(
-                                
+                              decoration: M3EButtonDecoration.styleFrom(
                                 backgroundColor: theme.colorScheme.primary,
                                 foregroundColor: theme.colorScheme.onPrimary,
+                                borderRadius: 99,
+                                hoveredRadius: 12,
+                                pressedRadius: 6,
                               ),
                             ),
                           ),
